@@ -1,10 +1,6 @@
-# django-react-webpack
+# This is a Django-React App for managing To-Do activities.
 
-This is Labcodes' boilerplate for django apps with frontend SPAs. We're currently using React and Webpack to manage the frontend.
-
-The boilerplate is PWA, HMR and code splitting ready (and a couple of other acronyms as well).
-
-It's still on beta, so expect little bugs to happen. They shouldn't, but if they pop up, add an issue and we'll get right to it!
+by Lucas Cavalcante (lucas@labcodes.com.br)
 
 ## Setup
 
@@ -22,7 +18,7 @@ If everything went right, you should have a server running at `localhost:8000`. 
 
 ### Installing it manually
 
-If the script isn't working or you want to install everything manually, first [download the zip with the boilerplate from github](https://github.com/labcodes/django-react-webpack/archive/feature/update.zip), create a virtualenv in it, activate it, then run `make install_dependencies`.
+If the script isn't working or you want to install everything manually, first [download the zip with the boilerplate from github](https://github.com/CavalcanteLucas/todolist/archive/v0.1.zip), create a virtualenv in it, activate it, then run `make install_dependencies`.
 
 With that done, the app is almost ready to be run! You just need to copy the `env.example` file to `.env`, so that the django app has access to evironment variables via python-decouple, then run `python manage.py migrate` to create a dev database, and finally `make run`, so that both webpack and django run in parallel.
 
@@ -56,3 +52,14 @@ You may want to:
 - start a new git repository;
 - add `nvm use` to the end of your `bin/activate` script, so that you're always using nvm whenever the virtualenv is active;
 - check `project/settings.py` for variables that need to be customized (PWA related, for example).
+
+## Deploying to Heroku
+
+Assuming you have [installed the Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli), logged in, and created a domain (in this case, http://todo-labc.herokuapp.com/), you can configure your App for running this project with:
+
+```heroku git:remote -a todo-labc
+heroku buildpacks:set heroku/python
+heroku buildpacks:add --index 1 heroku/nodejs
+heroku buildpacks # To check the buildpacks
+heroku config:set SECRET_KEY='Your secret key'
+```

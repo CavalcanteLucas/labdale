@@ -28,18 +28,15 @@ export class Welcome extends React.Component {
     return (
       <div id="welcome">
         <Helmet>
-          <title>DRW - Welcome!</title>
+          <title>ToDo-LabC App - Welcome!</title>
         </Helmet>
 
-        <h1>Welcome to our app!</h1>
-        <p>
-          Now, you may edit the routes on the `routes.js` file and/or edit this
-          file to start developing your app :]
-        </p>
+        <h1>Welcome to the ToDo-LabC App!</h1>
+        <p>This is a Django-React App for managing To-Do activities.</p>
         {message ? <p className="message">{message}</p> : null}
         <p>
-          To understand a bit better about routing, take a look at our
-          <Link to="/sample-nested-page/"> sample nested page</Link>.
+          This is a work in pogress.
+          <Link to="/sample-nested-page/">See more</Link>.
         </p>
       </div>
     );
