@@ -35,8 +35,8 @@ export class Welcome extends React.Component {
         <p>This is a Django-React App for managing To-Do activities.</p>
         {message ? <p className="message">{message}</p> : null}
         <p>
-          This is a work in pogress.
-          <Link to="/sample-nested-page/">See more</Link>.
+          This is a work in poggress.
+          <Link to="/sample-nested-page/"> See more</Link>.
         </p>
       </div>
     );
