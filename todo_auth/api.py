@@ -14,10 +14,7 @@ class RegistrationAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         content = {
-            "user": UserSerializer(
-                        user,
-                        context=self.get_serializer_context()
-                    ).data,
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
             "token": AuthToken.objects.create(user)[1],
         }
         return Response(content, status=status.HTTP_201_CREATED)
