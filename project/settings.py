@@ -42,7 +42,13 @@ INSTALLED_APPS = [
     "rest_framework",
     "webpack_loader",
     "pwa",
+    "knox",
+    "todo_auth",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
