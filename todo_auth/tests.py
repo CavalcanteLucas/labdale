@@ -13,7 +13,10 @@ class AccountTests(TestCase):
 
         url = reverse("register")
         user_sample = mommy.prepare("User")
-        data = {"username": user_sample.username, "password": user_sample.password}
+        data = {
+            "username": user_sample.username,
+            "password": user_sample.password
+        }
         # There are no users
         self.assertEqual(0, User.objects.count())
 
@@ -22,11 +25,17 @@ class AccountTests(TestCase):
         self.assertEqual(1, User.objects.count())
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
 
-        user = User.objects.get(id=1)
-        expected_user_data = {"username": user.username, "id": user.id}
+        created_user = User.objects.get(id=1)
+        expected_user_data = {
+            "username": created_user.username,
+            "id": created_user.id
+        }
         # API confirms user creation
         self.assertEqual(expected_user_data, response.data["user"])
-        self.assertIn(user.auth_token_set.get().token_key, response.data["token"])
+        self.assertIn(
+            created_user.auth_token_set.get().token_key, 
+            response.data["token"]
+        )
 
         response = self.client.post(url, data)
         # API blocks repeated users to be created
@@ -37,7 +46,7 @@ class AccountTests(TestCase):
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
         data = {
-            "username": user_sample.username, 
+            "username": user_sample.username,
             "password": ""
         }
         response = self.client.post(url, data)
