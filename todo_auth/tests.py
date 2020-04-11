@@ -33,7 +33,7 @@ class AccountTests(TestCase):
         # API confirms user creation
         self.assertEqual(expected_user_data, response.data["user"])
         self.assertIn(
-            created_user.auth_token_set.get().token_key, 
+            created_user.auth_token_set.get().token_key,
             response.data["token"]
         )
 
