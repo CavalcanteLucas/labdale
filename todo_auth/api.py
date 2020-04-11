@@ -3,11 +3,11 @@ from rest_framework.response import Response
 
 from knox.models import AuthToken
 
-from todo_auth.serializers import CreateUserSerializer, UserSerializer
+from todo_auth.serializers import RegisterSerializer, UserSerializer
 
 
 class RegistrationAPI(generics.GenericAPIView):
-    serializer_class = CreateUserSerializer
+    serializer_class = RegisterSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
