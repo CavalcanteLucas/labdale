@@ -76,6 +76,8 @@
     "workbox-webpack-plugin": "^5.1.1"
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "history": "^4.10.1",
     "jest": "^25.1.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
@@ -87,6 +89,7 @@
     "react-redux-api-tools": "^2.1.1",
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
+    "redux-form": "^8.3.3",
     "redux-thunk": "^2.3.0",
     "whatwg-fetch": "^3.0.0"
   }

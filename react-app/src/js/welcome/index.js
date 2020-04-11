@@ -7,14 +7,13 @@ export default class Welcome extends React.Component {
     return (
       <div id="welcome">
         <Helmet>
-          <title>ToDo-LabC App - Welcome!</title>
+          <title>- To-Do LABC -</title>
         </Helmet>
 
-        <h1>Welcome to the ToDo-LabC App!</h1>
+        <h1>Welcome to the To-Do LABC App!</h1>
         <p>This is a Django-React App for managing To-Do activities.</p>
         <p>
-          This is a work in progress.
-          <Link to="/sample-nested-page/"> See more</Link>.
+          Not a user yet? <Link to="/register">Create a login</Link>.
         </p>
       </div>
     );
