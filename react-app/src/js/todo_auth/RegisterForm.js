@@ -5,10 +5,15 @@ import { Link } from "react-router-dom";
 import { register } from "./actions";
 
 export class RegisterForm extends React.Component {
-  onSubmit = async e => {
+  state = {
+    username: "",
+    password: ""
+  };
+
+  onSubmit = e => {
     e.preventDefault();
     const { username, password } = this.state;
-    const response = await this.props.register(username, password);
+    this.props.register(username, password);
     if (response === 201) {
       this.props.history.push("/");
     }

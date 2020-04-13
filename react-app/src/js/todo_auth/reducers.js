@@ -1,20 +1,31 @@
-import { REGISTER_SUCCESS, REGISTER_FAILURE } from "./actions";
+import {
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE
+} from "./actions";
 
 const initialState = {
   isLoading: false,
   isRegistered: false,
   token: localStorage.getItem("token"),
-  errors: null
+  errors: null,
+  message: null
 };
 
 export default function todoAuthReducers(state = initialState, action) {
   switch (action.type) {
+    case REGISTER_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        errors: null,
+      }
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.data.token);
       return {
         ...state,
         isLoading: false,
-        errors: null
+        messsage: "OK"
       };
     case REGISTER_FAILURE:
       localStorage.removeItem("token");
@@ -22,7 +33,7 @@ export default function todoAuthReducers(state = initialState, action) {
         ...state,
         token: null,
         isLoading: false,
-        errors: action.errors
+        errors: action.response.data
       };
     default:
       return state;
