@@ -30,20 +30,24 @@ export class RegisterForm extends React.Component {
           <legend>Register</legend>
           <p>
             <label htmlFor="username">
-              Username
+              Username:&nbsp;
               <input
                 type="text"
                 id="username"
+                required
+                placeholder="Enter username"
                 onChange={e => this.setState({ username: e.target.value })}
               />
             </label>
           </p>
           <p>
             <label htmlFor="password">
-              Password
+              Password:&nbsp;
               <input
                 type="password"
                 id="password"
+                required
+                placeholder="Enter password"
                 onChange={e => this.setState({ password: e.target.value })}
               />
             </label>
