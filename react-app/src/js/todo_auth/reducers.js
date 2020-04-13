@@ -6,10 +6,9 @@ import {
 
 const initialState = {
   isLoading: false,
-  isRegistered: false,
   token: localStorage.getItem("token"),
   errors: null,
-  message: null
+  response: false
 };
 
 export default function todoAuthReducers(state = initialState, action) {
@@ -19,13 +18,14 @@ export default function todoAuthReducers(state = initialState, action) {
         ...state,
         isLoading: true,
         errors: null,
-      }
+        response: false
+      };
     case REGISTER_SUCCESS:
-      localStorage.setItem("token", action.data.token);
+      localStorage.setItem("token", action.response.data.token);
       return {
         ...state,
         isLoading: false,
-        messsage: "OK"
+        response: action.response.ok
       };
     case REGISTER_FAILURE:
       localStorage.removeItem("token");
@@ -33,6 +33,7 @@ export default function todoAuthReducers(state = initialState, action) {
         ...state,
         token: null,
         isLoading: false,
+        response: action.response.ok,
         errors: action.response.data
       };
     default:
