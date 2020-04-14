@@ -1,0 +1,13 @@
+.app-header-wrapper {
+  background: #24292E;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  height: 2rem;
+  width: 2rem;
+  filter: invert(1);
+}
