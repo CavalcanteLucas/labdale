@@ -1,14 +1,15 @@
 import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
-  REGISTER_FAILURE
+  REGISTER_FAILURE,
+  CLEAR_REGISTER_SUCCESS_MESSAGE
 } from "./actions";
 
 const initialState = {
   isLoading: false,
   token: localStorage.getItem("token"),
   errors: null,
-  response: false
+  successMessage: null
 };
 
 export default function todoAuthReducers(state = initialState, action) {
@@ -18,23 +19,28 @@ export default function todoAuthReducers(state = initialState, action) {
         ...state,
         isLoading: true,
         errors: null,
-        response: false
+        successMessage: initialState.successMessage
       };
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.response.data.token);
       return {
         ...state,
         isLoading: false,
-        response: action.response.ok
+        successMessage: "User successfully created!"
       };
     case REGISTER_FAILURE:
       localStorage.removeItem("token");
+      // error mapping here
       return {
         ...state,
         token: null,
         isLoading: false,
-        response: action.response.ok,
         errors: action.response.data
+      };
+    case CLEAR_REGISTER_SUCCESS_MESSAGE:
+      return {
+        ...state,
+        successMessage: initialState.successMessage
       };
     default:
       return state;

@@ -12,23 +12,21 @@ export class RegisterForm extends React.Component {
   };
 
   static propTypes = {
-    register: PropTypes.func,
-    response: PropTypes.bool,
+    register: PropTypes.func.isRequired,
     errors: PropTypes.object,
-    history: PropTypes.object
+    history: PropTypes.object,
+    successMessage: PropTypes.string
   };
 
   static defaultProps = {
-    register: () => {},
-    response: false,
     errors: null,
-    history: null
+    history: null,
+    successMessage: null
   };
 
-  componentDidUpdate(prevProps) {
-    const { response, history } = this.props;
-    if (response && response !== prevProps.response) {
-      alert("User successfully created!");
+  componentDidUpdate() {
+    const { successMessage, history } = this.props;
+    if (successMessage) {
       history.push("/");
     }
   }
@@ -101,7 +99,7 @@ export class RegisterForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  response: state.todoAuth.response,
+  successMessage: state.todoAuth.successMessage,
   errors: state.todoAuth.errors
 });
 

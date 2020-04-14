@@ -7,13 +7,6 @@
 @import "variables";
 @import "base";
 
-// then, we import our custom css
-@import "pages/welcome";
-@import "pages/header";
-
-// finally, we import the overrides needed for customizing third-party css
-@import "overrides";
-
 // bootstrap
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/root";
@@ -50,3 +43,10 @@
 @import "~bootstrap/scss/spinners";
 @import "~bootstrap/scss/utilities";
 @import "~bootstrap/scss/print";
+
+// then, we import our custom css
+@import "pages/welcome";
+@import "pages/header";
+
+// finally, we import the overrides needed for customizing third-party css
+@import "overrides";
