@@ -1,4 +1,5 @@
 import React from "react";
+import { Container, Col, Row } from "react-bootstrap";
 import Helmet from "react-helmet";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -36,23 +37,41 @@ export class Welcome extends React.Component {
     const { successMessage } = this.props;
 
     return (
-      <div id="welcome">
+      <div id="welcome-body">
         <Helmet>
           <title>- To-Do LABC -</title>
         </Helmet>
+        <Container className="welcome-body-wrapper">
+          <Row>
+            <Col>
+              <div className="welcome-wrapper">
+                <h1 className="welcome-title">
+                  Welcome to the To-Do LABC App!
+                </h1>
 
-        <h1>Welcome to the To-Do LABC App!</h1>
+                <div className="welcome-message-wrapper">
+                  <p className="welcome-message">
+                    This is a Django-React App for managing To-Do activities.
+                  </p>
+                </div>
+              </div>
+            </Col>
 
-        {successMessage ? (
-          <div className="alert alert-success" role="alert">
-            {successMessage}
-          </div>
-        ) : null}
-
-        <p>This is a Django-React App for managing To-Do activities.</p>
-        <p>
-          Not a user yet? <Link to="/register">Create a login</Link>.
-        </p>
+            <Col>
+              <div className="login-box">
+                <p>This will become some login form.</p>
+                <p>
+                  Not a user yet? <Link to="/register">Create a login</Link>.
+                </p>
+              </div>
+              {successMessage ? (
+                <div className="alert alert-success" role="alert">
+                  {successMessage}
+                </div>
+              ) : null}
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }

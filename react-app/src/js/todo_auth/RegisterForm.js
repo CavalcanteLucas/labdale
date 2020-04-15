@@ -1,9 +1,10 @@
 import React from "react";
+import { Button, Container, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 
-import { register } from "./actions";
+import { register, clearRegisterErrorMessage } from "./actions";
+import RegisterFormErrors from "./RegisterFormErrors";
 
 export class RegisterForm extends React.Component {
   state = {
@@ -13,21 +14,35 @@ export class RegisterForm extends React.Component {
 
   static propTypes = {
     register: PropTypes.func.isRequired,
-    errors: PropTypes.object,
     history: PropTypes.object,
-    successMessage: PropTypes.string
+    successMessage: PropTypes.string,
+    clearRegisterErrorMessage: PropTypes.func,
+    errors: PropTypes.shape({
+      username: PropTypes.arrayOf(PropTypes.string),
+      password: PropTypes.arrayOf(PropTypes.string)
+    })
   };
 
   static defaultProps = {
-    errors: null,
     history: null,
-    successMessage: null
+    successMessage: null,
+    errors: null,
+    clearRegisterErrorMessage: () => {}
   };
 
   componentDidUpdate() {
-    const { successMessage, history } = this.props;
+    const {
+      successMessage,
+      history,
+      errors,
+      clearRegisterErrorMessage
+    } = this.props;
+
     if (successMessage) {
       history.push("/");
+    }
+    if (errors) {
+      setTimeout(clearRegisterErrorMessage, 2000);
     }
   }
 
@@ -39,61 +54,46 @@ export class RegisterForm extends React.Component {
   };
 
   render() {
+    const { username, password } = this.state;
     const { errors } = this.props;
 
-    const error = [];
-    if (errors) {
-      Object.keys(errors).map(field =>
-        error.push(`${field}: ${errors[field][0]}`)
-      );
-    }
-
     return (
-      <form onSubmit={this.onSubmit}>
-        <fieldset>
-          <legend>Register</legend>
-          <p>
-            <label htmlFor="username">
-              Username:&nbsp;
-              <input
-                type="text"
-                id="username"
+      <Container className="register-body-wrapper">
+        <div className="register-wrapper">
+          <h3 className="join-us-subtitle">Join Us</h3>
+          <h1 className="create-your-account-subtitle">Create your account</h1>
+          <Form onSubmit={this.onSubmit}>
+            <Form.Group controlId="formGroupName">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
                 required
-                placeholder="Enter username"
+                type="username"
+                placeholder=""
                 onChange={e => this.setState({ username: e.target.value })}
               />
-            </label>
-          </p>
-          <p>
-            <label htmlFor="password">
-              Password:&nbsp;
-              <input
-                type="password"
-                id="password"
+            </Form.Group>
+            <Form.Group controlId="formGroupPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
                 required
-                placeholder="Enter password"
+                type="password"
+                placeholder=""
                 onChange={e => this.setState({ password: e.target.value })}
               />
-            </label>
-          </p>
-          <p>
-            <button type="submit">Register</button>
-          </p>
-
-          <p>
-            Already have an account? <Link to="/login">Login</Link>
-          </p>
-
-          {/* Displaying errors */}
-          {errors ? (
-            <ul>
-              {error.map(item => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          ) : null}
-        </fieldset>
-      </form>
+            </Form.Group>
+            <Button
+              disabled={!username || !password}
+              variant="primary"
+              type="submit"
+              block
+            >
+              {" "}
+              Create account
+            </Button>
+          </Form>
+        </div>
+        {errors ? <RegisterFormErrors /> : null}
+      </Container>
     );
   }
 }
@@ -104,7 +104,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  register: (username, password) => dispatch(register(username, password))
+  register: (username, password) => dispatch(register(username, password)),
+  clearRegisterErrorMessage: () => dispatch(clearRegisterErrorMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

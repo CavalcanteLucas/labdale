@@ -1,7 +1,29 @@
-.shop-header-wrapper {
-  background: #EC6056;
-  padding: 0.5em 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.welcome-body-wrapper {
+  padding-top: 4rem;
+}
+
+.welcome-wrapper {
+  color: white;
+  margin-top: 1rem;
+}
+
+.welcome-title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 52px;
+}
+
+.welcome-message-wrapper {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  color: #B2B3B5;
+  font-size: 18px;
+}
+
+.login-box {
+  background: white;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  transition: box-shadow 0.2s ease-in-out;
 }
