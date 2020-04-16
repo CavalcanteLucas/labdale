@@ -64,6 +64,18 @@ export class RegisterForm extends React.Component {
     }
   };
 
+  handleInputChange = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  canSubmit = () => {
+    const { username, password, confirmPassword } = this.state;
+    const fieldsAreEmpty = !username || !password || !confirmPassword;
+    const passwordsAreEqual = confirmPassword === password;
+    return !fieldsAreEmpty && passwordsAreEqual;
+  };
+
   render() {
     const { username, password, confirmPassword } = this.state;
     const { errors } = this.props;
@@ -77,34 +89,38 @@ export class RegisterForm extends React.Component {
             <Form.Group controlId="form-name">
               <Form.Label>Username</Form.Label>
               <Form.Control
+                name="username"
                 required
-                type="username"
+                type="text"
                 placeholder=""
-                onChange={e => this.setState({ username: e.target.value })}
+                value={username}
+                onChange={this.handleInputChange}
               />
             </Form.Group>
             <Form.Group controlId="form-password">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                name="password"
                 required
                 type="password"
                 placeholder=""
-                onChange={e => this.setState({ password: e.target.value })}
+                value={password}
+                onChange={this.handleInputChange}
               />
             </Form.Group>
             <Form.Group controlId="form-confirm-password">
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control
+                name="confirmPassword"
                 required
                 type="password"
                 placeholder=""
-                onChange={e =>
-                  // eslint-disable-next-line prettier/prettier
-                  this.setState({ confirmPassword: e.target.value })}
+                value={confirmPassword}
+                onChange={this.handleInputChange}
               />
             </Form.Group>
             <Button
-              disabled={!username || !password || !confirmPassword}
+              disabled={!this.canSubmit()}
               variant="primary"
               type="submit"
               block
