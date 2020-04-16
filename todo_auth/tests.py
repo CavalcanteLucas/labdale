@@ -13,10 +13,7 @@ class AccountTests(TestCase):
 
         url = reverse("register")
         user_sample = mommy.prepare("User")
-        data = {
-            "username": user_sample.username,
-            "password": user_sample.password
-        }
+        data = {"username": user_sample.username, "password": user_sample.password}
         # There are no users
         self.assertEqual(0, User.objects.count())
 
@@ -26,15 +23,11 @@ class AccountTests(TestCase):
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
 
         created_user = User.objects.get(id=1)
-        expected_user_data = {
-            "username": created_user.username,
-            "id": created_user.id
-        }
+        expected_user_data = {"username": created_user.username, "id": created_user.id}
         # API confirms user creation
         self.assertEqual(expected_user_data, response.data["user"])
         self.assertIn(
-            created_user.auth_token_set.get().token_key,
-            response.data["token"]
+            created_user.auth_token_set.get().token_key, response.data["token"]
         )
 
         response = self.client.post(url, data)
@@ -45,10 +38,7 @@ class AccountTests(TestCase):
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
-        data = {
-            "username": user_sample.username,
-            "password": ""
-        }
+        data = {"username": user_sample.username, "password": ""}
         response = self.client.post(url, data)
         # API blocks user creation with blank password
         self.assertEqual(

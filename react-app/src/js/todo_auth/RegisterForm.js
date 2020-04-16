@@ -3,13 +3,18 @@ import { Button, Container, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { register, clearRegisterErrorMessage } from "./actions";
+import {
+  register,
+  clearRegisterErrorMessage,
+  setInvalidConfirmationPasswordErrorMessage
+} from "./actions";
 import RegisterFormErrors from "./RegisterFormErrors";
 
 export class RegisterForm extends React.Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    confirmPassword: ""
   };
 
   static propTypes = {
@@ -17,6 +22,7 @@ export class RegisterForm extends React.Component {
     history: PropTypes.object,
     successMessage: PropTypes.string,
     clearRegisterErrorMessage: PropTypes.func,
+    setInvalidConfirmationPasswordErrorMessage: PropTypes.func,
     errors: PropTypes.shape({
       username: PropTypes.arrayOf(PropTypes.string),
       password: PropTypes.arrayOf(PropTypes.string)
@@ -27,7 +33,8 @@ export class RegisterForm extends React.Component {
     history: null,
     successMessage: null,
     errors: null,
-    clearRegisterErrorMessage: () => {}
+    clearRegisterErrorMessage: () => {},
+    setInvalidConfirmationPasswordErrorMessage: () => {}
   };
 
   componentDidUpdate() {
@@ -48,13 +55,17 @@ export class RegisterForm extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { username, password } = this.state;
-    const { register } = this.props;
-    register(username, password);
+    const { username, password, confirmPassword } = this.state;
+    const { register, setInvalidConfirmationPasswordErrorMessage } = this.props;
+    if (password === confirmPassword) {
+      register(username, password);
+    } else {
+      setInvalidConfirmationPasswordErrorMessage();
+    }
   };
 
   render() {
-    const { username, password } = this.state;
+    const { username, password, confirmPassword } = this.state;
     const { errors } = this.props;
 
     return (
@@ -63,7 +74,7 @@ export class RegisterForm extends React.Component {
           <h3 className="join-us-subtitle">Join Us</h3>
           <h1 className="create-your-account-subtitle">Create your account</h1>
           <Form onSubmit={this.onSubmit}>
-            <Form.Group controlId="formGroupName">
+            <Form.Group controlId="form-name">
               <Form.Label>Username</Form.Label>
               <Form.Control
                 required
@@ -72,7 +83,7 @@ export class RegisterForm extends React.Component {
                 onChange={e => this.setState({ username: e.target.value })}
               />
             </Form.Group>
-            <Form.Group controlId="formGroupPassword">
+            <Form.Group controlId="form-password">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 required
@@ -81,8 +92,19 @@ export class RegisterForm extends React.Component {
                 onChange={e => this.setState({ password: e.target.value })}
               />
             </Form.Group>
+            <Form.Group controlId="form-confirm-password">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                required
+                type="password"
+                placeholder=""
+                onChange={e =>
+                  // eslint-disable-next-line prettier/prettier
+                  this.setState({ confirmPassword: e.target.value })}
+              />
+            </Form.Group>
             <Button
-              disabled={!username || !password}
+              disabled={!username || !password || !confirmPassword}
               variant="primary"
               type="submit"
               block
@@ -105,7 +127,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   register: (username, password) => dispatch(register(username, password)),
-  clearRegisterErrorMessage: () => dispatch(clearRegisterErrorMessage())
+  clearRegisterErrorMessage: () => dispatch(clearRegisterErrorMessage()),
+  setInvalidConfirmationPasswordErrorMessage: () =>
+    dispatch(setInvalidConfirmationPasswordErrorMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

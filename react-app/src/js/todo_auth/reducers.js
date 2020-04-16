@@ -3,7 +3,8 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
   CLEAR_REGISTER_SUCCESS_MESSAGE,
-  CLEAR_REGISTER_ERROR_MESSAGE
+  CLEAR_REGISTER_ERROR_MESSAGE,
+  SET_INVALID_CONFIRMATION_PASSWORD_ERROR_MESSAGE
 } from "./actions";
 
 const initialState = {
@@ -31,7 +32,6 @@ export default function todoAuthReducers(state = initialState, action) {
       };
     case REGISTER_FAILURE:
       localStorage.removeItem("token");
-      // console.log(action.response.data);
       return {
         ...state,
         token: null,
@@ -47,6 +47,13 @@ export default function todoAuthReducers(state = initialState, action) {
       return {
         ...state,
         errors: initialState.errors
+      };
+    case SET_INVALID_CONFIRMATION_PASSWORD_ERROR_MESSAGE:
+      return {
+        ...state,
+        errors: {
+          password: ["Invalid confirmation password."]
+        }
       };
     default:
       return state;
