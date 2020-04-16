@@ -40,6 +40,4 @@ const mapStateToProps = state => ({
   errors: state.todoAuth.errors
 });
 
-const mapDispatchToProps = () => {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterFormErrors);
+export default connect(mapStateToProps)(RegisterFormErrors);

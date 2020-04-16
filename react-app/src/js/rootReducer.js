@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import todoAuthReducers from "./todo_auth/reducers";
+import todoAuthReducers from "./register-form/reducers";
 
 export default combineReducers({
   todoAuth: todoAuthReducers

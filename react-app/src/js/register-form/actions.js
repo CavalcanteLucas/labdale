@@ -27,11 +27,3 @@ export const register = (username, password) => {
 export const clearRegisterSuccessMessage = () => ({
   type: CLEAR_REGISTER_SUCCESS_MESSAGE
 });
-
-export const clearRegisterErrorMessage = () => ({
-  type: CLEAR_REGISTER_ERROR_MESSAGE
-});
-
-export const setInvalidConfirmationPasswordErrorMessage = () => ({
-  type: SET_INVALID_CONFIRMATION_PASSWORD_ERROR_MESSAGE
-});

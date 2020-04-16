@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Header";
 
 const WelcomePage = React.lazy(() => import("./welcome"));
-const RegisterForm = React.lazy(() => import("./todo_auth/RegisterForm"));
+const RegisterForm = React.lazy(() => import("./register-form"));
 
 export default class Routes extends React.Component {
   render() {
