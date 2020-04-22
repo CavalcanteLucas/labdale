@@ -9,8 +9,9 @@ import RegisterFormErrors from "./RegisterFormErrors";
 export class RegisterForm extends React.Component {
   state = {
     username: "",
-    password: "",
-    confirmPassword: ""
+    email: "",
+    password1: "",
+    password2: ""
   };
 
   static propTypes = {
@@ -19,7 +20,9 @@ export class RegisterForm extends React.Component {
     successMessage: PropTypes.string,
     errors: PropTypes.shape({
       username: PropTypes.arrayOf(PropTypes.string),
-      password: PropTypes.arrayOf(PropTypes.string)
+      email: PropTypes.arrayOf(PropTypes.string),
+      password1: PropTypes.arrayOf(PropTypes.string),
+      password2: PropTypes.arrayOf(PropTypes.string)
     })
   };
 
@@ -39,11 +42,9 @@ export class RegisterForm extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { username, password, confirmPassword } = this.state;
+    const { username, email, password1, password2 } = this.state;
     const { register } = this.props;
-    if (password === confirmPassword) {
-      register(username, password);
-    }
+    register(username, email, password1, password2);
   };
 
   handleInputChange = e => {
@@ -51,15 +52,8 @@ export class RegisterForm extends React.Component {
     this.setState({ [name]: value });
   };
 
-  canSubmit = () => {
-    const { username, password, confirmPassword } = this.state;
-    const fieldsAreEmpty = !username || !password || !confirmPassword;
-    const passwordsAreEqual = confirmPassword === password;
-    return !fieldsAreEmpty && passwordsAreEqual;
-  };
-
   render() {
-    const { username, password, confirmPassword } = this.state;
+    const { username, email, password1, password2 } = this.state;
     const { errors } = this.props;
 
     return (
@@ -71,7 +65,7 @@ export class RegisterForm extends React.Component {
               Create your account
             </h1>
             <Form onSubmit={this.onSubmit}>
-              <Form.Group controlId="form-name">
+              <Form.Group controlId="form-username">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
                   name="username"
@@ -82,35 +76,41 @@ export class RegisterForm extends React.Component {
                   onChange={this.handleInputChange}
                 />
               </Form.Group>
-              <Form.Group controlId="form-password">
-                <Form.Label>Password</Form.Label>
+              <Form.Group controlId="form-email">
+                <Form.Label>Email</Form.Label>
                 <Form.Control
-                  name="password"
+                  name="email"
                   required
-                  type="password"
+                  type="text"
                   placeholder=""
-                  value={password}
+                  value={email}
                   onChange={this.handleInputChange}
                 />
               </Form.Group>
-              <Form.Group controlId="form-confirm-password">
-                <Form.Label>Confirm Password</Form.Label>
+              <Form.Group controlId="form-password1">
+                <Form.Label>Password</Form.Label>
                 <Form.Control
-                  name="confirmPassword"
+                  name="password1"
                   required
                   type="password"
                   placeholder=""
-                  value={confirmPassword}
+                  value={password1}
+                  onChange={this.handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="form-password2">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  name="password2"
+                  required
+                  type="password"
+                  placeholder=""
+                  value={password2}
                   onChange={this.handleInputChange}
                 />
               </Form.Group>
               {errors ? <RegisterFormErrors /> : null}
-              <Button
-                disabled={!this.canSubmit()}
-                variant="primary"
-                type="submit"
-                block
-              >
+              <Button variant="primary" type="submit" block>
                 {" "}
                 Create account
               </Button>
@@ -128,7 +128,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  register: (username, password) => dispatch(register(username, password))
+  register: (username, email, password1, password2) =>
+    dispatch(register(username, email, password1, password2))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
