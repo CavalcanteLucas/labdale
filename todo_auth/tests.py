@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.test import TestCase
 
 from rest_framework import status
-from model_mommy import mommy
+from model_bakery import baker
 
 User = get_user_model()
 
@@ -12,7 +12,7 @@ class AccountTests(TestCase):
     def test_create_account(self):
 
         url = reverse("register")
-        user_sample = mommy.prepare("User")
+        user_sample = baker.prepare("User")
         data = {"username": user_sample.username, "password": user_sample.password}
         # There are no users
         self.assertEqual(0, User.objects.count())
