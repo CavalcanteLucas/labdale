@@ -19,12 +19,10 @@ from django.urls import re_path, path, include
 
 frontend_urls = [
     path("", include("pwa.urls")),
-    # re_path(r"^.*$", TemplateView.as_view(template_name="frontend/index.html")),
 ]
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    # path("api/todo-auth/", include("todo_auth.urls")),
     path("api/rest-auth/", include('rest_auth.urls')),
     path("api/rest-auth/registration/", include('rest_auth.registration.urls'))
 ] + frontend_urls

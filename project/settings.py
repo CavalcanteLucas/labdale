@@ -45,20 +45,14 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "webpack_loader",
     "pwa",
-    # "knox",
-    # "todo_auth",
     "rest_auth",
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "rest_auth.registration",
 ]
 
 SITE_ID = 1
-
-# REST_FRAMEWORK = {
-#     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
-# }
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
