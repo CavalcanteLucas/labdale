@@ -29,6 +29,8 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Application definition
 
@@ -40,15 +42,23 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework.authtoken",
     "webpack_loader",
     "pwa",
-    "knox",
-    "todo_auth",
+    # "knox",
+    # "todo_auth",
+    "rest_auth",
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 ]
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
-}
+SITE_ID = 1
+
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
+# }
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
