@@ -9,25 +9,18 @@ import { clearRegisterSuccessMessage } from "../register-form/actions";
 
 export class Welcome extends React.Component {
   static propTypes = {
-    fetchWelcomeMessage: PropTypes.func,
     successMessage: PropTypes.string,
     clearRegisterSuccessMessage: PropTypes.func
   };
 
   static defaultProps = {
     successMessage: null,
-    fetchWelcomeMessage: () => {},
     clearRegisterSuccessMessage: () => {}
   };
 
   componentDidMount() {
-    const {
-      fetchWelcomeMessage,
-      clearRegisterSuccessMessage,
-      successMessage
-    } = this.props;
+    const { clearRegisterSuccessMessage, successMessage } = this.props;
 
-    fetchWelcomeMessage();
     if (successMessage) {
       setTimeout(clearRegisterSuccessMessage, 2000);
     }

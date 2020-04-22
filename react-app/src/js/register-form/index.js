@@ -75,7 +75,7 @@ export class RegisterForm extends React.Component {
                 <Form.Label>Username</Form.Label>
                 <Form.Control
                   name="username"
-                  // required
+                  required
                   type="text"
                   placeholder=""
                   value={username}
@@ -86,7 +86,7 @@ export class RegisterForm extends React.Component {
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   name="password"
-                  // required
+                  required
                   type="password"
                   placeholder=""
                   value={password}
@@ -97,7 +97,7 @@ export class RegisterForm extends React.Component {
                 <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
                   name="confirmPassword"
-                  // required
+                  required
                   type="password"
                   placeholder=""
                   value={confirmPassword}

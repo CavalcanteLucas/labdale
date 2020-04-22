@@ -25,7 +25,7 @@ export default function todoAuthReducers(state = initialState, action) {
       localStorage.setItem("token", action.response.data.token);
       return {
         ...state,
-        isLoading: false,
+        isLoading: initialState.isLoading,
         successMessage: "User successfully created!"
       };
     case REGISTER_FAILURE:
@@ -33,7 +33,7 @@ export default function todoAuthReducers(state = initialState, action) {
       return {
         ...state,
         token: null,
-        isLoading: false,
+        isLoading: initialState.isLoading,
         errors: action.response.data
       };
     case CLEAR_REGISTER_SUCCESS_MESSAGE:
