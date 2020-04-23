@@ -123,8 +123,8 @@ export class RegisterForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.todoAuth.successMessage,
-  errors: state.todoAuth.errors
+  successMessage: state.register.successMessage,
+  errors: state.register.errors
 });
 
 const mapDispatchToProps = dispatch => ({

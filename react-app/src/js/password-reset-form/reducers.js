@@ -1,8 +1,8 @@
 import {
-  REGISTER_REQUEST,
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
-  CLEAR_REGISTER_SUCCESS_MESSAGE
+  PASSWORD_RESET_REQUEST,
+  PASSWORD_RESET_SUCCESS,
+  PASSWORD_RESET_FAILURE,
+  CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE
 } from "./actions";
 
 const initialState = {
@@ -12,23 +12,24 @@ const initialState = {
   errors: null
 };
 
-export default function registerhReducers(state = initialState, action) {
+export default function passwordResetReducers(state = initialState, action) {
   switch (action.type) {
-    case REGISTER_REQUEST:
+    case PASSWORD_RESET_REQUEST:
       return {
         ...state,
         isLoading: true,
         successMessage: initialState.successMessage,
         errors: initialState.errors
       };
-    case REGISTER_SUCCESS:
+    case PASSWORD_RESET_SUCCESS:
       localStorage.setItem("token", action.response.data.token);
       return {
         ...state,
         isLoading: initialState.isLoading,
-        successMessage: "User successfully created!"
+        successMessage:
+          "Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder."
       };
-    case REGISTER_FAILURE:
+    case PASSWORD_RESET_FAILURE:
       localStorage.removeItem("token");
       return {
         ...state,
@@ -36,7 +37,7 @@ export default function registerhReducers(state = initialState, action) {
         isLoading: initialState.isLoading,
         errors: action.response.data
       };
-    case CLEAR_REGISTER_SUCCESS_MESSAGE:
+    case CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE:
       return {
         ...state,
         successMessage: initialState.successMessage

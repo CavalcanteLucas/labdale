@@ -37,7 +37,7 @@ class RegisterFormErrors extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  errors: state.todoAuth.errors
+  errors: state.register.errors
 });
 
 export default connect(mapStateToProps)(RegisterFormErrors);

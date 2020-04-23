@@ -6,28 +6,42 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { clearRegisterSuccessMessage } from "../register-form/actions";
+import { clearPasswordResetSuccessMessage } from "../password-reset-form/actions";
 
 export class Welcome extends React.Component {
   static propTypes = {
-    successMessage: PropTypes.string,
-    clearRegisterSuccessMessage: PropTypes.func
+    successRegisterMessage: PropTypes.string,
+    successPasswordResetMessage: PropTypes.string,
+    clearRegisterSuccessMessage: PropTypes.func,
+    clearPasswordResetSuccessMessage: PropTypes.func
   };
 
   static defaultProps = {
-    successMessage: null,
-    clearRegisterSuccessMessage: () => {}
+    successRegisterMessage: null,
+    successPasswordResetMessage: null,
+    clearRegisterSuccessMessage: () => {},
+    clearPasswordResetSuccessMessage: () => {}
   };
 
   componentDidMount() {
-    const { clearRegisterSuccessMessage, successMessage } = this.props;
+    const {
+      clearRegisterSuccessMessage,
+      clearPasswordResetSuccessMessage,
+      successRegisterMessage,
+      successPasswordResetMessage
+    } = this.props;
 
-    if (successMessage) {
+    if (successRegisterMessage) {
       setTimeout(clearRegisterSuccessMessage, 2000);
+    }
+
+    if (successPasswordResetMessage) {
+      setTimeout(clearPasswordResetSuccessMessage, 4000);
     }
   }
 
   render() {
-    const { successMessage } = this.props;
+    const { successRegisterMessage, successPasswordResetMessage } = this.props;
 
     return (
       <div id="welcome-body">
@@ -56,10 +70,18 @@ export class Welcome extends React.Component {
                 <p>
                   Not a user yet? <Link to="/register">Create a login</Link>.
                 </p>
+                <p>
+                  <Link to="/password_reset">Forgot password?</Link>
+                </p>
               </div>
-              {successMessage ? (
+              {successRegisterMessage ? (
                 <div className="alert alert-success" role="alert">
-                  {successMessage}
+                  {successRegisterMessage}
+                </div>
+              ) : null}
+              {successPasswordResetMessage ? (
+                <div className="alert alert-success" role="alert">
+                  {successPasswordResetMessage}
                 </div>
               ) : null}
             </Col>
@@ -71,11 +93,14 @@ export class Welcome extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.todoAuth.successMessage
+  successRegisterMessage: state.register.successMessage,
+  successPasswordResetMessage: state.passwordReset.successMessage
 });
 
 const mapDispatchToProps = dispatch => ({
-  clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage())
+  clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage()),
+  clearPasswordResetSuccessMessage: () =>
+    dispatch(clearPasswordResetSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
