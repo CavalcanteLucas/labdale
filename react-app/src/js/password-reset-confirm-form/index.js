@@ -3,22 +3,21 @@ import { Button, Container, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { register } from "./actions";
+import { passwordResetConfirm } from "./actions";
 import FormErrors from "../FormErrors";
 
-export class RegisterForm extends React.Component {
+export class PasswordResetConfirmForm extends React.Component {
   state = {
-    username: "",
-    email: "",
     password1: "",
     password2: ""
   };
 
   static propTypes = {
-    register: PropTypes.func.isRequired,
+    passwordResetConfirm: PropTypes.func.isRequired,
     history: PropTypes.object,
     successMessage: PropTypes.string,
-    errors: PropTypes.object
+    errors: PropTypes.object,
+    match: PropTypes.object.isRequired
   };
 
   static defaultProps = {
@@ -37,9 +36,11 @@ export class RegisterForm extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { username, email, password1, password2 } = this.state;
-    const { register } = this.props;
-    register(username, email, password1, password2);
+    const { password1, password2 } = this.state;
+    const { match } = this.props;
+    const { uid, token } = match.params;
+    const { passwordResetConfirm } = this.props;
+    passwordResetConfirm(uid, token, password1, password2);
   };
 
   handleInputChange = e => {
@@ -48,42 +49,16 @@ export class RegisterForm extends React.Component {
   };
 
   render() {
-    const { username, email, password1, password2 } = this.state;
+    const { password1, password2 } = this.state;
     const { errors } = this.props;
 
     return (
       <div id="form-box">
         <Container>
           <div className="form-wrapper">
-            <h3 className="join-us-subtitle">Join Us</h3>
-            <h1 className="create-your-account-subtitle">
-              Create your account
-            </h1>
             <Form onSubmit={this.onSubmit}>
-              <Form.Group controlId="form-username">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  name="username"
-                  required
-                  type="text"
-                  placeholder=""
-                  value={username}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="form-email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  name="email"
-                  required
-                  type="text"
-                  placeholder=""
-                  value={email}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Group>
               <Form.Group controlId="form-password1">
-                <Form.Label>Password</Form.Label>
+                <Form.Label>New password</Form.Label>
                 <Form.Control
                   name="password1"
                   required
@@ -94,7 +69,7 @@ export class RegisterForm extends React.Component {
                 />
               </Form.Group>
               <Form.Group controlId="form-password2">
-                <Form.Label>Confirm Password</Form.Label>
+                <Form.Label>Confirm new password</Form.Label>
                 <Form.Control
                   name="password2"
                   required
@@ -105,9 +80,9 @@ export class RegisterForm extends React.Component {
                 />
               </Form.Group>
               {errors ? <FormErrors errors={errors} /> : null}
-              <Button variant="primary" type="submit" block>
+              <Button variant="success" type="submit" block>
                 {" "}
-                Create account
+                Change password
               </Button>
             </Form>
           </div>
@@ -118,13 +93,16 @@ export class RegisterForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.register.successMessage,
-  errors: state.register.errors
+  successMessage: state.passwordResetConfirm.successMessage,
+  errors: state.passwordResetConfirm.errors
 });
 
 const mapDispatchToProps = dispatch => ({
-  register: (username, email, password1, password2) =>
-    dispatch(register(username, email, password1, password2))
+  passwordResetConfirm: (uid, token, password1, password2) =>
+    dispatch(passwordResetConfirm(uid, token, password1, password2))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PasswordResetConfirmForm);

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { passwordReset } from "./actions";
+import FormErrors from "../FormErrors";
 
 export class PasswordResetForm extends React.Component {
   state = {
@@ -14,9 +15,7 @@ export class PasswordResetForm extends React.Component {
     passwordReset: PropTypes.func.isRequired,
     history: PropTypes.object,
     successMessage: PropTypes.string,
-    errors: PropTypes.shape({
-      email: PropTypes.arrayOf(PropTypes.string)
-    })
+    errors: PropTypes.object
   };
 
   static defaultProps = {
@@ -50,10 +49,10 @@ export class PasswordResetForm extends React.Component {
     const { errors } = this.props;
 
     return (
-      <div id="register-form">
+      <div id="form-box">
         <Container>
-          <div className="register-wrapper">
-            <h4>Reset your passoword</h4>
+          <div className="form-wrapper">
+            <h4>Reset your password</h4>
             <Form onSubmit={this.onSubmit}>
               <Form.Group controlId="form-email">
                 <Form.Label>
@@ -69,7 +68,7 @@ export class PasswordResetForm extends React.Component {
                   onChange={this.handleInputChange}
                 />
               </Form.Group>
-              {errors}
+              {errors ? <FormErrors errors={errors} /> : null}
               <Button variant="success" type="submit" block>
                 {" "}
                 Send password reset email

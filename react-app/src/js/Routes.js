@@ -5,6 +5,9 @@ import Header from "./Header";
 const WelcomePage = React.lazy(() => import("./welcome"));
 const RegisterForm = React.lazy(() => import("./register-form"));
 const PasswordResetForm = React.lazy(() => import("./password-reset-form"));
+const PasswordResetConfirmForm = React.lazy(() =>
+  import("./password-reset-confirm-form")
+);
 
 export default class Routes extends React.Component {
   render() {
@@ -20,6 +23,11 @@ export default class Routes extends React.Component {
                 exact
                 path="/password_reset"
                 component={PasswordResetForm}
+              />
+              <Route
+                exact
+                path="/password/reset/confirm/:uid/:token"
+                component={PasswordResetConfirmForm}
               />
             </Switch>
           </React.Suspense>

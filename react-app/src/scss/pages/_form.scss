@@ -1,7 +1,7 @@
-#register-form {
+#form-box {
   padding-top: 4rem;
 
-  .register-wrapper {
+  .form-wrapper {
     background: white;
     border-radius: 0.5rem;
     margin-top: 1rem;
@@ -19,7 +19,7 @@
     text-align: center;
   }
 
-  .register-form-errors {
+  .form-errors {
     list-style-type: none;
   }
 }

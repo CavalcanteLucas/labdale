@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
   isEmpty as _isEmpty,
@@ -7,12 +6,9 @@ import {
   join as _join
 } from "lodash";
 
-class RegisterFormErrors extends React.Component {
+export default class FormErrors extends React.Component {
   static propTypes = {
-    errors: PropTypes.shape({
-      username: PropTypes.arrayOf(PropTypes.string),
-      password: PropTypes.arrayOf(PropTypes.string)
-    })
+    errors: PropTypes.object
   };
 
   static defaultProps = {
@@ -21,11 +17,10 @@ class RegisterFormErrors extends React.Component {
 
   render() {
     const { errors } = this.props;
-
     if (_isEmpty(errors)) return null;
 
     return (
-      <ul className="register-form-errors alert alert-danger">
+      <ul className="form-errors alert alert-danger">
         {Object.entries(errors).map(([fieldLabel, fieldErrors]) => (
           <li key={fieldLabel}>
             {_capitalize(fieldLabel)}: {_join(fieldErrors, " ")}
@@ -35,9 +30,3 @@ class RegisterFormErrors extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  errors: state.register.errors
-});
-
-export default connect(mapStateToProps)(RegisterFormErrors);

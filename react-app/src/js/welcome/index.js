@@ -7,28 +7,32 @@ import { Link } from "react-router-dom";
 
 import { clearRegisterSuccessMessage } from "../register-form/actions";
 import { clearPasswordResetSuccessMessage } from "../password-reset-form/actions";
+import { clearPasswordResetConfirmSuccessMessage } from "../password-reset-confirm-form/actions";
 
 export class Welcome extends React.Component {
   static propTypes = {
     successRegisterMessage: PropTypes.string,
     successPasswordResetMessage: PropTypes.string,
-    clearRegisterSuccessMessage: PropTypes.func,
-    clearPasswordResetSuccessMessage: PropTypes.func
+    successPasswordResetConfirmMessage: PropTypes.string,
+    clearRegisterSuccessMessage: PropTypes.func.isRequired,
+    clearPasswordResetSuccessMessage: PropTypes.func.isRequired,
+    clearPasswordResetConfirmSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     successRegisterMessage: null,
     successPasswordResetMessage: null,
-    clearRegisterSuccessMessage: () => {},
-    clearPasswordResetSuccessMessage: () => {}
+    successPasswordResetConfirmMessage: null
   };
 
   componentDidMount() {
     const {
       clearRegisterSuccessMessage,
       clearPasswordResetSuccessMessage,
+      clearPasswordResetConfirmSuccessMessage,
       successRegisterMessage,
-      successPasswordResetMessage
+      successPasswordResetMessage,
+      successPasswordResetConfirmMessage
     } = this.props;
 
     if (successRegisterMessage) {
@@ -38,10 +42,18 @@ export class Welcome extends React.Component {
     if (successPasswordResetMessage) {
       setTimeout(clearPasswordResetSuccessMessage, 4000);
     }
+
+    if (successPasswordResetConfirmMessage) {
+      setTimeout(clearPasswordResetConfirmSuccessMessage, 4000);
+    }
   }
 
   render() {
-    const { successRegisterMessage, successPasswordResetMessage } = this.props;
+    const {
+      successRegisterMessage,
+      successPasswordResetMessage,
+      successPasswordResetConfirmMessage
+    } = this.props;
 
     return (
       <div id="welcome-body">
@@ -84,6 +96,11 @@ export class Welcome extends React.Component {
                   {successPasswordResetMessage}
                 </div>
               ) : null}
+              {successPasswordResetConfirmMessage ? (
+                <div className="alert alert-success" role="alert">
+                  {successPasswordResetConfirmMessage}
+                </div>
+              ) : null}
             </Col>
           </Row>
         </Container>
@@ -94,13 +111,16 @@ export class Welcome extends React.Component {
 
 const mapStateToProps = state => ({
   successRegisterMessage: state.register.successMessage,
-  successPasswordResetMessage: state.passwordReset.successMessage
+  successPasswordResetMessage: state.passwordReset.successMessage,
+  successPasswordResetConfirmMessage: state.passwordResetConfirm.successMessage
 });
 
 const mapDispatchToProps = dispatch => ({
   clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage()),
   clearPasswordResetSuccessMessage: () =>
-    dispatch(clearPasswordResetSuccessMessage())
+    dispatch(clearPasswordResetSuccessMessage()),
+  clearPasswordResetConfirmSuccessMessage: () =>
+    dispatch(clearPasswordResetConfirmSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
