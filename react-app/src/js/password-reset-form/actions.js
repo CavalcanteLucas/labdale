@@ -5,6 +5,8 @@ export const PASSWORD_RESET_SUCCESS = "PASSWORD_RESET_SUCCESS";
 export const PASSWORD_RESET_FAILURE = "PASSWORD_RESET_FAILURE";
 export const CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE =
   "CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE";
+export const CLEAR_PASSWORD_RESET_FAILURE_MESSAGE =
+  "CLEAR_PASSWORD_RESET_FAILURE_MESSAGE";
 
 export const passwordReset = email => {
   const requestData = {
@@ -24,4 +26,8 @@ export const passwordReset = email => {
 
 export const clearPasswordResetSuccessMessage = () => ({
   type: CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE
+});
+
+export const clearPasswordResetFailureMessage = () => ({
+  type: CLEAR_PASSWORD_RESET_FAILURE_MESSAGE
 });

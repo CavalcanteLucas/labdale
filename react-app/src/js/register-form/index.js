@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { register } from "./actions";
+import { register, clearRegisterFailureMessage } from "./actions";
 import FormErrors from "../FormErrors";
 
 export class RegisterForm extends React.Component {
@@ -18,7 +18,8 @@ export class RegisterForm extends React.Component {
     register: PropTypes.func.isRequired,
     history: PropTypes.object,
     successMessage: PropTypes.string,
-    errors: PropTypes.object
+    errors: PropTypes.object,
+    clearRegisterFailureMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -33,6 +34,11 @@ export class RegisterForm extends React.Component {
     if (successMessage) {
       history.push("/");
     }
+  }
+
+  componentWillUnmount() {
+    const { clearRegisterFailureMessage } = this.props;
+    clearRegisterFailureMessage();
   }
 
   onSubmit = e => {
@@ -54,63 +60,67 @@ export class RegisterForm extends React.Component {
     return (
       <div id="form-box">
         <Container>
-          <div className="form-wrapper">
-            <h3 className="join-us-subtitle">Join Us</h3>
-            <h1 className="create-your-account-subtitle">
-              Create your account
-            </h1>
-            <Form onSubmit={this.onSubmit}>
-              <Form.Group controlId="form-username">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  name="username"
-                  required
-                  type="text"
-                  placeholder=""
-                  value={username}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="form-email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  name="email"
-                  required
-                  type="text"
-                  placeholder=""
-                  value={email}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="form-password1">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  name="password1"
-                  required
-                  type="password"
-                  placeholder=""
-                  value={password1}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="form-password2">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control
-                  name="password2"
-                  required
-                  type="password"
-                  placeholder=""
-                  value={password2}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Group>
-              {errors ? <FormErrors errors={errors} /> : null}
-              <Button variant="primary" type="submit" block>
-                {" "}
-                Create account
-              </Button>
-            </Form>
-          </div>
+          <Row className="justify-content-md-center">
+            <Col md="9" lg="7" xl="6">
+              <div className="form-wrapper">
+                <h3 className="join-us-subtitle">Join Us</h3>
+                <h1 className="create-your-account-subtitle">
+                  Create your account
+                </h1>
+                <Form onSubmit={this.onSubmit}>
+                  <Form.Group controlId="form-username">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                      name="username"
+                      required
+                      type="text"
+                      placeholder=""
+                      value={username}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="form-email">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                      name="email"
+                      required
+                      type="text"
+                      placeholder=""
+                      value={email}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="form-password1">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      name="password1"
+                      required
+                      type="password"
+                      placeholder=""
+                      value={password1}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="form-password2">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                      name="password2"
+                      required
+                      type="password"
+                      placeholder=""
+                      value={password2}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                  {errors ? <FormErrors errors={errors} /> : null}
+                  <Button variant="primary" type="submit" block>
+                    {" "}
+                    Create account
+                  </Button>
+                </Form>
+              </div>
+            </Col>
+          </Row>
         </Container>
       </div>
     );
@@ -124,7 +134,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   register: (username, email, password1, password2) =>
-    dispatch(register(username, email, password1, password2))
+    dispatch(register(username, email, password1, password2)),
+  clearRegisterFailureMessage: () => dispatch(clearRegisterFailureMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

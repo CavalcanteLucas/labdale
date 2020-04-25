@@ -5,6 +5,8 @@ export const PASSWORD_RESET_CONFIRM_SUCCESS = "PASSWORD_RESET_SUCCESS";
 export const PASSWORD_RESET_CONFIRM_FAILURE = "PASSWORD_RESET_FAILURE";
 export const CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE =
   "CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE";
+export const CLEAR_PASSWORD_RESET_CONFIRM_FAILURE_MESSAGE =
+  "CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE";
 
 export const passwordResetConfirm = (uid, token, password1, password2) => {
   const requestData = {
@@ -29,4 +31,8 @@ export const passwordResetConfirm = (uid, token, password1, password2) => {
 
 export const clearPasswordResetConfirmSuccessMessage = () => ({
   type: CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE
+});
+
+export const clearPasswordResetConfirmFailureMessage = () => ({
+  type: CLEAR_PASSWORD_RESET_CONFIRM_FAILURE_MESSAGE
 });

@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { passwordReset } from "./actions";
+import { passwordReset, clearPasswordResetFailureMessage } from "./actions";
 import FormErrors from "../FormErrors";
 
 export class PasswordResetForm extends React.Component {
@@ -15,7 +15,8 @@ export class PasswordResetForm extends React.Component {
     passwordReset: PropTypes.func.isRequired,
     history: PropTypes.object,
     successMessage: PropTypes.string,
-    errors: PropTypes.object
+    errors: PropTypes.object,
+    clearPasswordResetFailureMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -30,6 +31,11 @@ export class PasswordResetForm extends React.Component {
     if (successMessage) {
       history.push("/");
     }
+  }
+
+  componentWillUnmount() {
+    const { clearPasswordResetFailureMessage } = this.props;
+    clearPasswordResetFailureMessage();
   }
 
   onSubmit = e => {
@@ -51,30 +57,39 @@ export class PasswordResetForm extends React.Component {
     return (
       <div id="form-box">
         <Container>
-          <div className="form-wrapper">
-            <h4>Reset your password</h4>
-            <Form onSubmit={this.onSubmit}>
-              <Form.Group controlId="form-email">
-                <Form.Label>
-                  Enter your user account`s verified email address and we will
-                  send you a password reset link.
-                </Form.Label>
-                <Form.Control
-                  name="email"
-                  required
-                  type="text"
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Group>
-              {errors ? <FormErrors errors={errors} /> : null}
-              <Button variant="success" type="submit" block>
-                {" "}
-                Send password reset email
-              </Button>
-            </Form>
-          </div>
+          <Row className="justify-content-md-center">
+            <Col
+              xs={{ span: 8, offset: 2 }}
+              md={{ span: 6, offset: 0 }}
+              lg={{ span: 5 }}
+              xl={{ span: 4 }}
+            >
+              <div className="form-wrapper">
+                <h4>Reset your password</h4>
+                <Form onSubmit={this.onSubmit}>
+                  <Form.Group controlId="form-email">
+                    <Form.Label>
+                      Enter your user account`s verified email address and we
+                      will send you a password reset link.
+                    </Form.Label>
+                    <Form.Control
+                      name="email"
+                      required
+                      type="text"
+                      placeholder="Enter your email address"
+                      value={email}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                  {errors ? <FormErrors errors={errors} /> : null}
+                  <Button variant="success" type="submit" block>
+                    {" "}
+                    Send password reset email
+                  </Button>
+                </Form>
+              </div>
+            </Col>
+          </Row>
         </Container>
       </div>
     );
@@ -87,7 +102,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  passwordReset: email => dispatch(passwordReset(email))
+  passwordReset: email => dispatch(passwordReset(email)),
+  clearPasswordResetFailureMessage: () =>
+    dispatch(clearPasswordResetFailureMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PasswordResetForm);

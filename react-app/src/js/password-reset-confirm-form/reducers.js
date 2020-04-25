@@ -2,7 +2,8 @@ import {
   PASSWORD_RESET_CONFIRM_REQUEST,
   PASSWORD_RESET_CONFIRM_SUCCESS,
   PASSWORD_RESET_CONFIRM_FAILURE,
-  CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE
+  CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE,
+  CLEAR_PASSWORD_RESET_CONFIRM_FAILURE_MESSAGE
 } from "./actions";
 
 const initialState = {
@@ -44,6 +45,11 @@ export default function passwordResetConfirmReducers(
       return {
         ...state,
         successMessage: initialState.successMessage
+      };
+    case CLEAR_PASSWORD_RESET_CONFIRM_FAILURE_MESSAGE:
+      return {
+        ...state,
+        errors: initialState.errors
       };
     default:
       return state;

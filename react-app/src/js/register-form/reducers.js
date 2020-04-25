@@ -2,7 +2,8 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-  CLEAR_REGISTER_SUCCESS_MESSAGE
+  CLEAR_REGISTER_SUCCESS_MESSAGE,
+  CLEAR_REGISTER_FAILURE_MESSAGE
 } from "./actions";
 
 const initialState = {
@@ -40,6 +41,11 @@ export default function registerhReducers(state = initialState, action) {
       return {
         ...state,
         successMessage: initialState.successMessage
+      };
+    case CLEAR_REGISTER_FAILURE_MESSAGE:
+      return {
+        ...state,
+        errors: initialState.errors
       };
     default:
       return state;

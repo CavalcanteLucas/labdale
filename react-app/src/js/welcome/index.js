@@ -48,6 +48,18 @@ export class Welcome extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const {
+      clearRegisterSuccessMessage,
+      clearPasswordResetSuccessMessage,
+      clearPasswordResetConfirmSuccessMessage
+    } = this.props;
+
+    clearRegisterSuccessMessage();
+    clearPasswordResetSuccessMessage();
+    clearPasswordResetConfirmSuccessMessage();
+  }
+
   render() {
     const {
       successRegisterMessage,
