@@ -3,7 +3,12 @@ import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { register, clearRegisterFailureMessage } from "./actions";
+import {
+  register,
+  clearRegisterFailureMessage,
+  clearRegisterSuccessMessage
+} from "./actions";
+import { setSuccessMessage } from "../welcome/actions";
 import FormErrors from "../FormErrors";
 
 export class RegisterForm extends React.Component {
@@ -19,7 +24,9 @@ export class RegisterForm extends React.Component {
     history: PropTypes.object,
     successMessage: PropTypes.string,
     errors: PropTypes.object,
-    clearRegisterFailureMessage: PropTypes.func.isRequired
+    clearRegisterFailureMessage: PropTypes.func.isRequired,
+    clearRegisterSuccessMessage: PropTypes.func.isRequired,
+    setSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -28,10 +35,16 @@ export class RegisterForm extends React.Component {
     errors: null
   };
 
+  componentDidMount() {
+    const { clearRegisterSuccessMessage } = this.props;
+    clearRegisterSuccessMessage();
+  }
+
   componentDidUpdate() {
-    const { successMessage, history } = this.props;
+    const { successMessage, setSuccessMessage, history } = this.props;
 
     if (successMessage) {
+      setSuccessMessage(successMessage);
       history.push("/");
     }
   }
@@ -114,7 +127,6 @@ export class RegisterForm extends React.Component {
                   </Form.Group>
                   {errors ? <FormErrors errors={errors} /> : null}
                   <Button variant="primary" type="submit" block>
-                    {" "}
                     Create account
                   </Button>
                 </Form>
@@ -135,7 +147,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   register: (username, email, password1, password2) =>
     dispatch(register(username, email, password1, password2)),
-  clearRegisterFailureMessage: () => dispatch(clearRegisterFailureMessage())
+  clearRegisterFailureMessage: () => dispatch(clearRegisterFailureMessage()),
+  clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage()),
+  setSuccessMessage: successMessage =>
+    dispatch(setSuccessMessage(successMessage))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

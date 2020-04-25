@@ -5,9 +5,11 @@ import { connect } from "react-redux";
 
 import {
   passwordResetConfirm,
-  clearPasswordResetConfirmFailureMessage
+  clearPasswordResetConfirmFailureMessage,
+  clearPasswordResetConfirmSuccessMessage
 } from "./actions";
 import FormErrors from "../FormErrors";
+import { setSuccessMessage } from "../welcome/actions";
 
 export class PasswordResetConfirmForm extends React.Component {
   state = {
@@ -21,7 +23,9 @@ export class PasswordResetConfirmForm extends React.Component {
     successMessage: PropTypes.string,
     errors: PropTypes.object,
     match: PropTypes.object.isRequired,
-    clearPasswordResetConfirmFailureMessage: PropTypes.func.isRequired
+    clearPasswordResetConfirmFailureMessage: PropTypes.func.isRequired,
+    clearPasswordResetConfirmSuccessMessage: PropTypes.func.isRequired,
+    setSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -30,10 +34,16 @@ export class PasswordResetConfirmForm extends React.Component {
     errors: null
   };
 
+  componentDidMount() {
+    const { clearPasswordResetConfirmSuccessMessage } = this.props;
+    clearPasswordResetConfirmSuccessMessage();
+  }
+
   componentDidUpdate() {
-    const { successMessage, history } = this.props;
+    const { successMessage, setSuccessMessage, history } = this.props;
 
     if (successMessage) {
+      setSuccessMessage(successMessage);
       history.push("/");
     }
   }
@@ -97,9 +107,12 @@ export class PasswordResetConfirmForm extends React.Component {
                   </Form.Group>
                   {errors ? <FormErrors errors={errors} /> : null}
                   <Button variant="success" type="submit" block>
-                    {" "}
                     Change password
                   </Button>
+                  <small>
+                    Make sure it`s at least 15 characters OR at least 8
+                    characters including a number and a lowercase letter.
+                  </small>
                 </Form>
               </div>
             </Col>
@@ -119,7 +132,11 @@ const mapDispatchToProps = dispatch => ({
   passwordResetConfirm: (uid, token, password1, password2) =>
     dispatch(passwordResetConfirm(uid, token, password1, password2)),
   clearPasswordResetConfirmFailureMessage: () =>
-    dispatch(clearPasswordResetConfirmFailureMessage())
+    dispatch(clearPasswordResetConfirmFailureMessage()),
+  clearPasswordResetConfirmSuccessMessage: () =>
+    dispatch(clearPasswordResetConfirmSuccessMessage()),
+  setSuccessMessage: successMessage =>
+    dispatch(setSuccessMessage(successMessage))
 });
 
 export default connect(

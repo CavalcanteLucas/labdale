@@ -13,7 +13,7 @@ const initialState = {
   errors: null
 };
 
-export default function registerhReducers(state = initialState, action) {
+export default function registerReducers(state = initialState, action) {
   switch (action.type) {
     case REGISTER_REQUEST:
       return {

@@ -3,7 +3,11 @@ import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { passwordReset, clearPasswordResetFailureMessage } from "./actions";
+import {
+  passwordReset,
+  clearPasswordResetFailureMessage,
+  clearPasswordResetSuccessMessage
+} from "./actions";
 import FormErrors from "../FormErrors";
 
 export class PasswordResetForm extends React.Component {
@@ -16,7 +20,8 @@ export class PasswordResetForm extends React.Component {
     history: PropTypes.object,
     successMessage: PropTypes.string,
     errors: PropTypes.object,
-    clearPasswordResetFailureMessage: PropTypes.func.isRequired
+    clearPasswordResetFailureMessage: PropTypes.func.isRequired,
+    clearPasswordResetSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -25,11 +30,16 @@ export class PasswordResetForm extends React.Component {
     errors: null
   };
 
+  componentDidMount() {
+    const { clearPasswordResetSuccessMessage } = this.props;
+    clearPasswordResetSuccessMessage();
+  }
+
   componentDidUpdate() {
     const { successMessage, history } = this.props;
 
     if (successMessage) {
-      history.push("/");
+      history.push("/password_reset/confirm");
     }
   }
 
@@ -83,7 +93,6 @@ export class PasswordResetForm extends React.Component {
                   </Form.Group>
                   {errors ? <FormErrors errors={errors} /> : null}
                   <Button variant="success" type="submit" block>
-                    {" "}
                     Send password reset email
                   </Button>
                 </Form>
@@ -104,7 +113,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   passwordReset: email => dispatch(passwordReset(email)),
   clearPasswordResetFailureMessage: () =>
-    dispatch(clearPasswordResetFailureMessage())
+    dispatch(clearPasswordResetFailureMessage()),
+  clearPasswordResetSuccessMessage: () =>
+    dispatch(clearPasswordResetSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PasswordResetForm);

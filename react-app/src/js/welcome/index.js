@@ -5,73 +5,48 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { clearRegisterSuccessMessage } from "../register-form/actions";
-import { clearPasswordResetSuccessMessage } from "../password-reset-form/actions";
-import { clearPasswordResetConfirmSuccessMessage } from "../password-reset-confirm-form/actions";
+import { clearSuccessMessage } from "./actions";
 
 export class Welcome extends React.Component {
   static propTypes = {
-    successRegisterMessage: PropTypes.string,
-    successPasswordResetMessage: PropTypes.string,
-    successPasswordResetConfirmMessage: PropTypes.string,
-    clearRegisterSuccessMessage: PropTypes.func.isRequired,
-    clearPasswordResetSuccessMessage: PropTypes.func.isRequired,
-    clearPasswordResetConfirmSuccessMessage: PropTypes.func.isRequired
+    successMessage: PropTypes.string,
+    clearSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    successRegisterMessage: null,
-    successPasswordResetMessage: null,
-    successPasswordResetConfirmMessage: null
+    successMessage: null
   };
 
-  componentDidMount() {
-    const {
-      clearRegisterSuccessMessage,
-      clearPasswordResetSuccessMessage,
-      clearPasswordResetConfirmSuccessMessage,
-      successRegisterMessage,
-      successPasswordResetMessage,
-      successPasswordResetConfirmMessage
-    } = this.props;
+  componentWillUnmount = () => {
+    const { clearSuccessMessage } = this.props;
+    clearSuccessMessage();
+  };
 
-    if (successRegisterMessage) {
-      setTimeout(clearRegisterSuccessMessage, 2000);
-    }
-
-    if (successPasswordResetMessage) {
-      setTimeout(clearPasswordResetSuccessMessage, 4000);
-    }
-
-    if (successPasswordResetConfirmMessage) {
-      setTimeout(clearPasswordResetConfirmSuccessMessage, 4000);
-    }
-  }
-
-  componentWillUnmount() {
-    const {
-      clearRegisterSuccessMessage,
-      clearPasswordResetSuccessMessage,
-      clearPasswordResetConfirmSuccessMessage
-    } = this.props;
-
-    clearRegisterSuccessMessage();
-    clearPasswordResetSuccessMessage();
-    clearPasswordResetConfirmSuccessMessage();
-  }
+  handleCloseSuccessMessage = () => {
+    const { clearSuccessMessage } = this.props;
+    clearSuccessMessage();
+  };
 
   render() {
-    const {
-      successRegisterMessage,
-      successPasswordResetMessage,
-      successPasswordResetConfirmMessage
-    } = this.props;
+    const { successMessage } = this.props;
 
     return (
       <div id="welcome-body">
         <Helmet>
           <title>- To-Do LABC -</title>
         </Helmet>
+        {successMessage ? (
+          <div className="alert alert-success" role="alert">
+            {successMessage}
+            <button
+              onClick={this.handleCloseSuccessMessage}
+              type="button"
+              className="close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        ) : null}
         <Container className="welcome-body-wrapper">
           <Row>
             <Col>
@@ -98,21 +73,6 @@ export class Welcome extends React.Component {
                   <Link to="/password_reset">Forgot password?</Link>
                 </p>
               </div>
-              {successRegisterMessage ? (
-                <div className="alert alert-success" role="alert">
-                  {successRegisterMessage}
-                </div>
-              ) : null}
-              {successPasswordResetMessage ? (
-                <div className="alert alert-success" role="alert">
-                  {successPasswordResetMessage}
-                </div>
-              ) : null}
-              {successPasswordResetConfirmMessage ? (
-                <div className="alert alert-success" role="alert">
-                  {successPasswordResetConfirmMessage}
-                </div>
-              ) : null}
             </Col>
           </Row>
         </Container>
@@ -122,17 +82,11 @@ export class Welcome extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successRegisterMessage: state.register.successMessage,
-  successPasswordResetMessage: state.passwordReset.successMessage,
-  successPasswordResetConfirmMessage: state.passwordResetConfirm.successMessage
+  successMessage: state.successMessage.successMessage
 });
 
 const mapDispatchToProps = dispatch => ({
-  clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage()),
-  clearPasswordResetSuccessMessage: () =>
-    dispatch(clearPasswordResetSuccessMessage()),
-  clearPasswordResetConfirmSuccessMessage: () =>
-    dispatch(clearPasswordResetConfirmSuccessMessage())
+  clearSuccessMessage: () => dispatch(clearSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
