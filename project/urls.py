@@ -22,4 +22,7 @@ frontend_urls = [
     re_path(r"^.*$", TemplateView.as_view(template_name="frontend/index.html")),
 ]
 
-urlpatterns = [path("admin/", admin.site.urls)] + frontend_urls
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("api/todo-auth/", include("todo_auth.urls")),
+] + frontend_urls

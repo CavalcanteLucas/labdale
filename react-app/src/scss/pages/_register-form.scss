@@ -1,0 +1,25 @@
+#register-form {
+  padding-top: 4rem;
+
+  .register-wrapper {
+    background: white;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    transition: box-shadow 0.2s ease-in-out;
+  }
+
+  .join-us-subtitle {
+    color: #6A727D;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .create-your-account-subtitle {
+    text-align: center;
+  }
+
+  .register-form-errors {
+    list-style-type: none;
+  }
+}
