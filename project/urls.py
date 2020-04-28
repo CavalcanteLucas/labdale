@@ -17,9 +17,12 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.urls import re_path, path, include
 
+from todolist import endpoints as todolist_enpoints
+
 frontend_urls = [
     path("", include("pwa.urls")),
-    re_path(r"^.*$", TemplateView.as_view(template_name="frontend/index.html")),
+    path("todolist-api/", include(todolist_enpoints))
+    # re_path(r"^.*$", TemplateView.as_view(template_name="frontend/index.html")),
 ]
 
 urlpatterns = [
@@ -32,4 +35,5 @@ urlpatterns = [
         TemplateView.as_view(template_name="frontend/index.html"),
         name="password_reset_confirm",
     ),
+    path("", include(todolist_enpoints))
 ] + frontend_urls

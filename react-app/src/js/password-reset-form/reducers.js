@@ -23,7 +23,7 @@ export default function passwordResetReducers(state = initialState, action) {
         errors: initialState.errors
       };
     case PASSWORD_RESET_SUCCESS:
-      localStorage.setItem("token", action.response.data.token);
+      localStorage.setItem("token", action.response.data.key);
       return {
         ...state,
         isLoading: initialState.isLoading,

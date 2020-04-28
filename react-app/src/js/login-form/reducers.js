@@ -22,7 +22,7 @@ export default function loginReducers(state = initialState, action) {
         errors: initialState.errors
       };
     case LOGIN_SUCCESS:
-      localStorage.setItem("token", action.response.data.token);
+      localStorage.setItem("token", action.response.data.key);
       return {
         ...state,
         isLoading: initialState.isLoading,

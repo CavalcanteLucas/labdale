@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "rest_auth.registration",
+    "todolist.apps.TodoListConfig"
 ]
 
 REST_FRAMEWORK = {
