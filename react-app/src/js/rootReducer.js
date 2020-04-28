@@ -4,10 +4,12 @@ import registerReducers from "./register-form/reducers";
 import passwordResetReducers from "./password-reset-form/reducers";
 import passwordResetConfirmReducers from "./password-reset-confirm-form/reducers";
 import successMessageReducers from "./welcome/reducers";
+import loginReducers from "./login-form/reducers";
 
 export default combineReducers({
   register: registerReducers,
   passwordReset: passwordResetReducers,
   passwordResetConfirm: passwordResetConfirmReducers,
-  successMessage: successMessageReducers
+  successMessage: successMessageReducers,
+  login: loginReducers
 });

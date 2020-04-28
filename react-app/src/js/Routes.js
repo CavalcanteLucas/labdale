@@ -11,6 +11,7 @@ const PasswordResetConfirmForm = React.lazy(() =>
 const PasswordResetConfirmEmailSent = React.lazy(() =>
   import("./password-reset-confirm-email-sent")
 );
+const Dashboard = React.lazy(() => import("./dashboard"));
 
 export default class Routes extends React.Component {
   render() {
@@ -37,6 +38,7 @@ export default class Routes extends React.Component {
                 path="/password/reset/confirm/:uid/:token"
                 component={PasswordResetConfirmForm}
               />
+              <Route exact path="/dashboard" component={Dashboard} />
             </Switch>
           </React.Suspense>
         </div>

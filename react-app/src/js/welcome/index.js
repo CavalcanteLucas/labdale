@@ -3,17 +3,19 @@ import { Container, Col, Row } from "react-bootstrap";
 import Helmet from "react-helmet";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 
+import LoginForm from "../login-form";
 import { clearSuccessMessage } from "./actions";
 
 export class Welcome extends React.Component {
   static propTypes = {
     successMessage: PropTypes.string,
-    clearSuccessMessage: PropTypes.func.isRequired
+    clearSuccessMessage: PropTypes.func.isRequired,
+    history: PropTypes.object
   };
 
   static defaultProps = {
+    history: null,
     successMessage: null
   };
 
@@ -28,7 +30,7 @@ export class Welcome extends React.Component {
   };
 
   render() {
-    const { successMessage } = this.props;
+    const { successMessage, history } = this.props;
 
     return (
       <div id="welcome-body">
@@ -49,7 +51,12 @@ export class Welcome extends React.Component {
         ) : null}
         <Container className="welcome-body-wrapper">
           <Row>
-            <Col>
+            <Col
+              xs={{ span: 10, offset: 1 }}
+              md={{ span: 6, offset: 0 }}
+              lg={{ span: 5, offset: 1 }}
+              xl={{ span: 4, offset: 2 }}
+            >
               <div className="welcome-wrapper">
                 <h1 className="welcome-title">
                   Welcome to the To-Do LABC App!
@@ -62,16 +69,14 @@ export class Welcome extends React.Component {
                 </div>
               </div>
             </Col>
-
-            <Col>
+            <Col
+              xs={{ span: 8, offset: 2 }}
+              md={{ span: 6, offset: 0 }}
+              lg={{ span: 5 }}
+              xl={{ span: 4 }}
+            >
               <div className="login-box">
-                <p>This will become some login form.</p>
-                <p>
-                  Not a user yet? <Link to="/register">Create a login</Link>.
-                </p>
-                <p>
-                  <Link to="/password_reset">Forgot password?</Link>
-                </p>
+                <LoginForm history={history}/>
               </div>
             </Col>
           </Row>
