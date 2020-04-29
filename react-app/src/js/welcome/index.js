@@ -33,7 +33,8 @@ export class Welcome extends React.Component {
     const { successMessage, history } = this.props;
 
     return (
-      <div id="welcome-body">
+      // <div className="body-main" style={{ height: "100vh" }}>
+      <div id="welcome-body" style={{ height: "100vh" }}>
         <Helmet>
           <title>- To-Do LABC -</title>
         </Helmet>
@@ -82,6 +83,7 @@ export class Welcome extends React.Component {
           </Row>
         </Container>
       </div>
+      // </div>
     );
   }
 }

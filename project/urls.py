@@ -21,19 +21,20 @@ from todolist import endpoints as todolist_enpoints
 
 frontend_urls = [
     path("", include("pwa.urls")),
-    path("todolist-api/", include(todolist_enpoints))
     # re_path(r"^.*$", TemplateView.as_view(template_name="frontend/index.html")),
 ]
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/rest-auth/", include("rest_auth.urls")),
-    path("api/rest-auth/registration/", include("rest_auth.registration.urls")),
     # This URL is used to generate email content
     re_path(
         r"^password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
         TemplateView.as_view(template_name="frontend/index.html"),
         name="password_reset_confirm",
     ),
-    path("", include(todolist_enpoints))
+    path("api/rest-auth/registration/", include("rest_auth.registration.urls")),
+    path("api/rest-auth/", include("rest_auth.urls")),
+    path("api/todo-list/", include(todolist_enpoints)),
+    # path("", include(todolist_enpoints))
+    path("admin/", admin.site.urls)
+
 ] + frontend_urls

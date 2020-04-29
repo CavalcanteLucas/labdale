@@ -49,8 +49,8 @@
 // then, we import our custom css
 @import "pages/welcome";
 @import "pages/header";
-@import "pages/body";
 @import "pages/form";
+@import "pages/dashboard";
 
 // finally, we import the overrides needed for customizing third-party css
 @import "overrides";

@@ -65,7 +65,7 @@ export class PasswordResetForm extends React.Component {
     const { errors } = this.props;
 
     return (
-      <div id="form-box">
+      <div id="form-box" style={{ height: "100vh" }}>
         <Container>
           <Row className="justify-content-md-center">
             <Col

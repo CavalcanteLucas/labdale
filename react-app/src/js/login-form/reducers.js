@@ -9,7 +9,8 @@ const initialState = {
   isLoading: false,
   token: localStorage.getItem("token"),
   successMessage: null,
-  errors: null
+  errors: null,
+  isAuthenticated: null
 };
 
 export default function loginReducers(state = initialState, action) {
@@ -26,7 +27,8 @@ export default function loginReducers(state = initialState, action) {
       return {
         ...state,
         isLoading: initialState.isLoading,
-        successMessage: "Logged in successfully."
+        successMessage: "Logged in successfully.",
+        isAuthenticated: true
       };
     case LOGIN_FAILURE:
       localStorage.removeItem("token");
@@ -34,7 +36,8 @@ export default function loginReducers(state = initialState, action) {
         ...state,
         token: null,
         isLoading: initialState.isLoading,
-        errors: action.response.data
+        errors: action.response.data,
+        isAuthenticated: false
       };
     case CLEAR_LOGIN_SUCCESS_MESSAGE:
       return {

@@ -13,9 +13,9 @@ export default class Header extends React.Component {
             className="logo"
           />
         </Link>
-        <Button href="/register" variant="outline-light">
-          Sign Up
-        </Button>
+        <Link to="/register">
+          <Button variant="outline-light">Sign Up</Button>
+        </Link>
       </div>
     );
   }

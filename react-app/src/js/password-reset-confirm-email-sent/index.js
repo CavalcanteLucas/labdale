@@ -4,7 +4,7 @@ import { Button, Container, Row, Col } from "react-bootstrap";
 export default class PasswordResetConfirmEmailSent extends React.Component {
   render() {
     return (
-      <div id="form-box">
+      <div id="form-box" style={{ height: "100vh" }}>
         <Container>
           <Row className="justify-content-md-center">
             <Col

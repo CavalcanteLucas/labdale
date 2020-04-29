@@ -5,11 +5,13 @@ import passwordResetReducers from "./password-reset-form/reducers";
 import passwordResetConfirmReducers from "./password-reset-confirm-form/reducers";
 import successMessageReducers from "./welcome/reducers";
 import loginReducers from "./login-form/reducers";
+import todoReducers from "./dashboard/reducers";
 
 export default combineReducers({
   register: registerReducers,
   passwordReset: passwordResetReducers,
   passwordResetConfirm: passwordResetConfirmReducers,
   successMessage: successMessageReducers,
-  login: loginReducers
+  login: loginReducers,
+  todo: todoReducers
 });

@@ -18,30 +18,24 @@ export default class Routes extends React.Component {
     return (
       <Router>
         <Header />
-        <div className="body-main" style={{ height: "100vh" }}>
-          <React.Suspense fallback={<div>Loading...</div>}>
-            <Switch>
-              <Route exact path="/" component={WelcomePage} />
-              <Route exact path="/register" component={RegisterForm} />
-              <Route
-                exact
-                path="/password_reset"
-                component={PasswordResetForm}
-              />
-              <Route
-                exact
-                path="/password_reset/confirm"
-                component={PasswordResetConfirmEmailSent}
-              />
-              <Route
-                exact
-                path="/password/reset/confirm/:uid/:token"
-                component={PasswordResetConfirmForm}
-              />
-              <Route exact path="/dashboard" component={Dashboard} />
-            </Switch>
-          </React.Suspense>
-        </div>
+        <React.Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route exact path="/" component={WelcomePage} />
+            <Route exact path="/register" component={RegisterForm} />
+            <Route exact path="/password_reset" component={PasswordResetForm} />
+            <Route
+              exact
+              path="/password_reset/confirm"
+              component={PasswordResetConfirmEmailSent}
+            />
+            <Route
+              exact
+              path="/password/reset/confirm/:uid/:token"
+              component={PasswordResetConfirmForm}
+            />
+            <Route exact path="/dashboard" component={Dashboard} />
+          </Switch>
+        </React.Suspense>
       </Router>
     );
   }

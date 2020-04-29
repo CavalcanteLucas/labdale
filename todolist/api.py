@@ -1,7 +1,7 @@
 from rest_framework import viewsets, permissions, generics
 
 from .models import TodoList
-from .serializers import TodoListSerializer, UserSerializer
+from .serializers import TodoListSerializer
 
 class TodoListViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, ]
@@ -12,7 +12,3 @@ class TodoListViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
-class UserAPI(generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticated, ]
-    serializers_classes = UserSerializer
