@@ -2,6 +2,8 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
   CLEAR_LOGIN_SUCCESS_MESSAGE
 } from "./actions";
 
@@ -14,8 +16,10 @@ const initialState = {
 };
 
 export default function loginReducers(state = initialState, action) {
+  console.log(action.type)
   switch (action.type) {
     case LOGIN_REQUEST:
+    case LOGOUT_REQUEST:
       return {
         ...state,
         isLoading: true,
@@ -31,6 +35,7 @@ export default function loginReducers(state = initialState, action) {
         isAuthenticated: true
       };
     case LOGIN_FAILURE:
+    case LOGOUT_SUCCESS:
       localStorage.removeItem("token");
       return {
         ...state,

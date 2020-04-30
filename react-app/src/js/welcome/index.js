@@ -75,7 +75,7 @@ export class Welcome extends React.Component {
               lg={{ span: 5 }}
               xl={{ span: 4 }}
             >
-              <div className="login-box">
+              <div className="form-box">
                 <LoginForm history={history} />
               </div>
             </Col>

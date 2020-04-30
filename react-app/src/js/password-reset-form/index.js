@@ -65,7 +65,7 @@ export class PasswordResetForm extends React.Component {
     const { errors } = this.props;
 
     return (
-      <div id="form-box" style={{ height: "100vh" }}>
+      <div id="password-reset-body" style={{ height: "100vh" }}>
         <Container>
           <Row className="justify-content-md-center">
             <Col
@@ -74,7 +74,7 @@ export class PasswordResetForm extends React.Component {
               lg={{ span: 5 }}
               xl={{ span: 4 }}
             >
-              <div className="form-wrapper">
+              <div className="form-box">
                 <h4>Reset your password</h4>
                 <Form onSubmit={this.onSubmit}>
                   <Form.Group controlId="form-email">

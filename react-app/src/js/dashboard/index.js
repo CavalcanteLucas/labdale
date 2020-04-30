@@ -30,7 +30,7 @@ export class Dashboard extends React.Component {
       <div id="dashboard" style={{ height: "100vh" }}>
         {userInfo ? (
           <Container>
-            <h3>Hi {userInfo.username}</h3>
+            <h3>Hi {userInfo.username},</h3>
             <p>Today is TODAY</p>
             {todos ? (
               <Card body>

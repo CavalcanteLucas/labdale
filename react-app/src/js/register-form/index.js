@@ -71,12 +71,12 @@ export class RegisterForm extends React.Component {
     const { errors } = this.props;
 
     return (
-      <div id="form-box" style={{ height: "100vh" }}>
+      <div id="register-body" style={{ height: "100vh" }}>
         <Container>
           <Row className="justify-content-md-center">
             <Col md="9" lg="7" xl="6">
               <h3 className="join-us-subtitle">Join Us</h3>
-              <div className="form-wrapper">
+              <div className="form-box">
                 <h1 className="create-your-account-subtitle">
                   Create your account
                 </h1>
