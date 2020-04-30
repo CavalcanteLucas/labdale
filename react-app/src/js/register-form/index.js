@@ -75,8 +75,8 @@ export class RegisterForm extends React.Component {
         <Container>
           <Row className="justify-content-md-center">
             <Col md="9" lg="7" xl="6">
+              <h3 className="join-us-subtitle">Join Us</h3>
               <div className="form-wrapper">
-                <h3 className="join-us-subtitle">Join Us</h3>
                 <h1 className="create-your-account-subtitle">
                   Create your account
                 </h1>

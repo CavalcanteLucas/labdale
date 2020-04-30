@@ -1,51 +1,66 @@
 import React from "react";
-import { Container, Row, Col, ListGroup } from "react-bootstrap";
+import { Card, Container, Row, Col, ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { getTodos } from "./actions";
+import { getTodos, getUserInfo } from "./actions";
 
 export class Dashboard extends React.Component {
   static propTypes = {
     getTodos: PropTypes.func.isRequired,
-    todos: PropTypes.array
+    getUserInfo: PropTypes.func.isRequired,
+    todos: PropTypes.array,
+    userInfo: PropTypes.object
   };
 
   static defaultProps = {
-    todos: null
+    todos: null,
+    userInfo: null
   };
 
   componentDidMount() {
-    const { getTodos } = this.props;
+    const { getTodos, getUserInfo } = this.props;
     getTodos();
+    getUserInfo();
   }
 
   render() {
-    const { todos } = this.props;
+    const { todos, userInfo } = this.props;
     return (
       <div id="dashboard" style={{ height: "100vh" }}>
-        <Container>
-          <h1>Welcome, {localStorage.token}</h1>
-          <h4>It`s good to have you back.</h4>
-          {todos ? (
-            <ListGroup>
-              {todos.map(todo => (
-                <ListGroup.Item key={todo.id}>{todo.title}</ListGroup.Item>
-              ))}
-            </ListGroup>
-          ) : null}
-        </Container>
+        {userInfo ? (
+          <Container>
+            <h3>Hi {userInfo.username}</h3>
+            <p>Today is TODAY</p>
+            {todos ? (
+              <Card body>
+                <ListGroup variant="flush">
+                  {todos.map(todo => (
+                    <ListGroup.Item key={todo.id}>
+                      <p>
+                        <strong>{todo.title}</strong> ({todo.id})
+                      </p>
+                      <small>{todo.created_at}</small>
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              </Card>
+            ) : null}
+          </Container>
+        ) : null}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  todos: state.todo.todos
+  todos: state.todo.todos,
+  userInfo: state.userInfo.userInfo
 });
 
 const mapDispatchToProps = dispatch => ({
-  getTodos: () => dispatch(getTodos())
+  getTodos: () => dispatch(getTodos()),
+  getUserInfo: () => dispatch(getUserInfo())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

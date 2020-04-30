@@ -33,7 +33,6 @@ export class Welcome extends React.Component {
     const { successMessage, history } = this.props;
 
     return (
-      // <div className="body-main" style={{ height: "100vh" }}>
       <div id="welcome-body" style={{ height: "100vh" }}>
         <Helmet>
           <title>- To-Do LABC -</title>
@@ -77,7 +76,7 @@ export class Welcome extends React.Component {
               xl={{ span: 4 }}
             >
               <div className="login-box">
-                <LoginForm history={history}/>
+                <LoginForm history={history} />
               </div>
             </Col>
           </Row>
