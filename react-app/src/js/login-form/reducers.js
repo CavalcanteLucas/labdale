@@ -16,7 +16,6 @@ const initialState = {
 };
 
 export default function loginReducers(state = initialState, action) {
-  console.log(action.type)
   switch (action.type) {
     case LOGIN_REQUEST:
     case LOGOUT_REQUEST:

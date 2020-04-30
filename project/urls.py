@@ -21,7 +21,7 @@ from todolist import endpoints as todolist_enpoints
 
 frontend_urls = [
     path("", include("pwa.urls")),
-    # re_path(r"^.*$", TemplateView.as_view(template_name="frontend/index.html")),
+    re_path(r"^.*$", TemplateView.as_view(template_name="frontend/index.html")),
 ]
 
 urlpatterns = [
@@ -34,7 +34,6 @@ urlpatterns = [
     path("api/rest-auth/registration/", include("rest_auth.registration.urls")),
     path("api/rest-auth/", include("rest_auth.urls")),
     path("api/todo-list/", include(todolist_enpoints)),
-    # path("", include(todolist_enpoints))
     path("admin/", admin.site.urls)
 
 ] + frontend_urls

@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Container, Row, Col, ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import moment from "moment";
 
 import { getTodos, getUserInfo } from "./actions";
 
@@ -30,7 +31,9 @@ export class Dashboard extends React.Component {
       <div id="dashboard" style={{ height: "100vh" }}>
         {userInfo ? (
           <Container>
-            <h3>Hi {userInfo.username},</h3>
+            <h3>
+              Hi <strong>{userInfo.username}</strong>,
+            </h3>
             <p>Today is TODAY</p>
             {todos ? (
               <Card body>
@@ -40,7 +43,11 @@ export class Dashboard extends React.Component {
                       <p>
                         <strong>{todo.title}</strong> ({todo.id})
                       </p>
-                      <small>{todo.created_at}</small>
+                      <small>
+                        {moment(todo.created_at).format(
+                          "MMMM Do YYYY, h:mm:ss a"
+                        )}
+                      </small>
                     </ListGroup.Item>
                   ))}
                 </ListGroup>

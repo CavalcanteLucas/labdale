@@ -34,14 +34,14 @@ export class Header extends React.Component {
 
     return (
       <div className="app-header-wrapper">
-        <Link to="/">
+        <Link to={userInfo ? "/dashboard" : "/"}>
           <img
             src="https://image.flaticon.com/icons/png/512/54/54441.png"
             alt="Logomark"
             className="logo"
           />
         </Link>
-        {localStorage.token !== "undefinied" && userInfo ? (
+        {userInfo ? (
           <DropdownButton
             id="user-menu"
             title={userInfo.username}
