@@ -7,27 +7,25 @@ import PropTypes from "prop-types";
 import { getUserInfo } from "./dashboard/actions";
 import { logout } from "./login-form/actions";
 
-export class Header extends React.Component {
+class Header extends React.Component {
   static propTypes = {
     getUserInfo: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
-    userInfo: PropTypes.object
+    userInfo: PropTypes.object,
+    isAuthenticated: PropTypes.bool
   };
 
   static defaultProps = {
-    userInfo: null
+    userInfo: null,
+    isAuthenticated: null
   };
 
   componentDidMount() {
-    const { getUserInfo } = this.props;
-    getUserInfo();
+    const { getUserInfo, isAuthenticated } = this.props;
+    if (isAuthenticated) {
+      getUserInfo();
+    }
   }
-
-  // handleLogoutClick() {
-  //   console.log(this);
-  //   const { logout } = this.props;
-  //   logout();
-  // }
 
   render() {
     const { userInfo, logout } = this.props;
@@ -47,7 +45,7 @@ export class Header extends React.Component {
             title={userInfo.username}
             variant="dark"
           >
-            <Dropdown.Item onClick={logout} href="/">Logout</Dropdown.Item>
+            <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
           </DropdownButton>
         ) : (
           <Link to="/register">
@@ -60,7 +58,8 @@ export class Header extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  userInfo: state.userInfo.userInfo
+  userInfo: state.userInfo.userInfo,
+  isAuthenticated: state.login.isAuthenticated
 });
 
 const mapDispatchToProps = dispatch => ({

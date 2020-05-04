@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { login, clearLoginSuccessMessage } from "./actions";
 import FormErrors from "../FormErrors";
 
-export class LoginForm extends React.Component {
+class LoginForm extends React.Component {
   state = {
     username: "",
     password: ""

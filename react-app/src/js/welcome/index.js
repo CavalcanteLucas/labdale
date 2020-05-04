@@ -11,18 +11,34 @@ export class Welcome extends React.Component {
   static propTypes = {
     successMessage: PropTypes.string,
     clearSuccessMessage: PropTypes.func.isRequired,
-    history: PropTypes.object
+    history: PropTypes.object,
+    isAuthenticated: PropTypes.bool
   };
 
   static defaultProps = {
     history: null,
-    successMessage: null
+    successMessage: null,
+    isAuthenticated: null
   };
 
-  componentWillUnmount = () => {
+  componentDidMount() {
+    const { isAuthenticated, history } = this.props;
+    if (isAuthenticated) {
+      history.push("/dashboard");
+    }
+  }
+
+  componentDidUpdate() {
+    const { isAuthenticated, history } = this.props;
+    if (isAuthenticated) {
+      history.push("/dashboard");
+    }
+  }
+
+  componentWillUnmount() {
     const { clearSuccessMessage } = this.props;
     clearSuccessMessage();
-  };
+  }
 
   handleCloseSuccessMessage = () => {
     const { clearSuccessMessage } = this.props;
@@ -88,7 +104,8 @@ export class Welcome extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.successMessage.successMessage
+  successMessage: state.successMessage.successMessage,
+  isAuthenticated: state.login.isAuthenticated
 });
 
 const mapDispatchToProps = dispatch => ({

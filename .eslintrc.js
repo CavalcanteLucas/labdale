@@ -11,6 +11,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-shadow': 'off',
     'no-underscore-dangle': 'off',
+    'no-unneeded-ternary': 'off',
 
     'prettier/prettier': 'error',
 

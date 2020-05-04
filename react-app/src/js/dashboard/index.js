@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Container, Row, Col, ListGroup } from "react-bootstrap";
+import { Card, Container, ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import moment from "moment";
@@ -11,18 +11,32 @@ export class Dashboard extends React.Component {
     getTodos: PropTypes.func.isRequired,
     getUserInfo: PropTypes.func.isRequired,
     todos: PropTypes.array,
-    userInfo: PropTypes.object
+    userInfo: PropTypes.object,
+    history: PropTypes.object,
+    isAuthenticated: PropTypes.bool
   };
 
   static defaultProps = {
     todos: null,
-    userInfo: null
+    userInfo: null,
+    history: null,
+    isAuthenticated: null
   };
 
   componentDidMount() {
-    const { getTodos, getUserInfo } = this.props;
+    const { getTodos, getUserInfo, isAuthenticated, history } = this.props;
+    if (!isAuthenticated) {
+      history.push("/");
+    }
     getTodos();
     getUserInfo();
+  }
+
+  componentDidUpdate() {
+    const { isAuthenticated, history } = this.props;
+    if (!isAuthenticated) {
+      history.push("/");
+    }
   }
 
   render() {
@@ -62,7 +76,8 @@ export class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   todos: state.todo.todos,
-  userInfo: state.userInfo.userInfo
+  userInfo: state.userInfo.userInfo,
+  isAuthenticated: state.login.isAuthenticated
 });
 
 const mapDispatchToProps = dispatch => ({

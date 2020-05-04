@@ -12,7 +12,7 @@ const initialState = {
   token: localStorage.getItem("token"),
   successMessage: null,
   errors: null,
-  isAuthenticated: null
+  isAuthenticated: localStorage.getItem("token") ? true : false
 };
 
 export default function loginReducers(state = initialState, action) {

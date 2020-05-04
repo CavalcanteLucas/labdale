@@ -7,6 +7,8 @@ import {
   GET_USER_INFO_FAILURE
 } from "./actions";
 
+import { LOGOUT_SUCCESS } from "../login-form/actions";
+
 const initialState = {
   isLoading: false,
   errors: null,
@@ -58,6 +60,10 @@ export function userInfoReducers(state = initialState, action) {
         ...state,
         isLoading: initialState.isLoading,
         userInfo: initialState.userInfo
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        initialState
       };
     default:
       return state;
