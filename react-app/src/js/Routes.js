@@ -39,7 +39,7 @@ export default class Routes extends React.Component {
             />
             <PublicRoute
               exact
-              path="/password/reset/confirm/:uid/:token"
+              path="/password_reset/confirm/:uid/:token"
               component={PasswordResetConfirmForm}
             />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />

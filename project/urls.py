@@ -27,7 +27,7 @@ frontend_urls = [
 urlpatterns = [
     # This URL is used to generate email content
     re_path(
-        r"^password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
+        r"^password_reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
         TemplateView.as_view(template_name="frontend/index.html"),
         name="password_reset_confirm",
     ),
