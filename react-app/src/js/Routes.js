@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import PrivateRoute from "./PrivateRoute";
 import Header from "./Header";
 
 const WelcomePage = React.lazy(() => import("./welcome"));
@@ -33,7 +35,7 @@ export default class Routes extends React.Component {
               path="/password/reset/confirm/:uid/:token"
               component={PasswordResetConfirmForm}
             />
-            <Route exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>
         </React.Suspense>
       </Router>

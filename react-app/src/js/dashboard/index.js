@@ -12,31 +12,17 @@ export class Dashboard extends React.Component {
     getUserInfo: PropTypes.func.isRequired,
     todos: PropTypes.array,
     userInfo: PropTypes.object,
-    history: PropTypes.object,
-    isAuthenticated: PropTypes.bool
   };
 
   static defaultProps = {
     todos: null,
     userInfo: null,
-    history: null,
-    isAuthenticated: null
   };
 
   componentDidMount() {
-    const { getTodos, getUserInfo, isAuthenticated, history } = this.props;
-    if (!isAuthenticated) {
-      history.push("/");
-    }
+    const { getTodos, getUserInfo } = this.props;
     getTodos();
     getUserInfo();
-  }
-
-  componentDidUpdate() {
-    const { isAuthenticated, history } = this.props;
-    if (!isAuthenticated) {
-      history.push("/");
-    }
   }
 
   render() {
@@ -77,7 +63,6 @@ export class Dashboard extends React.Component {
 const mapStateToProps = state => ({
   todos: state.todo.todos,
   userInfo: state.userInfo.userInfo,
-  isAuthenticated: state.login.isAuthenticated
 });
 
 const mapDispatchToProps = dispatch => ({
