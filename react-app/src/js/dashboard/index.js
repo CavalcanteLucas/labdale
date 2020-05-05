@@ -3,6 +3,7 @@ import { Card, Container, ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import moment from "moment";
+import { capitalize as _capitalize } from "lodash";
 
 import { getTodos } from "./actions";
 import { getUserInfo } from "../auth/actions";
@@ -29,30 +30,34 @@ export class Dashboard extends React.Component {
   render() {
     const { todos, userInfo } = this.props;
     return (
-      <div id="dashboard" style={{ height: "100vh" }}>
+      <div id="dashboard-body" style={{ height: "100vh" }}>
         {userInfo ? (
-          <Container>
+          <Container className="dashboard-body-wrapper">
             <h3>
-              Hi <strong>{userInfo.username}</strong>,
+              Hi <strong>{_capitalize(userInfo.username)}</strong>,
             </h3>
-            <p>Today is TODAY</p>
+            <p>
+              today is: <strong>{moment().format("dddd, DD/MM/Y")}</strong>
+            </p>
             {todos ? (
-              <Card body>
-                <ListGroup variant="flush">
-                  {todos.map(todo => (
-                    <ListGroup.Item key={todo.id}>
-                      <p>
-                        <strong>{todo.title}</strong> ({todo.id})
-                      </p>
-                      <small>
-                        {moment(todo.created_at).format(
-                          "MMMM Do YYYY, h:mm:ss a"
-                        )}
-                      </small>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              </Card>
+              <div className="dashboard-wrapper">
+                <Card body>
+                  <ListGroup variant="flush">
+                    {todos.map(todo => (
+                      <ListGroup.Item key={todo.id}>
+                        <p>
+                          <strong>{todo.title}</strong> ({todo.id})
+                        </p>
+                        <small>
+                          {moment(todo.created_at).format(
+                            "MMMM Do YYYY, h:mm:ss a"
+                          )}
+                        </small>
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
+                </Card>
+              </div>
             ) : null}
           </Container>
         ) : null}
