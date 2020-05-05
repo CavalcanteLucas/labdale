@@ -21,34 +21,22 @@ export class PasswordResetForm extends React.Component {
     successMessage: PropTypes.string,
     errors: PropTypes.object,
     clearPasswordResetFailureMessage: PropTypes.func.isRequired,
-    clearPasswordResetSuccessMessage: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool
+    clearPasswordResetSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     history: null,
     successMessage: null,
-    errors: null,
-    isAuthenticated: null
+    errors: null
   };
 
   componentDidMount() {
-    const {
-      clearPasswordResetSuccessMessage,
-      isAuthenticated,
-      history
-    } = this.props;
-    if (isAuthenticated) {
-      history.push("/dashboard");
-    }
+    const { clearPasswordResetSuccessMessage } = this.props;
     clearPasswordResetSuccessMessage();
   }
 
   componentDidUpdate() {
-    const { successMessage, isAuthenticated, history } = this.props;
-    if (isAuthenticated) {
-      history.push("/dashboard");
-    }
+    const { successMessage, history } = this.props;
     if (successMessage) {
       history.push("/password_reset/confirm");
     }
@@ -118,8 +106,7 @@ export class PasswordResetForm extends React.Component {
 
 const mapStateToProps = state => ({
   successMessage: state.passwordReset.successMessage,
-  errors: state.passwordReset.errors,
-  isAuthenticated: state.login.isAuthenticated
+  errors: state.passwordReset.errors
 });
 
 const mapDispatchToProps = dispatch => ({

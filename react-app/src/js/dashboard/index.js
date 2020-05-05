@@ -11,12 +11,12 @@ export class Dashboard extends React.Component {
     getTodos: PropTypes.func.isRequired,
     getUserInfo: PropTypes.func.isRequired,
     todos: PropTypes.array,
-    userInfo: PropTypes.object,
+    userInfo: PropTypes.object
   };
 
   static defaultProps = {
     todos: null,
-    userInfo: null,
+    userInfo: null
   };
 
   componentDidMount() {
@@ -62,7 +62,7 @@ export class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   todos: state.todo.todos,
-  userInfo: state.userInfo.userInfo,
+  userInfo: state.userInfo.userInfo
 });
 
 const mapDispatchToProps = dispatch => ({

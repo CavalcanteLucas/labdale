@@ -15,29 +15,17 @@ class LoginForm extends React.Component {
 
   static propTypes = {
     login: PropTypes.func.isRequired,
-    history: PropTypes.object,
-    successMessage: PropTypes.string,
     errors: PropTypes.object,
     clearLoginSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    history: null,
-    successMessage: null,
     errors: null
   };
 
   componentDidMount() {
     const { clearLoginSuccessMessage } = this.props;
     clearLoginSuccessMessage();
-  }
-
-  componentDidUpdate() {
-    const { successMessage, history } = this.props;
-
-    if (successMessage) {
-      history.push("/dashboard");
-    }
   }
 
   onSubmit = e => {
@@ -106,7 +94,6 @@ class LoginForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.login.successMessage,
   errors: state.login.errors
 });
 

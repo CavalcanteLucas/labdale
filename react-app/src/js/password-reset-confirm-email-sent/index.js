@@ -1,26 +1,8 @@
 import React from "react";
+import { Link } from "react-router";
 import { Button, Container, Row, Col } from "react-bootstrap";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
-export class PasswordResetConfirmEmailSent extends React.Component {
-  static propTypes = {
-    history: PropTypes.object,
-    isAuthenticated: PropTypes.bool
-  };
-
-  static defaultProps = {
-    history: null,
-    isAuthenticated: null
-  };
-
-  componentDidMount() {
-    const { isAuthenticated, history } = this.props;
-    if (isAuthenticated) {
-      history.push("/dashboard");
-    }
-  }
-
+export default class PasswordResetConfirmEmailSent extends React.Component {
   render() {
     return (
       <div id="password-reset-body" style={{ height: "100vh" }}>
@@ -38,9 +20,11 @@ export class PasswordResetConfirmEmailSent extends React.Component {
                   Check your email for a link to reset your password. If it
                   doesn’t appear within a few minutes, check your spam folder.
                 </p>
-                <Button href="/" variant="secondary" block>
-                  Return to sign in
-                </Button>
+                <Link to="/">
+                  <Button variant="secondary" block>
+                    Return to sign in
+                  </Button>
+                </Link>
               </div>
             </Col>
           </Row>
@@ -49,9 +33,3 @@ export class PasswordResetConfirmEmailSent extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  isAuthenticated: state.login.isAuthenticated
-});
-
-export default connect(mapStateToProps, null)(PasswordResetConfirmEmailSent);

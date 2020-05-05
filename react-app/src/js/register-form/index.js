@@ -26,39 +26,22 @@ export class RegisterForm extends React.Component {
     errors: PropTypes.object,
     clearRegisterFailureMessage: PropTypes.func.isRequired,
     clearRegisterSuccessMessage: PropTypes.func.isRequired,
-    setSuccessMessage: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool
+    setSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     history: null,
     successMessage: null,
-    errors: null,
-    isAuthenticated: null
+    errors: null
   };
 
   componentDidMount() {
-    const {
-      clearRegisterSuccessMessage,
-      isAuthenticated,
-      history
-    } = this.props;
-    if (isAuthenticated) {
-      history.push("/dashboard");
-    }
+    const { clearRegisterSuccessMessage } = this.props;
     clearRegisterSuccessMessage();
   }
 
   componentDidUpdate() {
-    const {
-      successMessage,
-      setSuccessMessage,
-      isAuthenticated,
-      history
-    } = this.props;
-    if (isAuthenticated) {
-      history.push("/dashboard");
-    }
+    const { successMessage, setSuccessMessage, history } = this.props;
     if (successMessage) {
       setSuccessMessage(successMessage);
       history.push("/");
@@ -157,8 +140,7 @@ export class RegisterForm extends React.Component {
 
 const mapStateToProps = state => ({
   successMessage: state.register.successMessage,
-  errors: state.register.errors,
-  isAuthenticated: state.login.isAuthenticated
+  errors: state.register.errors
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -34,6 +34,5 @@ urlpatterns = [
     path("api/rest-auth/registration/", include("rest_auth.registration.urls")),
     path("api/rest-auth/", include("rest_auth.urls")),
     path("api/todo-list/", include(todolist_enpoints)),
-    path("admin/", admin.site.urls)
-
+    path("admin/", admin.site.urls),
 ] + frontend_urls

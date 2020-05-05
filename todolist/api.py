@@ -3,8 +3,11 @@ from rest_framework import viewsets, permissions, generics
 from .models import TodoList
 from .serializers import TodoListSerializer
 
+
 class TodoListViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated, ]
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     serializer_class = TodoListSerializer
 
     def get_queryset(self):

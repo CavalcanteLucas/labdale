@@ -1,7 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 import Header from "./Header";
 
 const WelcomePage = React.lazy(() => import("./welcome"));
@@ -22,15 +23,19 @@ export default class Routes extends React.Component {
         <Header />
         <React.Suspense fallback={<div>Loading...</div>}>
           <Switch>
-            <Route exact path="/" component={WelcomePage} />
-            <Route exact path="/register" component={RegisterForm} />
-            <Route exact path="/password_reset" component={PasswordResetForm} />
-            <Route
+            <PublicRoute exact path="/" component={WelcomePage} />
+            <PublicRoute exact path="/register" component={RegisterForm} />
+            <PublicRoute
+              exact
+              path="/password_reset"
+              component={PasswordResetForm}
+            />
+            <PublicRoute
               exact
               path="/password_reset/confirm"
               component={PasswordResetConfirmEmailSent}
             />
-            <Route
+            <PublicRoute
               exact
               path="/password/reset/confirm/:uid/:token"
               component={PasswordResetConfirmForm}

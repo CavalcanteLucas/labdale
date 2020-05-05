@@ -10,30 +10,12 @@ import { clearSuccessMessage } from "./actions";
 export class Welcome extends React.Component {
   static propTypes = {
     successMessage: PropTypes.string,
-    clearSuccessMessage: PropTypes.func.isRequired,
-    history: PropTypes.object,
-    isAuthenticated: PropTypes.bool
+    clearSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    history: null,
-    successMessage: null,
-    isAuthenticated: null
+    successMessage: null
   };
-
-  componentDidMount() {
-    const { isAuthenticated, history } = this.props;
-    if (isAuthenticated) {
-      history.push("/dashboard");
-    }
-  }
-
-  componentDidUpdate() {
-    const { isAuthenticated, history } = this.props;
-    if (isAuthenticated) {
-      history.push("/dashboard");
-    }
-  }
 
   componentWillUnmount() {
     const { clearSuccessMessage } = this.props;
@@ -46,7 +28,7 @@ export class Welcome extends React.Component {
   };
 
   render() {
-    const { successMessage, history } = this.props;
+    const { successMessage } = this.props;
 
     return (
       <div id="welcome-body" style={{ height: "100vh" }}>
@@ -92,20 +74,18 @@ export class Welcome extends React.Component {
               xl={{ span: 4 }}
             >
               <div className="form-box">
-                <LoginForm history={history} />
+                <LoginForm />
               </div>
             </Col>
           </Row>
         </Container>
       </div>
-      // </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.successMessage.successMessage,
-  isAuthenticated: state.login.isAuthenticated
+  successMessage: state.successMessage.successMessage
 });
 
 const mapDispatchToProps = dispatch => ({
