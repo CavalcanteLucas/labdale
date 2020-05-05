@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { login, clearLoginSuccessMessage } from "./actions";
-import FormErrors from "../FormErrors";
+import { login, clearLoginSuccessMessage } from "../actions";
+import FormErrors from "../../FormErrors";
 
 class LoginForm extends React.Component {
   state = {
@@ -94,7 +94,7 @@ class LoginForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  errors: state.login.errors
+  errors: state.auth.errors
 });
 
 const mapDispatchToProps = dispatch => ({

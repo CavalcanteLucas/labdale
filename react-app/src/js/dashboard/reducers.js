@@ -1,19 +1,13 @@
 import {
   GET_TODOS_REQUEST,
   GET_TODOS_SUCCESS,
-  GET_TODOS_FAILURE,
-  GET_USER_INFO_REQUEST,
-  GET_USER_INFO_SUCCESS,
-  GET_USER_INFO_FAILURE
+  GET_TODOS_FAILURE
 } from "./actions";
-
-import { LOGOUT_SUCCESS } from "../login-form/actions";
 
 const initialState = {
   isLoading: false,
   errors: null,
-  todos: null,
-  userinfo: null
+  todos: null
 };
 
 export function todoReducers(state = initialState, action) {
@@ -35,35 +29,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         isLoading: initialState.isLoading
-      };
-    default:
-      return state;
-  }
-}
-
-export function userInfoReducers(state = initialState, action) {
-  switch (action.type) {
-    case GET_USER_INFO_REQUEST:
-      return {
-        ...state,
-        isLoading: true,
-        errors: initialState.errors
-      };
-    case GET_USER_INFO_SUCCESS:
-      return {
-        ...state,
-        isLoading: initialState.isLoading,
-        userInfo: action.response.data
-      };
-    case GET_USER_INFO_FAILURE:
-      return {
-        ...state,
-        isLoading: initialState.isLoading,
-        userInfo: initialState.userInfo
-      };
-    case LOGOUT_SUCCESS:
-      return {
-        initialState
       };
     default:
       return state;

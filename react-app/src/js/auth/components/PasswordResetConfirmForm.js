@@ -7,9 +7,9 @@ import {
   passwordResetConfirm,
   clearPasswordResetConfirmFailureMessage,
   clearPasswordResetConfirmSuccessMessage
-} from "./actions";
-import FormErrors from "../FormErrors";
-import { setSuccessMessage } from "../welcome/actions";
+} from "../actions";
+import FormErrors from "../../FormErrors";
+import { setSuccessMessage } from "../../welcome/actions";
 
 export class PasswordResetConfirmForm extends React.Component {
   state = {
@@ -124,8 +124,8 @@ export class PasswordResetConfirmForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.passwordResetConfirm.successMessage,
-  errors: state.passwordResetConfirm.errors
+  successMessage: state.auth.passwordResetConfirmSuccessMessage,
+  errors: state.auth.passwordResetConfirmErrors
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -7,9 +7,9 @@ import {
   register,
   clearRegisterFailureMessage,
   clearRegisterSuccessMessage
-} from "./actions";
-import { setSuccessMessage } from "../welcome/actions";
-import FormErrors from "../FormErrors";
+} from "../actions";
+import { setSuccessMessage } from "../../welcome/actions";
+import FormErrors from "../../FormErrors";
 
 export class RegisterForm extends React.Component {
   state = {
@@ -139,8 +139,8 @@ export class RegisterForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.register.successMessage,
-  errors: state.register.errors
+  successMessage: state.auth.registerSuccessMessage,
+  errors: state.auth.registerErrors
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -32,7 +32,7 @@ class PublicRoute extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.login.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps)(withRouter(PublicRoute));

@@ -4,8 +4,7 @@ import { Button, Dropdown, DropdownButton } from "react-bootstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { getUserInfo } from "./dashboard/actions";
-import { logout } from "./login-form/actions";
+import { logout, getUserInfo } from "./auth/actions";
 
 class Header extends React.Component {
   static propTypes = {
@@ -58,8 +57,8 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  userInfo: state.userInfo.userInfo,
-  isAuthenticated: state.login.isAuthenticated
+  userInfo: state.auth.userInfo,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = dispatch => ({

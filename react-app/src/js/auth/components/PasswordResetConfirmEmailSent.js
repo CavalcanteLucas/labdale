@@ -20,7 +20,7 @@ export default class PasswordResetConfirmEmailSent extends React.Component {
                   Check your email for a link to reset your password. If it
                   doesn’t appear within a few minutes, check your spam folder.
                 </p>
-                <Link to="/">
+                <Link to="/" style={{ textDecoration: "none" }}>
                   <Button variant="secondary" block>
                     Return to sign in
                   </Button>

@@ -6,13 +6,15 @@ import PublicRoute from "./PublicRoute";
 import Header from "./Header";
 
 const WelcomePage = React.lazy(() => import("./welcome"));
-const RegisterForm = React.lazy(() => import("./register-form"));
-const PasswordResetForm = React.lazy(() => import("./password-reset-form"));
+const RegisterForm = React.lazy(() => import("./auth/components/RegisterForm"));
+const PasswordResetForm = React.lazy(() =>
+  import("./auth/components/PasswordResetForm")
+);
 const PasswordResetConfirmForm = React.lazy(() =>
-  import("./password-reset-confirm-form")
+  import("./auth/components/PasswordResetConfirmForm")
 );
 const PasswordResetConfirmEmailSent = React.lazy(() =>
-  import("./password-reset-confirm-email-sent")
+  import("./auth/components/PasswordResetConfirmEmailSent")
 );
 const Dashboard = React.lazy(() => import("./dashboard"));
 

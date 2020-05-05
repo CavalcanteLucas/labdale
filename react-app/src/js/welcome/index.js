@@ -4,7 +4,7 @@ import Helmet from "react-helmet";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import LoginForm from "../login-form";
+import LoginForm from "../auth/components/LoginForm";
 import { clearSuccessMessage } from "./actions";
 
 export class Welcome extends React.Component {
@@ -85,7 +85,7 @@ export class Welcome extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.successMessage.successMessage
+  successMessage: state.welcome.successMessage
 });
 
 const mapDispatchToProps = dispatch => ({

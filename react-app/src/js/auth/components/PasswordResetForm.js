@@ -7,8 +7,8 @@ import {
   passwordReset,
   clearPasswordResetFailureMessage,
   clearPasswordResetSuccessMessage
-} from "./actions";
-import FormErrors from "../FormErrors";
+} from "../actions";
+import FormErrors from "../../FormErrors";
 
 export class PasswordResetForm extends React.Component {
   state = {
@@ -18,16 +18,16 @@ export class PasswordResetForm extends React.Component {
   static propTypes = {
     passwordReset: PropTypes.func.isRequired,
     history: PropTypes.object,
-    successMessage: PropTypes.string,
-    errors: PropTypes.object,
+    passwordResetSuccessMessage: PropTypes.string,
+    passwordResetErrors: PropTypes.object,
     clearPasswordResetFailureMessage: PropTypes.func.isRequired,
     clearPasswordResetSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     history: null,
-    successMessage: null,
-    errors: null
+    passwordResetSuccessMessage: null,
+    passwordResetErrors: null
   };
 
   componentDidMount() {
@@ -36,8 +36,8 @@ export class PasswordResetForm extends React.Component {
   }
 
   componentDidUpdate() {
-    const { successMessage, history } = this.props;
-    if (successMessage) {
+    const { passwordResetSuccessMessage, history } = this.props;
+    if (passwordResetSuccessMessage) {
       history.push("/password_reset/confirm");
     }
   }
@@ -61,7 +61,7 @@ export class PasswordResetForm extends React.Component {
 
   render() {
     const { email } = this.state;
-    const { errors } = this.props;
+    const { passwordResetErrors } = this.props;
 
     return (
       <div id="password-reset-body" style={{ height: "100vh" }}>
@@ -90,7 +90,9 @@ export class PasswordResetForm extends React.Component {
                       onChange={this.handleInputChange}
                     />
                   </Form.Group>
-                  {errors ? <FormErrors errors={errors} /> : null}
+                  {passwordResetErrors ? (
+                    <FormErrors errors={passwordResetErrors} />
+                  ) : null}
                   <Button variant="success" type="submit" block>
                     Send password reset email
                   </Button>
@@ -105,8 +107,8 @@ export class PasswordResetForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.passwordReset.successMessage,
-  errors: state.passwordReset.errors
+  passwordResetSuccessMessage: state.auth.passwordResetSuccessMessage,
+  passwordResetErrors: state.auth.passwordResetErrors
 });
 
 const mapDispatchToProps = dispatch => ({

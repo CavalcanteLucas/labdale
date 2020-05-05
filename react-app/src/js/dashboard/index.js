@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import moment from "moment";
 
-import { getTodos, getUserInfo } from "./actions";
+import { getTodos } from "./actions";
+import { getUserInfo } from "../auth/actions";
 
 export class Dashboard extends React.Component {
   static propTypes = {
@@ -62,7 +63,7 @@ export class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   todos: state.todo.todos,
-  userInfo: state.userInfo.userInfo
+  userInfo: state.auth.userInfo
 });
 
 const mapDispatchToProps = dispatch => ({
