@@ -67,6 +67,8 @@ export default function loginReducers(state = initialState, action) {
     case LOGIN_FAILURE:
     case LOGOUT_SUCCESS:
       localStorage.removeItem("token");
+      initialState.token = null;
+      initialState.isAuthenticated = false;
       return initialState;
     case CLEAR_LOGIN_SUCCESS_MESSAGE:
       return {
