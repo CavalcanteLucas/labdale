@@ -3,7 +3,7 @@ import moment from "moment";
 import PropTypes from "prop-types";
 import { capitalize as _capitalize } from "lodash";
 import { connect } from "react-redux";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 import TodoList from "./TodoList";
 import { getUserInfo } from "../auth/actions";
@@ -29,15 +29,20 @@ export class Dashboard extends React.Component {
       <div className="dashboard" style={{ height: "100vh" }}>
         {userInfo ? (
           <Container>
-            <div className="dashboard__content">
-              <h3>
-                Hi <strong>{_capitalize(userInfo.username)}</strong>,
-              </h3>
-              <p>
-                today is: <strong>{moment().format("dddd, DD/MM/Y")}</strong>
-              </p>
-              <TodoList />
-            </div>
+            <Row>
+              <Col>
+                <div className="dashboard__content">
+                  <h3>
+                    Hi <strong>{_capitalize(userInfo.username)}</strong>,
+                  </h3>
+                  <p>
+                    today is:
+                    <strong> {moment().format("dddd, DD/MM/Y")}</strong>
+                  </p>
+                  <TodoList />
+                </div>
+              </Col>
+            </Row>
           </Container>
         ) : null}
       </div>
