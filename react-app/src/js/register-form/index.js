@@ -1,26 +1,32 @@
 import React from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { register } from "./actions";
-import RegisterFormErrors from "./RegisterFormErrors";
+import {
+  register,
+  clearRegisterFailureMessage,
+  clearRegisterSuccessMessage
+} from "./actions";
+import { setSuccessMessage } from "../welcome/actions";
+import FormErrors from "../FormErrors";
 
 export class RegisterForm extends React.Component {
   state = {
     username: "",
-    password: "",
-    confirmPassword: ""
+    email: "",
+    password1: "",
+    password2: ""
   };
 
   static propTypes = {
     register: PropTypes.func.isRequired,
     history: PropTypes.object,
     successMessage: PropTypes.string,
-    errors: PropTypes.shape({
-      username: PropTypes.arrayOf(PropTypes.string),
-      password: PropTypes.arrayOf(PropTypes.string)
-    })
+    errors: PropTypes.object,
+    clearRegisterFailureMessage: PropTypes.func.isRequired,
+    clearRegisterSuccessMessage: PropTypes.func.isRequired,
+    setSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -29,21 +35,30 @@ export class RegisterForm extends React.Component {
     errors: null
   };
 
+  componentDidMount() {
+    const { clearRegisterSuccessMessage } = this.props;
+    clearRegisterSuccessMessage();
+  }
+
   componentDidUpdate() {
-    const { successMessage, history } = this.props;
+    const { successMessage, setSuccessMessage, history } = this.props;
 
     if (successMessage) {
+      setSuccessMessage(successMessage);
       history.push("/");
     }
   }
 
+  componentWillUnmount() {
+    const { clearRegisterFailureMessage } = this.props;
+    clearRegisterFailureMessage();
+  }
+
   onSubmit = e => {
     e.preventDefault();
-    const { username, password, confirmPassword } = this.state;
+    const { username, email, password1, password2 } = this.state;
     const { register } = this.props;
-    if (password === confirmPassword) {
-      register(username, password);
-    }
+    register(username, email, password1, password2);
   };
 
   handleInputChange = e => {
@@ -51,71 +66,73 @@ export class RegisterForm extends React.Component {
     this.setState({ [name]: value });
   };
 
-  canSubmit = () => {
-    const { username, password, confirmPassword } = this.state;
-    const fieldsAreEmpty = !username || !password || !confirmPassword;
-    const passwordsAreEqual = confirmPassword === password;
-    return !fieldsAreEmpty && passwordsAreEqual;
-  };
-
   render() {
-    const { username, password, confirmPassword } = this.state;
+    const { username, email, password1, password2 } = this.state;
     const { errors } = this.props;
 
     return (
-      <div id="register-form">
+      <div id="form-box">
         <Container>
-          <div className="register-wrapper">
-            <h3 className="join-us-subtitle">Join Us</h3>
-            <h1 className="create-your-account-subtitle">
-              Create your account
-            </h1>
-            <Form onSubmit={this.onSubmit}>
-              <Form.Group controlId="form-name">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  name="username"
-                  required
-                  type="text"
-                  placeholder=""
-                  value={username}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="form-password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  name="password"
-                  required
-                  type="password"
-                  placeholder=""
-                  value={password}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="form-confirm-password">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control
-                  name="confirmPassword"
-                  required
-                  type="password"
-                  placeholder=""
-                  value={confirmPassword}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Group>
-              {errors ? <RegisterFormErrors /> : null}
-              <Button
-                disabled={!this.canSubmit()}
-                variant="primary"
-                type="submit"
-                block
-              >
-                {" "}
-                Create account
-              </Button>
-            </Form>
-          </div>
+          <Row className="justify-content-md-center">
+            <Col md="9" lg="7" xl="6">
+              <div className="form-wrapper">
+                <h3 className="join-us-subtitle">Join Us</h3>
+                <h1 className="create-your-account-subtitle">
+                  Create your account
+                </h1>
+                <Form onSubmit={this.onSubmit}>
+                  <Form.Group controlId="form-username">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                      name="username"
+                      required
+                      type="text"
+                      placeholder=""
+                      value={username}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="form-email">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                      name="email"
+                      required
+                      type="text"
+                      placeholder=""
+                      value={email}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="form-password1">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      name="password1"
+                      required
+                      type="password"
+                      placeholder=""
+                      value={password1}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="form-password2">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                      name="password2"
+                      required
+                      type="password"
+                      placeholder=""
+                      value={password2}
+                      onChange={this.handleInputChange}
+                    />
+                  </Form.Group>
+                  {errors ? <FormErrors errors={errors} /> : null}
+                  <Button variant="primary" type="submit" block>
+                    Create account
+                  </Button>
+                </Form>
+              </div>
+            </Col>
+          </Row>
         </Container>
       </div>
     );
@@ -123,12 +140,17 @@ export class RegisterForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.todoAuth.successMessage,
-  errors: state.todoAuth.errors
+  successMessage: state.register.successMessage,
+  errors: state.register.errors
 });
 
 const mapDispatchToProps = dispatch => ({
-  register: (username, password) => dispatch(register(username, password))
+  register: (username, email, password1, password2) =>
+    dispatch(register(username, email, password1, password2)),
+  clearRegisterFailureMessage: () => dispatch(clearRegisterFailureMessage()),
+  clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage()),
+  setSuccessMessage: successMessage =>
+    dispatch(setSuccessMessage(successMessage))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

@@ -5,26 +5,27 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { clearRegisterSuccessMessage } from "../register-form/actions";
+import { clearSuccessMessage } from "./actions";
 
 export class Welcome extends React.Component {
   static propTypes = {
     successMessage: PropTypes.string,
-    clearRegisterSuccessMessage: PropTypes.func
+    clearSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    successMessage: null,
-    clearRegisterSuccessMessage: () => {}
+    successMessage: null
   };
 
-  componentDidMount() {
-    const { clearRegisterSuccessMessage, successMessage } = this.props;
+  componentWillUnmount = () => {
+    const { clearSuccessMessage } = this.props;
+    clearSuccessMessage();
+  };
 
-    if (successMessage) {
-      setTimeout(clearRegisterSuccessMessage, 2000);
-    }
-  }
+  handleCloseSuccessMessage = () => {
+    const { clearSuccessMessage } = this.props;
+    clearSuccessMessage();
+  };
 
   render() {
     const { successMessage } = this.props;
@@ -34,6 +35,18 @@ export class Welcome extends React.Component {
         <Helmet>
           <title>- To-Do LABC -</title>
         </Helmet>
+        {successMessage ? (
+          <div className="alert alert-success" role="alert">
+            {successMessage}
+            <button
+              onClick={this.handleCloseSuccessMessage}
+              type="button"
+              className="close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        ) : null}
         <Container className="welcome-body-wrapper">
           <Row>
             <Col>
@@ -56,12 +69,10 @@ export class Welcome extends React.Component {
                 <p>
                   Not a user yet? <Link to="/register">Create a login</Link>.
                 </p>
+                <p>
+                  <Link to="/password_reset">Forgot password?</Link>
+                </p>
               </div>
-              {successMessage ? (
-                <div className="alert alert-success" role="alert">
-                  {successMessage}
-                </div>
-              ) : null}
             </Col>
           </Row>
         </Container>
@@ -71,11 +82,11 @@ export class Welcome extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.todoAuth.successMessage
+  successMessage: state.successMessage.successMessage
 });
 
 const mapDispatchToProps = dispatch => ({
-  clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage())
+  clearSuccessMessage: () => dispatch(clearSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome);

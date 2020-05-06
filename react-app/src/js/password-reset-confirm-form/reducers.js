@@ -1,9 +1,9 @@
 import {
-  REGISTER_REQUEST,
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
-  CLEAR_REGISTER_SUCCESS_MESSAGE,
-  CLEAR_REGISTER_FAILURE_MESSAGE
+  PASSWORD_RESET_CONFIRM_REQUEST,
+  PASSWORD_RESET_CONFIRM_SUCCESS,
+  PASSWORD_RESET_CONFIRM_FAILURE,
+  CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE,
+  CLEAR_PASSWORD_RESET_CONFIRM_FAILURE_MESSAGE
 } from "./actions";
 
 const initialState = {
@@ -13,23 +13,27 @@ const initialState = {
   errors: null
 };
 
-export default function registerReducers(state = initialState, action) {
+export default function passwordResetConfirmReducers(
+  state = initialState,
+  action
+) {
   switch (action.type) {
-    case REGISTER_REQUEST:
+    case PASSWORD_RESET_CONFIRM_REQUEST:
       return {
         ...state,
         isLoading: true,
         successMessage: initialState.successMessage,
         errors: initialState.errors
       };
-    case REGISTER_SUCCESS:
+    case PASSWORD_RESET_CONFIRM_SUCCESS:
       localStorage.setItem("token", action.response.data.token);
       return {
         ...state,
         isLoading: initialState.isLoading,
-        successMessage: "User successfully created!"
+        successMessage:
+          "Your password has been successfully changed. Use your new credentials to login."
       };
-    case REGISTER_FAILURE:
+    case PASSWORD_RESET_CONFIRM_FAILURE:
       localStorage.removeItem("token");
       return {
         ...state,
@@ -37,12 +41,12 @@ export default function registerReducers(state = initialState, action) {
         isLoading: initialState.isLoading,
         errors: action.response.data
       };
-    case CLEAR_REGISTER_SUCCESS_MESSAGE:
+    case CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE:
       return {
         ...state,
         successMessage: initialState.successMessage
       };
-    case CLEAR_REGISTER_FAILURE_MESSAGE:
+    case CLEAR_PASSWORD_RESET_CONFIRM_FAILURE_MESSAGE:
       return {
         ...state,
         errors: initialState.errors

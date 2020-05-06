@@ -24,5 +24,12 @@ frontend_urls = [
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/todo-auth/", include("todo_auth.urls")),
+    path("api/rest-auth/", include("rest_auth.urls")),
+    path("api/rest-auth/registration/", include("rest_auth.registration.urls")),
+    # This URL is used to generate email content
+    re_path(
+        r"^password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
+        TemplateView.as_view(template_name="frontend/index.html"),
+        name="password_reset_confirm",
+    ),
 ] + frontend_urls

@@ -1,7 +1,13 @@
 import { combineReducers } from "redux";
 
-import todoAuthReducers from "./register-form/reducers";
+import registerReducers from "./register-form/reducers";
+import passwordResetReducers from "./password-reset-form/reducers";
+import passwordResetConfirmReducers from "./password-reset-confirm-form/reducers";
+import successMessageReducers from "./welcome/reducers";
 
 export default combineReducers({
-  todoAuth: todoAuthReducers
+  register: registerReducers,
+  passwordReset: passwordResetReducers,
+  passwordResetConfirm: passwordResetConfirmReducers,
+  successMessage: successMessageReducers
 });
