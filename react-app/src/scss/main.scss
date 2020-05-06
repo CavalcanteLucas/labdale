@@ -50,8 +50,7 @@
 @import "components/welcome";
 @import "components/auth-form-card";
 @import "components/auth-page";
-
-@import "pages/header";
+@import "components/header";
 
 // finally, we import the overrides needed for customizing third-party css
 @import "overrides";

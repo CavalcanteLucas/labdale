@@ -30,20 +30,16 @@ class Header extends React.Component {
     const { userInfo, logout } = this.props;
 
     return (
-      <div className="app-header-wrapper">
+      <header className="header">
         <Link to={userInfo ? "/dashboard" : "/"}>
           <img
             src="https://image.flaticon.com/icons/png/512/54/54441.png"
             alt="Logomark"
-            className="logo"
+            className="header__logo"
           />
         </Link>
         {userInfo ? (
-          <DropdownButton
-            id="user-menu"
-            title={userInfo.username}
-            variant="dark"
-          >
+          <DropdownButton title={userInfo.username} variant="dark">
             <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
           </DropdownButton>
         ) : (
@@ -51,7 +47,7 @@ class Header extends React.Component {
             <Button variant="outline-light">Sign Up</Button>
           </Link>
         )}
-      </div>
+      </header>
     );
   }
 }
