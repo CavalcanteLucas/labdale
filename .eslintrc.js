@@ -4,6 +4,7 @@ module.exports = {
   rules: {
     'arrow-body-style': ['error', 'as-needed'],
     'class-methods-use-this': [1, { 'exceptMethods': ['render'] }],
+    'import/no-named-as-default': 'off',
     'import/prefer-default-export': 'off',
 
     'no-case-declarations': 'off',
