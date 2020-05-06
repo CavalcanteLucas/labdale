@@ -31,7 +31,7 @@ export class Welcome extends React.Component {
     const { successMessage } = this.props;
 
     return (
-      <div id="welcome-body" style={{ height: "100vh" }}>
+      <div className="welcome" style={{ height: "100vh" }}>
         <Helmet>
           <title>- To-Do LABC -</title>
         </Helmet>
@@ -47,38 +47,37 @@ export class Welcome extends React.Component {
             </button>
           </div>
         ) : null}
-        <Container className="welcome-body-wrapper">
-          <Row>
-            <Col
-              xs={{ span: 10, offset: 1 }}
-              md={{ span: 6, offset: 0 }}
-              lg={{ span: 5, offset: 1 }}
-              xl={{ span: 4, offset: 2 }}
-            >
-              <div className="welcome-wrapper">
-                <h1 className="welcome-title">
+        <div className="welcome__content">
+          <Container>
+            <Row>
+              <Col
+                xs={{ span: 10, offset: 1 }}
+                md={{ span: 6, offset: 0 }}
+                lg={{ span: 5, offset: 1 }}
+                xl={{ span: 4, offset: 2 }}
+              >
+                <h1 className="welcome__title">
                   Welcome to the To-Do LABC App!
                 </h1>
 
-                <div className="welcome-message-wrapper">
-                  <p className="welcome-message">
-                    This is a Django-React App for managing To-Do activities.
-                  </p>
+                <p className="welcome__message">
+                  This is a Django-React App for managing To-Do activities.
+                </p>
+              </Col>
+              <Col
+                xs={{ span: 8, offset: 2 }}
+                md={{ span: 6, offset: 0 }}
+                lg={{ span: 5 }}
+                xl={{ span: 4 }}
+              >
+                <div className="form-box">
+                  <LoginForm />
                 </div>
-              </div>
-            </Col>
-            <Col
-              xs={{ span: 8, offset: 2 }}
-              md={{ span: 6, offset: 0 }}
-              lg={{ span: 5 }}
-              xl={{ span: 4 }}
-            >
-              <div className="form-box">
-                <LoginForm />
-              </div>
-            </Col>
-          </Row>
-        </Container>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+
       </div>
     );
   }
