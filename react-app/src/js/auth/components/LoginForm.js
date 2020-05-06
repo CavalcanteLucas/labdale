@@ -45,9 +45,9 @@ class LoginForm extends React.Component {
     const { errors } = this.props;
 
     return (
-      <Row className="justify-content-md-center">
-        <Col>
-          <div className="form-wrapper">
+      <div className="auth-form-card">
+        <Row className="justify-content-md-center">
+          <Col>
             <Form onSubmit={this.onSubmit}>
               <Form.Group controlId="form-username">
                 <Form.Label>
@@ -86,9 +86,9 @@ class LoginForm extends React.Component {
                 Not a user yet? <Link to="/register">Create a login</Link>.
               </Form.Text>
             </Form>
-          </div>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }

@@ -5,7 +5,7 @@ import { Button, Container, Row, Col } from "react-bootstrap";
 export default class PasswordResetConfirmEmailSent extends React.Component {
   render() {
     return (
-      <div id="password-reset-body" style={{ height: "100vh" }}>
+      <div className="auth-page">
         <Container>
           <Row className="justify-content-md-center">
             <Col
@@ -14,7 +14,7 @@ export default class PasswordResetConfirmEmailSent extends React.Component {
               lg={{ span: 5 }}
               xl={{ span: 4 }}
             >
-              <div className="form-box">
+              <div className="auth-form-card">
                 <h4>Reset your password</h4>
                 <p>
                   Check your email for a link to reset your password. If it

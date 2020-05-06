@@ -70,15 +70,15 @@ export class RegisterForm extends React.Component {
     const { errors } = this.props;
 
     return (
-      <div id="register-body" style={{ height: "100vh" }}>
+      <div className="auth-page">
         <Container>
           <Row className="justify-content-md-center">
             <Col md="9" lg="7" xl="6">
-              <h3 className="join-us-subtitle">Join Us</h3>
-              <div className="form-box">
-                <h1 className="create-your-account-subtitle">
-                  Create your account
-                </h1>
+              <h3 className="auth-page__title">Join Us</h3>
+
+              <div className="auth-form-card">
+                <h1 className="auth-form-card__title">Create your account</h1>
+
                 <Form onSubmit={this.onSubmit}>
                   <Form.Group controlId="form-username">
                     <Form.Label>Username</Form.Label>

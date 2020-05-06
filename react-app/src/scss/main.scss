@@ -48,11 +48,10 @@
 @import "components/dashboard";
 @import "components/todo-list";
 @import "components/welcome";
+@import "components/auth-form-card";
+@import "components/auth-page";
 
 @import "pages/header";
-@import "pages/form";
-@import "pages/register";
-@import "pages/password-reset";
 
 // finally, we import the overrides needed for customizing third-party css
 @import "overrides";
