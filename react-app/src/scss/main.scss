@@ -45,10 +45,12 @@
 @import "~bootstrap/scss/print";
 
 // then, we import our custom css
+@import "components/dashboard";
+@import "components/todo-list";
+
 @import "pages/welcome";
 @import "pages/header";
 @import "pages/form";
-@import "pages/dashboard";
 @import "pages/register";
 @import "pages/password-reset";
 
