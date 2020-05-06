@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { login, clearLoginSuccessMessage } from "../actions";
-import FormErrors from "../../FormErrors";
+import FormErrors from "./FormErrors";
 
 class LoginForm extends React.Component {
   state = {

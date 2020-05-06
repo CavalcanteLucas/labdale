@@ -9,7 +9,7 @@ import {
   clearRegisterSuccessMessage
 } from "../actions";
 import { setSuccessMessage } from "../../welcome/actions";
-import FormErrors from "../../FormErrors";
+import FormErrors from "./FormErrors";
 
 export class RegisterForm extends React.Component {
   state = {

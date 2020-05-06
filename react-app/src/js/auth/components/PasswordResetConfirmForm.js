@@ -8,7 +8,7 @@ import {
   clearPasswordResetConfirmFailureMessage,
   clearPasswordResetConfirmSuccessMessage
 } from "../actions";
-import FormErrors from "../../FormErrors";
+import FormErrors from "./FormErrors";
 import { setSuccessMessage } from "../../welcome/actions";
 
 export class PasswordResetConfirmForm extends React.Component {
