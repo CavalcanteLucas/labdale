@@ -1,0 +1,15 @@
+.auth-form-card {
+  background: white;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  transition: box-shadow 0.2s ease-in-out;
+
+  &__title {
+    text-align: center;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+
+  &__errors { list-style-type: none; }
+}

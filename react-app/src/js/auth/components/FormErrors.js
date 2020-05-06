@@ -20,7 +20,7 @@ export default class FormErrors extends React.Component {
     if (_isEmpty(errors)) return null;
 
     return (
-      <ul className="form-errors alert alert-danger">
+      <ul className="auth-form-card__errors alert alert-danger">
         {Object.entries(errors).map(([fieldLabel, fieldErrors]) => (
           <li key={fieldLabel}>
             {_capitalize(fieldLabel)}: {_join(fieldErrors, " ")}

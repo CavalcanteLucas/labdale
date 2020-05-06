@@ -7,9 +7,9 @@ import {
   passwordResetConfirm,
   clearPasswordResetConfirmFailureMessage,
   clearPasswordResetConfirmSuccessMessage
-} from "./actions";
-import FormErrors from "../FormErrors";
-import { setSuccessMessage } from "../welcome/actions";
+} from "../actions";
+import FormErrors from "./FormErrors";
+import { setSuccessMessage } from "../../welcome/actions";
 
 export class PasswordResetConfirmForm extends React.Component {
   state = {
@@ -72,7 +72,7 @@ export class PasswordResetConfirmForm extends React.Component {
     const { errors } = this.props;
 
     return (
-      <div id="form-box">
+      <div className="auth-page">
         <Container>
           <Row className="justify-content-md-center">
             <Col
@@ -81,7 +81,7 @@ export class PasswordResetConfirmForm extends React.Component {
               lg={{ span: 5 }}
               xl={{ span: 4 }}
             >
-              <div className="form-wrapper">
+              <div className="auth-form-card">
                 <Form onSubmit={this.onSubmit}>
                   <Form.Group controlId="form-password1">
                     <Form.Label>New password</Form.Label>
@@ -124,8 +124,8 @@ export class PasswordResetConfirmForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.passwordResetConfirm.successMessage,
-  errors: state.passwordResetConfirm.errors
+  successMessage: state.auth.passwordResetConfirmSuccessMessage,
+  errors: state.auth.passwordResetConfirmErrors
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -3,8 +3,8 @@ import { Container, Col, Row } from "react-bootstrap";
 import Helmet from "react-helmet";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 
+import LoginForm from "../auth/components/LoginForm";
 import { clearSuccessMessage } from "./actions";
 
 export class Welcome extends React.Component {
@@ -17,10 +17,10 @@ export class Welcome extends React.Component {
     successMessage: null
   };
 
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     const { clearSuccessMessage } = this.props;
     clearSuccessMessage();
-  };
+  }
 
   handleCloseSuccessMessage = () => {
     const { clearSuccessMessage } = this.props;
@@ -31,7 +31,7 @@ export class Welcome extends React.Component {
     const { successMessage } = this.props;
 
     return (
-      <div id="welcome-body">
+      <div className="welcome" style={{ height: "100vh" }}>
         <Helmet>
           <title>- To-Do LABC -</title>
         </Helmet>
@@ -47,42 +47,41 @@ export class Welcome extends React.Component {
             </button>
           </div>
         ) : null}
-        <Container className="welcome-body-wrapper">
-          <Row>
-            <Col>
-              <div className="welcome-wrapper">
-                <h1 className="welcome-title">
+        <div className="welcome__content">
+          <Container>
+            <Row>
+              <Col
+                xs={{ span: 10, offset: 1 }}
+                md={{ span: 6, offset: 0 }}
+                lg={{ span: 5, offset: 1 }}
+                xl={{ span: 4, offset: 2 }}
+              >
+                <h1 className="welcome__title">
                   Welcome to the To-Do LABC App!
                 </h1>
 
-                <div className="welcome-message-wrapper">
-                  <p className="welcome-message">
-                    This is a Django-React App for managing To-Do activities.
-                  </p>
-                </div>
-              </div>
-            </Col>
-
-            <Col>
-              <div className="login-box">
-                <p>This will become some login form.</p>
-                <p>
-                  Not a user yet? <Link to="/register">Create a login</Link>.
+                <p className="welcome__message">
+                  This is a Django-React App for managing To-Do activities.
                 </p>
-                <p>
-                  <Link to="/password_reset">Forgot password?</Link>
-                </p>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+              </Col>
+              <Col
+                xs={{ span: 8, offset: 2 }}
+                md={{ span: 6, offset: 0 }}
+                lg={{ span: 5 }}
+                xl={{ span: 4 }}
+              >
+                <LoginForm />
+              </Col>
+            </Row>
+          </Container>
+        </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.successMessage.successMessage
+  successMessage: state.welcome.successMessage
 });
 
 const mapDispatchToProps = dispatch => ({

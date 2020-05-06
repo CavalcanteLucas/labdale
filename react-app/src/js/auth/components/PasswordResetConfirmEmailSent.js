@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, Container, Row, Col } from "react-bootstrap";
 
 export default class PasswordResetConfirmEmailSent extends React.Component {
   render() {
     return (
-      <div id="form-box">
+      <div className="auth-page">
         <Container>
           <Row className="justify-content-md-center">
             <Col
@@ -13,15 +14,17 @@ export default class PasswordResetConfirmEmailSent extends React.Component {
               lg={{ span: 5 }}
               xl={{ span: 4 }}
             >
-              <div className="form-wrapper">
+              <div className="auth-form-card">
                 <h4>Reset your password</h4>
                 <p>
                   Check your email for a link to reset your password. If it
                   doesn’t appear within a few minutes, check your spam folder.
                 </p>
-                <Button href="/" variant="secondary" block>
-                  Return to sign in
-                </Button>
+                <Link to="/" style={{ textDecoration: "none" }}>
+                  <Button variant="secondary" block>
+                    Return to sign in
+                  </Button>
+                </Link>
               </div>
             </Col>
           </Row>

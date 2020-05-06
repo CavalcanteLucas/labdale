@@ -7,9 +7,9 @@ import {
   register,
   clearRegisterFailureMessage,
   clearRegisterSuccessMessage
-} from "./actions";
-import { setSuccessMessage } from "../welcome/actions";
-import FormErrors from "../FormErrors";
+} from "../actions";
+import { setSuccessMessage } from "../../welcome/actions";
+import FormErrors from "./FormErrors";
 
 export class RegisterForm extends React.Component {
   state = {
@@ -42,7 +42,6 @@ export class RegisterForm extends React.Component {
 
   componentDidUpdate() {
     const { successMessage, setSuccessMessage, history } = this.props;
-
     if (successMessage) {
       setSuccessMessage(successMessage);
       history.push("/");
@@ -71,15 +70,15 @@ export class RegisterForm extends React.Component {
     const { errors } = this.props;
 
     return (
-      <div id="form-box">
+      <div className="auth-page">
         <Container>
           <Row className="justify-content-md-center">
             <Col md="9" lg="7" xl="6">
-              <div className="form-wrapper">
-                <h3 className="join-us-subtitle">Join Us</h3>
-                <h1 className="create-your-account-subtitle">
-                  Create your account
-                </h1>
+              <h3 className="auth-page__title">Join Us</h3>
+
+              <div className="auth-form-card">
+                <h1 className="auth-form-card__title">Create your account</h1>
+
                 <Form onSubmit={this.onSubmit}>
                   <Form.Group controlId="form-username">
                     <Form.Label>Username</Form.Label>
@@ -140,8 +139,8 @@ export class RegisterForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.register.successMessage,
-  errors: state.register.errors
+  successMessage: state.auth.registerSuccessMessage,
+  errors: state.auth.registerErrors
 });
 
 const mapDispatchToProps = dispatch => ({

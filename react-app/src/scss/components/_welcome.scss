@@ -1,0 +1,18 @@
+.welcome {
+  background-image: url("../img/background.png");
+  background-color: #2A3037;
+
+  &__content { padding-top: 5rem; }
+
+  &__title {
+    font-weight: 700;
+    font-size: 4rem;
+    color: white;
+  }
+
+  &__message {
+    font-weight: 400;
+    color: #B2B3B5;
+    font-size: 1.2rem;
+  }
+}

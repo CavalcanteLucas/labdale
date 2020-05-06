@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
-
 // main.scss
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
@@ -47,10 +45,12 @@
 @import "~bootstrap/scss/print";
 
 // then, we import our custom css
-@import "pages/welcome";
-@import "pages/header";
-@import "pages/body";
-@import "pages/form";
+@import "components/dashboard";
+@import "components/todo-list";
+@import "components/welcome";
+@import "components/auth-form-card";
+@import "components/auth-page";
+@import "components/header";
 
 // finally, we import the overrides needed for customizing third-party css
 @import "overrides";
