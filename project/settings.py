@@ -174,6 +174,17 @@ WEBPACK_LOADER = {
     }
 }
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://f926d838c8834f699674efbd3994e916@o391124.ingest.sentry.io/5236741",
+    integrations=[DjangoIntegration()],
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True,
+)
+
 # If you're not using this project on heroku, comment the following lines
 import django_heroku
 
