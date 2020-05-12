@@ -16,6 +16,6 @@ export const getTodos = () => {
       success: GET_TODOS_SUCCESS,
       failure: GET_TODOS_FAILURE
     },
-    apiCallFunction: () => fetchFromApi("api/todo-list/todos/", requestData)
+    apiCallFunction: () => fetchFromApi("api/todos/", requestData)
   };
 };

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class TodoList(models.Model):
+class Todo(models.Model):
     title = models.CharField(max_length=255)
     owner = models.ForeignKey(
         User, related_name="todos", on_delete=models.CASCADE, null=True
