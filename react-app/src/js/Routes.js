@@ -1,9 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import Header from "./Header";
+import NoMatch404 from "./NoMatch404";
 
 const WelcomePage = React.lazy(() => import("./welcome"));
 const RegisterForm = React.lazy(() => import("./auth/components/RegisterForm"));
@@ -43,6 +44,7 @@ export default class Routes extends React.Component {
               component={PasswordResetConfirmForm}
             />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <Route component={NoMatch404} />
           </Switch>
         </React.Suspense>
       </Router>
