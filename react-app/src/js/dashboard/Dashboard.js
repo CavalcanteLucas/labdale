@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 
 import TodoList from "./TodoList";
+import ActionBar from "./ActionBar";
 import { getUserInfo } from "../auth/actions";
 
 export class Dashboard extends React.Component {
@@ -28,15 +29,18 @@ export class Dashboard extends React.Component {
     return (
       <div className="dashboard" style={{ height: "100vh" }}>
         {userInfo ? (
-          <Container>
+          <Container fluid>
             <Row>
-              <Col>
+              <Col xs={2} lg={1}>
+                <ActionBar />
+              </Col>
+              <Col xs={10} lg={11}>
                 <div className="dashboard__content">
                   <h3>
                     Hi <strong>{_capitalize(userInfo.username)}</strong>,
                   </h3>
                   <p>
-                    today is:
+                    Today is:
                     <strong> {moment().format("dddd, DD/MM/Y")}</strong>
                   </p>
                   <TodoList />

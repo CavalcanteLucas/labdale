@@ -9,5 +9,9 @@
     height: 2rem;
     width: 2rem;
     filter: invert(1);
+
+    &:hover{
+      filter: invert(1) brightness(0.6);
+    }
   }
 }
