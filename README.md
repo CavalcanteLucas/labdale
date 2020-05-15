@@ -4,9 +4,17 @@ by Lucas Cavalcante (lucas@labcodes.com.br)
 
 ## Running it
 
-We require wget, make, python>=3.6 and nodejs>=8.10 to install our dependencies. On Ubuntu 18.04, you need libpq-dev and python3-dev too.
+We require the following softwares to install our dependencies:
+- `wget`;
+- `make`;
+- `python>=3.6`;
+- `nodejs>=8.10`. 
 
-If you want to run the project locally, be sure to have your virtualenv active (running `source bin/activate` from the project folder) and nvm set to the correct node version (by running `nvm use` on the project folder). If nvm is not found, try restarting your terminal or running `make setup_nvm` manually.
+On Ubuntu 18.04, you also need:
+- `libpq-dev`;
+- `python3-dev`.
+
+If you want to run the project locally, [download the zip with the boilerplate from github](https://github.com/labcodes/django-react-webpack/archive/feature/update.zip), create a virtualenv in it, be sure to have your virtualenv active (running `source bin/activate` from the project folder), then run `make install_dependencies`.
 
 You can copy the `env.example` file to `.env`, so that the django app has access to evironment variables via python-decouple, then run `python manage.py migrate` to create a dev database, and finally `make run`, so that both webpack and django run in parallel.
 
