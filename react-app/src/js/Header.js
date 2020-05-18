@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 
 import { logout, getUserInfo } from "./auth/actions";
 
+import logomark from "../img/logomark.png";
+
 class Header extends React.Component {
   static propTypes = {
     getUserInfo: PropTypes.func.isRequired,
@@ -32,11 +34,7 @@ class Header extends React.Component {
     return (
       <header className="header">
         <Link to={userInfo ? "/dashboard" : "/"}>
-          <img
-            src="https://image.flaticon.com/icons/png/512/54/54441.png"
-            alt="Logomark"
-            className="header__logo"
-          />
+          <img src={logomark} alt="Logomark" className="header__logo" />
         </Link>
         {userInfo ? (
           <DropdownButton title={userInfo.username} variant="dark">

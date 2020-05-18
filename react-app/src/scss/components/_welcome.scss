@@ -1,6 +1,7 @@
 .welcome {
-  background-image: url("../img/background.png");
+  // background-image: url("../img/background.png");
   background-color: #2A3037;
+  box-shadow:  inset 0 0 0.2rem black;
 
   &__content { padding-top: 5rem; }
 
