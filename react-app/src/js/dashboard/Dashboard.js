@@ -27,7 +27,7 @@ export class Dashboard extends React.Component {
   render() {
     const { userInfo } = this.props;
     return (
-      <div className="dashboard" style={{ height: "100vh" }}>
+      <div className="dashboard">
         {userInfo ? (
           <Container fluid>
             <Row>

@@ -1,7 +1,10 @@
 import {
   GET_TODOS_REQUEST,
   GET_TODOS_SUCCESS,
-  GET_TODOS_FAILURE
+  GET_TODOS_FAILURE,
+  CREATE_TODO_LIST_REQUEST,
+  CREATE_TODO_LIST_SUCCESS,
+  CREATE_TODO_LIST_FAILURE
 } from "./actions";
 
 const initialState = {
@@ -12,6 +15,12 @@ const initialState = {
 
 export function todoReducers(state = initialState, action) {
   switch (action.type) {
+    case CREATE_TODO_LIST_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        errors: initialState.errors
+      };
     case GET_TODOS_REQUEST:
       return {
         ...state,
@@ -25,10 +34,18 @@ export function todoReducers(state = initialState, action) {
         isLoading: initialState.isLoading,
         todos: action.response.data
       };
+    case CREATE_TODO_LIST_SUCCESS:
+      return {
+        ...state,
+        todos: [action.response.data, ...state.todos],
+        isLoading: initialState.isLoading
+      };
+    case CREATE_TODO_LIST_FAILURE:
     case GET_TODOS_FAILURE:
       return {
         ...state,
-        isLoading: initialState.isLoading
+        isLoading: initialState.isLoading,
+        errors: action.response.data
       };
     default:
       return state;

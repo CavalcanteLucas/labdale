@@ -21,6 +21,11 @@ export class TodoList extends React.Component {
     getTodos();
   }
 
+  // componentDidUpdate() {
+  //   const { getTodos } = this.props;
+  //   getTodos();
+  // }
+
   render() {
     const { todos } = this.props;
     if (!todos) return null;

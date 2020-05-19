@@ -1,8 +1,9 @@
-from django.conf.urls import include, url
+from django.urls import include, path
 from rest_framework import routers
 
-from .views import TodoListAPIView
+from .views import TodoListAPIView, TodoListCreateAPIView
 
 urlpatterns = [
-    url("^", TodoListAPIView.as_view()),
+    path("", TodoListAPIView.as_view()),
+    path("create/", TodoListCreateAPIView.as_view())
 ]

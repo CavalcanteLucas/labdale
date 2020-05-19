@@ -31,7 +31,7 @@ export class Welcome extends React.Component {
     const { successMessage } = this.props;
 
     return (
-      <div className="welcome" style={{ height: "100vh" }}>
+      <div className="welcome">
         <Helmet>
           <title>- To-Do LABC -</title>
         </Helmet>

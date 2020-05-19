@@ -1,9 +1,7 @@
 .action-bar {
-    // background: #213645;
-    // background-image: url("../img/background.png");
     background-color: #2A3037;
 
-    min-height: 100vh;
+    height: 100vh;
     max-width: 4rem;
     margin-left: -1rem;
     box-shadow: 0.1rem 0 0 #4A4E51;
@@ -12,11 +10,5 @@
     height: 2rem;
     width: 2rem;
     filter: invert(1);
-  }
-
-  &__item:hover {
-    // background: #294356;
-    box-shadow: inset -0.1rem 0 0 0 gold;
-    filter: brightness(0.7);
   }
 }
