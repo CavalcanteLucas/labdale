@@ -1,13 +1,13 @@
 import { fetchFromApi } from "react-redux-api-tools";
 
-export const GET_TODOS_REQUEST = "GET_TODOS_REQUEST";
-export const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS";
-export const GET_TODOS_FAILURE = "GET_TODOS_FAILURE";
+export const GET_TODO_LISTS_REQUEST = "GET_TODO_LISTS_REQUEST";
+export const GET_TODO_LISTS_SUCCESS = "GET_TODO_LISTS_SUCCESS";
+export const GET_TODO_LISTS_FAILURE = "GET_TODO_LISTS_FAILURE";
 export const CREATE_TODO_LIST_REQUEST = "CREATE_TODO_LIST_REQUEST";
 export const CREATE_TODO_LIST_SUCCESS = "CREATE_TODO_LIST_SUCCESS";
 export const CREATE_TODO_LIST_FAILURE = "CREATE_TODO_LIST_FAILURE";
 
-export const getTodos = () => {
+export const getTodoLists = () => {
   const requestData = {
     headers: {
       authorization: `Token ${localStorage.token}`
@@ -15,9 +15,9 @@ export const getTodos = () => {
   };
   return {
     types: {
-      request: GET_TODOS_REQUEST,
-      success: GET_TODOS_SUCCESS,
-      failure: GET_TODOS_FAILURE
+      request: GET_TODO_LISTS_REQUEST,
+      success: GET_TODO_LISTS_SUCCESS,
+      failure: GET_TODO_LISTS_FAILURE
     },
     apiCallFunction: () => fetchFromApi("api/todolists/", requestData)
   };

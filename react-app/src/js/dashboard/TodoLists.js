@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Card, ListGroup } from "react-bootstrap";
 
-import { getTodos } from "./actions";
+import { getTodoLists } from "./actions";
 
-export class TodoList extends React.Component {
+export class TodoLists extends React.Component {
   static propTypes = {
-    getTodos: PropTypes.func.isRequired,
+    getTodoLists: PropTypes.func.isRequired,
     todos: PropTypes.array
   };
 
@@ -17,8 +17,8 @@ export class TodoList extends React.Component {
   };
 
   componentDidMount() {
-    const { getTodos } = this.props;
-    getTodos();
+    const { getTodoLists } = this.props;
+    getTodoLists();
   }
 
   // componentDidUpdate() {
@@ -56,7 +56,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getTodos: () => dispatch(getTodos())
+  getTodoLists: () => dispatch(getTodoLists())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+export default connect(mapStateToProps, mapDispatchToProps)(TodoLists);

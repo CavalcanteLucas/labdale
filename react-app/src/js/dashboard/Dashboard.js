@@ -5,7 +5,7 @@ import { capitalize as _capitalize } from "lodash";
 import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 
-import TodoList from "./TodoList";
+import TodoLists from "./TodoLists";
 import ActionBar from "./ActionBar";
 import { getUserInfo } from "../auth/actions";
 
@@ -43,7 +43,7 @@ export class Dashboard extends React.Component {
                     Today is:
                     <strong> {moment().format("dddd, DD/MM/Y")}</strong>
                   </p>
-                  <TodoList />
+                  <TodoLists />
                 </div>
               </Col>
             </Row>

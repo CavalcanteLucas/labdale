@@ -1,5 +1,5 @@
 import Dashboard from "./Dashboard";
-import TodoList from "./TodoList";
+import TodoLists from "./TodoLists";
 
 export default Dashboard;
-export { TodoList };
+export { TodoLists };

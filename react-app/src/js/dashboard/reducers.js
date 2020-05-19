@@ -1,7 +1,7 @@
 import {
-  GET_TODOS_REQUEST,
-  GET_TODOS_SUCCESS,
-  GET_TODOS_FAILURE,
+  GET_TODO_LISTS_REQUEST,
+  GET_TODO_LISTS_SUCCESS,
+  GET_TODO_LISTS_FAILURE,
   CREATE_TODO_LIST_REQUEST,
   CREATE_TODO_LIST_SUCCESS,
   CREATE_TODO_LIST_FAILURE
@@ -21,14 +21,14 @@ export function todoReducers(state = initialState, action) {
         isLoading: true,
         errors: initialState.errors
       };
-    case GET_TODOS_REQUEST:
+    case GET_TODO_LISTS_REQUEST:
       return {
         ...state,
         isLoading: true,
         todos: initialState.todos,
         errors: initialState.errors
       };
-    case GET_TODOS_SUCCESS:
+    case GET_TODO_LISTS_SUCCESS:
       return {
         ...state,
         isLoading: initialState.isLoading,
@@ -41,7 +41,7 @@ export function todoReducers(state = initialState, action) {
         isLoading: initialState.isLoading
       };
     case CREATE_TODO_LIST_FAILURE:
-    case GET_TODOS_FAILURE:
+    case GET_TODO_LISTS_FAILURE:
       return {
         ...state,
         isLoading: initialState.isLoading,
