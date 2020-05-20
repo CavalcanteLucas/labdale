@@ -7,7 +7,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import TodoLists from "./TodoLists";
 import ActionBar from "./ActionBar";
-import { getUserInfo } from "../auth/actions";
+import { getUserInfo } from "../../auth/actions";
 
 export class Dashboard extends React.Component {
   static propTypes = {

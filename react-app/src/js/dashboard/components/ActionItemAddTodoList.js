@@ -3,16 +3,16 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Nav, Button, Modal, Form } from "react-bootstrap";
 
-import plusBtn from "../../img/plus-btn.png";
+import plusBtn from "../../../img/plus-btn.png";
 
 import {
   createTodoList,
   clearCreateTodoListErrors,
   clearCreateTodoListSuccessMessage
-} from "./actions";
-import FormErrors from "../FormErrors";
+} from "../actions";
+import FormErrors from "../../FormErrors";
 
-export class CreateTodoList extends React.Component {
+export class ActionItemAddTodoList extends React.Component {
   static propTypes = {
     createTodoList: PropTypes.func.isRequired,
     successMessage: PropTypes.string,
@@ -132,4 +132,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(clearCreateTodoListSuccessMessage())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateTodoList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ActionItemAddTodoList);

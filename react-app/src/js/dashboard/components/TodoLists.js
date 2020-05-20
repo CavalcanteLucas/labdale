@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Card, ListGroup } from "react-bootstrap";
 
-import { getTodoLists } from "./actions";
+import { getTodoLists } from "../actions";
 
 export class TodoLists extends React.Component {
   static propTypes = {

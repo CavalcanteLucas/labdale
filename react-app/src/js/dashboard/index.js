@@ -1,5 +1,5 @@
-import Dashboard from "./Dashboard";
-import TodoLists from "./TodoLists";
+import Dashboard from "./components/Dashboard";
+import TodoLists from "./components/TodoLists";
 
 export default Dashboard;
 export { TodoLists };
