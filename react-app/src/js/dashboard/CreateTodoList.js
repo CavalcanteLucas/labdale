@@ -5,17 +5,24 @@ import { Nav, Button, Modal, Form } from "react-bootstrap";
 
 import plusBtn from "../../img/plus-btn.png";
 
-import { createTodoList, clearCreateTodoListErrors } from "./actions";
+import { 
+  createTodoList,
+  clearCreateTodoListFailureMessage,
+  clearCreateTodoListSuccessMessage
+} from "./actions";
 import FormErrors from "../auth/components/FormErrors";
 
 export class CreateTodoList extends React.Component {
   static propTypes = {
     createTodoList: PropTypes.func.isRequired,
+    successMessage: PropTypes.string,
     errors: PropTypes.object,
-    clearCreateTodoListErrors: PropTypes.func.isRequired
+    clearCreateTodoListFailureMessage: PropTypes.func.isRequired,
+    clearCreateTodoListSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
+    successMessage: null,
     errors: null
   }
 
@@ -28,9 +35,20 @@ export class CreateTodoList extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+    const { successMessage, clearCreateTodoListSuccessMessage } = this.props;
+    if (successMessage) {
+      this.closeModal();
+      console.log(successMessage);
+      clearCreateTodoListSuccessMessage();
+    }
+  }
+
   closeModal = () => {
+    const { clearCreateTodoListFailureMessage } = this.props;
     this.setState({ modalIsOpen: false });
-    this.props.clearCreateTodoListErrors();
+    this.setState({ todoListTitle: "" });
+    clearCreateTodoListFailureMessage();
   };
 
   openModal = () => this.setState({ modalIsOpen: true });
@@ -40,8 +58,7 @@ export class CreateTodoList extends React.Component {
     const { todoListTitle } = this.state;
     const { createTodoList } = this.props;
     createTodoList(todoListTitle);
-//    this.closeModal();
-  };
+ };
 
   handleInputChange = e => {
     const { name, value } = e.target;
@@ -108,12 +125,14 @@ export class CreateTodoList extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  successMessage: state.todo.createTodoListSuccessMessage,
   errors: state.todo.createTodoListErrors
 });
 
 const mapDispatchToProps = dispatch => ({
   createTodoList: todoListTitle => dispatch(createTodoList(todoListTitle)),
-  clearCreateTodoListErrors: () => dispatch(clearCreateTodoListErrors())
+  clearCreateTodoListFailureMessage: () => dispatch(clearCreateTodoListFailureMessage()),
+  clearCreateTodoListSuccessMessage: () => dispatch(clearCreateTodoListSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateTodoList);

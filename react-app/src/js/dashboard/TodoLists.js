@@ -9,11 +9,11 @@ import { getTodoLists } from "./actions";
 export class TodoLists extends React.Component {
   static propTypes = {
     getTodoLists: PropTypes.func.isRequired,
-    todos: PropTypes.array
+    todoLists: PropTypes.array
   };
 
   static defaultProps = {
-    todos: null
+    todoLists: null
   };
 
   componentDidMount() {
@@ -21,26 +21,21 @@ export class TodoLists extends React.Component {
     getTodoLists();
   }
 
-  // componentDidUpdate() {
-  //   const { getTodos } = this.props;
-  //   getTodos();
-  // }
-
   render() {
-    const { todos } = this.props;
-    if (!todos) return null;
+    const { todoLists } = this.props;
+    if (!todoLists) return null;
 
     return (
       <div className="todo-list">
         <Card body>
           <ListGroup variant="flush">
-            {todos.map(todo => (
-              <ListGroup.Item key={todo.id}>
+            {todoLists.map(todoList => (
+              <ListGroup.Item key={todoList.id}>
                 <p>
-                  <strong>{todo.title}</strong> ({todo.id})
+                  <strong>{todoList.title}</strong> ({todoList.id})
                 </p>
                 <small>
-                  {moment(todo.created_at).format("MMMM Do YYYY, h:mm:ss a")}
+                  {moment(todoList.created_at).format("MMMM Do YYYY, h:mm:ss a")}
                 </small>
               </ListGroup.Item>
             ))}
@@ -52,7 +47,7 @@ export class TodoLists extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  todos: state.todo.todos
+  todoLists: state.todo.todoLists
 });
 
 const mapDispatchToProps = dispatch => ({

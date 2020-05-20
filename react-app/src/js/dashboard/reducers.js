@@ -5,65 +5,77 @@ import {
   CREATE_TODO_LIST_REQUEST,
   CREATE_TODO_LIST_SUCCESS,
   CREATE_TODO_LIST_FAILURE,
-  CLEAR_CREATE_TODO_LIST_FAILURE_MESSAGE
+  CLEAR_CREATE_TODO_LIST_FAILURE_MESSAGE,
+  CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE
 } from "./actions";
 
 const initialState = {
-  isLoading: false,
-  todos: null,
-  createTodoListErrors: null,
-  getTodoListsErrors: null
+  todoLists: null,
+  getTodoListsIsLoading: false,
+  getTodoListsErrors: null,
+  createTodoListIsLoading: false,
+  createTodoListSuccessMessage: null,
+  createTodoListErrors: null
 };
 
 export function todoReducers(state = initialState, action) {
   switch (action.type) {
-    // CREATE_TODO_LIST
-    case CREATE_TODO_LIST_REQUEST:
-      return {
-        ...state,
-        isLoading: true,
-        errors: initialState.createTodoListErrors
-      };
-    case CREATE_TODO_LIST_SUCCESS:
-      return {
-        ...state,
-        todos: [action.response.data, ...state.todos],
-        isLoading: initialState.isLoading
-      };
-    case CREATE_TODO_LIST_FAILURE:
-      return {
-        ...state,
-        isLoading: initialState.isLoading,
-        createTodoListErrors: action.response.data
-      };
 
    // GET_TODO_LISTS
     case GET_TODO_LISTS_REQUEST:
       return {
         ...state,
-        isLoading: true,
-        todos: initialState.todos,
-        errors: initialState.getTodoListErrors
+        getTodoListIsLoading: true,
+        getTodoListErrors: initialState.getTodoListErrors,
+        todoLists: initialState.todoLists
       };
     case GET_TODO_LISTS_SUCCESS:
       return {
         ...state,
-        isLoading: initialState.isLoading,
-        todos: action.response.data
+        getTodoListsIsLoading: initialState.getTodoListsIsLoading,
+        todoLists: action.response.data
       };
     case GET_TODO_LISTS_FAILURE:
       return {
         ...state,
-        isLoading: initialState.isLoading,
+        getTodoListsIsLoading: initialState.getTodoListsIsLoading,
         getTodoListsErrors: action.response.data
       };
 
-    // CLEAR_FAILURE_MESSAGE
+    // CREATE_TODO_LIST
+    case CREATE_TODO_LIST_REQUEST:
+      return {
+        ...state,
+        createTodoListIsLoading: true,
+        createTodoListSuccessMessage: initialState.createTodoListSuccessMessage,
+        createTodoListErrors: initialState.createTodoListErrors
+      };
+    case CREATE_TODO_LIST_SUCCESS:
+      return {
+        ...state,
+        todoLists: [action.response.data, ...state.todoLists],
+        createTodoListIsLoading: initialState.createTodoListIsLoading,
+        createTodoListSuccessMessage: "Todo List created successfully."
+      };
+    case CREATE_TODO_LIST_FAILURE:
+      return {
+        ...state,
+        createTodoListIsLoading: initialState.createTodoListIsLoading,
+        createTodoListErrors: action.response.data
+      };
+
+      // Clear
     case CLEAR_CREATE_TODO_LIST_FAILURE_MESSAGE:
       return {
         ...state,
         createTodoListErrors: initialState.createTodoListErrors
       };
+    case CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE:
+      return {
+        ...state,
+        createTodoListSuccessMessage: initialState.createTodoListSuccesMessage
+      };
+
     default:
       return state;
   }
