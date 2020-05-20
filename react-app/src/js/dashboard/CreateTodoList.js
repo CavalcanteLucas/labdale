@@ -5,7 +5,7 @@ import { Nav, Button, Modal, Form } from "react-bootstrap";
 
 import plusBtn from "../../img/plus-btn.png";
 
-import { 
+import {
   createTodoList,
   clearCreateTodoListFailureMessage,
   clearCreateTodoListSuccessMessage
@@ -24,7 +24,7 @@ export class CreateTodoList extends React.Component {
   static defaultProps = {
     successMessage: null,
     errors: null
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -39,7 +39,6 @@ export class CreateTodoList extends React.Component {
     const { successMessage, clearCreateTodoListSuccessMessage } = this.props;
     if (successMessage) {
       this.closeModal();
-      console.log(successMessage);
       clearCreateTodoListSuccessMessage();
     }
   }
@@ -58,7 +57,7 @@ export class CreateTodoList extends React.Component {
     const { todoListTitle } = this.state;
     const { createTodoList } = this.props;
     createTodoList(todoListTitle);
- };
+  };
 
   handleInputChange = e => {
     const { name, value } = e.target;
@@ -85,10 +84,7 @@ export class CreateTodoList extends React.Component {
           </Nav.Item>
         </Nav>
 
-        <Modal
-          show={modalIsOpen}
-          onHide={this.closeModal}
-        >
+        <Modal show={modalIsOpen} onHide={this.closeModal}>
           <Form onSubmit={this.onSubmit}>
             <Modal.Header closeButton>
               <Modal.Title>Create To-Do List</Modal.Title>
@@ -107,7 +103,7 @@ export class CreateTodoList extends React.Component {
                   onChange={this.handleInputChange}
                 />
               </Form.Group>
-              {errors ? <FormErrors errors={errors} /> : null} 
+              {errors ? <FormErrors errors={errors} /> : null}
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={this.closeModal}>
@@ -131,8 +127,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   createTodoList: todoListTitle => dispatch(createTodoList(todoListTitle)),
-  clearCreateTodoListFailureMessage: () => dispatch(clearCreateTodoListFailureMessage()),
-  clearCreateTodoListSuccessMessage: () => dispatch(clearCreateTodoListSuccessMessage())
+  clearCreateTodoListFailureMessage: () =>
+    dispatch(clearCreateTodoListFailureMessage()),
+  clearCreateTodoListSuccessMessage: () =>
+    dispatch(clearCreateTodoListSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateTodoList);

@@ -35,7 +35,9 @@ export class TodoLists extends React.Component {
                   <strong>{todoList.title}</strong> ({todoList.id})
                 </p>
                 <small>
-                  {moment(todoList.created_at).format("MMMM Do YYYY, h:mm:ss a")}
+                  {moment(todoList.created_at).format(
+                    "MMMM Do YYYY, h:mm:ss a"
+                  )}
                 </small>
               </ListGroup.Item>
             ))}

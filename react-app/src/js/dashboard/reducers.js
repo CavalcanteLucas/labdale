@@ -20,8 +20,7 @@ const initialState = {
 
 export function todoReducers(state = initialState, action) {
   switch (action.type) {
-
-   // GET_TODO_LISTS
+    // GET_TODO_LISTS
     case GET_TODO_LISTS_REQUEST:
       return {
         ...state,
@@ -64,7 +63,7 @@ export function todoReducers(state = initialState, action) {
         createTodoListErrors: action.response.data
       };
 
-      // Clear
+    // Clear
     case CLEAR_CREATE_TODO_LIST_FAILURE_MESSAGE:
       return {
         ...state,
