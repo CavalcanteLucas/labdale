@@ -121,3 +121,6 @@ webpack-stats.json
 # VSCode
 .vscode
 .DS_Store
+
+# Vim
+*.swp
