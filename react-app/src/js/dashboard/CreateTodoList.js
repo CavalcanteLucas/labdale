@@ -10,7 +10,7 @@ import {
   clearCreateTodoListErrors,
   clearCreateTodoListSuccessMessage
 } from "./actions";
-import FormErrors from "../auth/components/FormErrors";
+import FormErrors from "../FormErrors";
 
 export class CreateTodoList extends React.Component {
   static propTypes = {
