@@ -6,6 +6,7 @@ export const GET_TODO_LISTS_FAILURE = "GET_TODO_LISTS_FAILURE";
 export const CREATE_TODO_LIST_REQUEST = "CREATE_TODO_LIST_REQUEST";
 export const CREATE_TODO_LIST_SUCCESS = "CREATE_TODO_LIST_SUCCESS";
 export const CREATE_TODO_LIST_FAILURE = "CREATE_TODO_LIST_FAILURE";
+export const CLEAR_CREATE_TODO_LIST_FAILURE_MESSAGE = "CLEAR_CREATE_TODO_LIST_FAILURE_MESSAGE"
 
 export const getTodoLists = () => {
   const requestData = {
@@ -43,3 +44,7 @@ export const createTodoList = todoListTitle => {
     apiCallFunction: () => fetchFromApi("api/todolists/", requestData)
   };
 };
+
+export const clearCreateTodoListErrors = () => ({
+  type: CLEAR_CREATE_TODO_LIST_FAILURE_MESSAGE
+});
