@@ -12,7 +12,7 @@ import {
 const initialState = {
   todoLists: null,
   getTodoListsIsLoading: false,
-  getTodoListsErrors: null,
+  getTodoListFailureMessage: null,
   createTodoListIsLoading: false,
   createTodoListSuccessMessage: null,
   createTodoListErrors: null
@@ -25,7 +25,7 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodoListIsLoading: true,
-        getTodoListErrors: initialState.getTodoListErrors,
+        getTodoListFailureMessage: initialState.getTodoListFailureMessage,
         todoLists: initialState.todoLists
       };
     case GET_TODO_LISTS_SUCCESS:
@@ -38,7 +38,8 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodoListsIsLoading: initialState.getTodoListsIsLoading,
-        getTodoListsErrors: action.response.data
+        getTodoListFailureMessage:
+          "Opsy.. Could not retrieve your To-Do lists from database!"
       };
 
     // CREATE_TODO_LIST

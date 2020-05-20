@@ -12,11 +12,13 @@ import { getUserInfo } from "../../auth/actions";
 export class Dashboard extends React.Component {
   static propTypes = {
     getUserInfo: PropTypes.func.isRequired,
-    userInfo: PropTypes.object
+    userInfo: PropTypes.object,
+    failureMessage: PropTypes.string
   };
 
   static defaultProps = {
-    userInfo: null
+    userInfo: null,
+    failureMessage: ""
   };
 
   componentDidMount() {
@@ -25,7 +27,7 @@ export class Dashboard extends React.Component {
   }
 
   render() {
-    const { userInfo } = this.props;
+    const { userInfo, failureMessage } = this.props;
     return (
       <div className="dashboard">
         {userInfo ? (
@@ -43,7 +45,11 @@ export class Dashboard extends React.Component {
                     Today is:
                     <strong> {moment().format("dddd, DD/MM/Y")}</strong>
                   </p>
-                  <TodoLists />
+                  {failureMessage ? (
+                    <div className="alert alert-danger">{failureMessage}</div>
+                  ) : (
+                    <TodoLists />
+                  )}
                 </div>
               </Col>
             </Row>
@@ -55,7 +61,8 @@ export class Dashboard extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  userInfo: state.auth.userInfo
+  userInfo: state.auth.userInfo,
+  failureMessage: state.todo.getTodoListFailureMessage
 });
 
 const mapDispatchToProps = dispatch => ({
