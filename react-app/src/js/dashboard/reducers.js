@@ -5,7 +5,7 @@ import {
   CREATE_TODO_LIST_REQUEST,
   CREATE_TODO_LIST_SUCCESS,
   CREATE_TODO_LIST_FAILURE,
-  CLEAR_CREATE_TODO_LIST_FAILURE_MESSAGE,
+  CLEAR_CREATE_TODO_LIST_ERRORS,
   CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE
 } from "./actions";
 
@@ -63,8 +63,8 @@ export function todoReducers(state = initialState, action) {
         createTodoListErrors: action.response.data
       };
 
-    // Clear
-    case CLEAR_CREATE_TODO_LIST_FAILURE_MESSAGE:
+    // CLEAR
+    case CLEAR_CREATE_TODO_LIST_ERRORS:
       return {
         ...state,
         createTodoListErrors: initialState.createTodoListErrors

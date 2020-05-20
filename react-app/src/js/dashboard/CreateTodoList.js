@@ -7,7 +7,7 @@ import plusBtn from "../../img/plus-btn.png";
 
 import {
   createTodoList,
-  clearCreateTodoListFailureMessage,
+  clearCreateTodoListErrors,
   clearCreateTodoListSuccessMessage
 } from "./actions";
 import FormErrors from "../auth/components/FormErrors";
@@ -17,7 +17,7 @@ export class CreateTodoList extends React.Component {
     createTodoList: PropTypes.func.isRequired,
     successMessage: PropTypes.string,
     errors: PropTypes.object,
-    clearCreateTodoListFailureMessage: PropTypes.func.isRequired,
+    clearCreateTodoListErrors: PropTypes.func.isRequired,
     clearCreateTodoListSuccessMessage: PropTypes.func.isRequired
   };
 
@@ -44,10 +44,10 @@ export class CreateTodoList extends React.Component {
   }
 
   closeModal = () => {
-    const { clearCreateTodoListFailureMessage } = this.props;
+    const { clearCreateTodoListErrors } = this.props;
     this.setState({ modalIsOpen: false });
     this.setState({ todoListTitle: "" });
-    clearCreateTodoListFailureMessage();
+    clearCreateTodoListErrors();
   };
 
   openModal = () => this.setState({ modalIsOpen: true });
@@ -127,8 +127,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   createTodoList: todoListTitle => dispatch(createTodoList(todoListTitle)),
-  clearCreateTodoListFailureMessage: () =>
-    dispatch(clearCreateTodoListFailureMessage()),
+  clearCreateTodoListErrors: () => dispatch(clearCreateTodoListErrors()),
   clearCreateTodoListSuccessMessage: () =>
     dispatch(clearCreateTodoListSuccessMessage())
 });
