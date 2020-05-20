@@ -22,7 +22,7 @@ export const getTodoLists = () => {
       success: GET_TODO_LISTS_SUCCESS,
       failure: GET_TODO_LISTS_FAILURE
     },
-    apiCallFunction: () => fetchFromApi("api/todolists/", requestData)
+    apiCallFunction: () => fetchFromApi("api/todo-list/", requestData)
   };
 };
 
@@ -43,7 +43,7 @@ export const createTodoList = todoListTitle => {
       success: CREATE_TODO_LIST_SUCCESS,
       failure: CREATE_TODO_LIST_FAILURE
     },
-    apiCallFunction: () => fetchFromApi("api/todolists/", requestData)
+    apiCallFunction: () => fetchFromApi("api/todo-list/", requestData)
   };
 };
 
