@@ -94,7 +94,7 @@ class LoginForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  errors: state.auth.errors
+  errors: state.auth.loginErrors
 });
 
 const mapDispatchToProps = dispatch => ({

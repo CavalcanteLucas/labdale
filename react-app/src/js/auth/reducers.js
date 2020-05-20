@@ -65,6 +65,11 @@ export default function loginReducers(state = initialState, action) {
         isAuthenticated: true
       };
     case LOGIN_FAILURE:
+      return {
+        ...state,
+        loginIsLoading: initialState.loginIsLoading,
+        loginErrors: action.response.data
+      };
     case LOGOUT_SUCCESS:
       localStorage.removeItem("token");
       initialState.token = null;
