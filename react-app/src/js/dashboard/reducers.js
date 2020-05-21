@@ -73,7 +73,7 @@ export function todoReducers(state = initialState, action) {
     case CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE:
       return {
         ...state,
-        createTodoListSuccessMessage: initialState.createTodoListSuccesMessage
+        createTodoListSuccessMessage: initialState.createTodoListSuccessMessage
       };
 
     default:
