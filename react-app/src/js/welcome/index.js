@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Col, Row } from "react-bootstrap";
+import { Alert, Container, Col, Row } from "react-bootstrap";
 import Helmet from "react-helmet";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -36,16 +36,13 @@ export class Welcome extends React.Component {
           <title>- To-Do LABC -</title>
         </Helmet>
         {successMessage ? (
-          <div className="alert alert-success" role="alert">
+          <Alert
+            variant="success"
+            onClose={this.handleCloseSuccessMessage}
+            dismissible
+          >
             {successMessage}
-            <button
-              onClick={this.handleCloseSuccessMessage}
-              type="button"
-              className="close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+          </Alert>
         ) : null}
         <div className="welcome__content">
           <Container>

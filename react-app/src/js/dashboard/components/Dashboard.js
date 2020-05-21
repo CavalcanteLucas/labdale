@@ -3,22 +3,27 @@ import moment from "moment";
 import PropTypes from "prop-types";
 import { capitalize as _capitalize } from "lodash";
 import { connect } from "react-redux";
-import { Container, Row, Col } from "react-bootstrap";
+import { Alert, Container, Row, Col } from "react-bootstrap";
 
 import TodoLists from "./TodoLists";
 import ActionBar from "./ActionBar";
 import { getUserInfo } from "../../auth/actions";
 
+import { clearCreateTodoListSuccessMessage } from "../actions";
+
 export class Dashboard extends React.Component {
   static propTypes = {
     getUserInfo: PropTypes.func.isRequired,
     userInfo: PropTypes.object,
-    failureMessage: PropTypes.string
+    failureMessage: PropTypes.string,
+    successMessage: PropTypes.string,
+    clearSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     userInfo: null,
-    failureMessage: ""
+    failureMessage: "",
+    successMessage: ""
   };
 
   componentDidMount() {
@@ -26,8 +31,13 @@ export class Dashboard extends React.Component {
     getUserInfo();
   }
 
+  handleCloseSuccessMessage = () => {
+    const { clearSuccessMessage } = this.props;
+    clearSuccessMessage();
+  };
+
   render() {
-    const { userInfo, failureMessage } = this.props;
+    const { userInfo, failureMessage, successMessage } = this.props;
     return (
       <div className="dashboard">
         {userInfo ? (
@@ -37,6 +47,18 @@ export class Dashboard extends React.Component {
                 <ActionBar />
               </Col>
               <Col xs={10} lg={11}>
+                {failureMessage ? (
+                  <Alert variant="danger">{failureMessage}</Alert>
+                ) : null}
+                {successMessage ? (
+                  <Alert
+                    variant="success"
+                    onClose={this.handleCloseSuccessMessage}
+                    dismissible
+                  >
+                    {successMessage}
+                  </Alert>
+                ) : null}
                 <div className="dashboard__content">
                   <h3>
                     Hi <strong>{_capitalize(userInfo.username)}</strong>,
@@ -45,11 +67,7 @@ export class Dashboard extends React.Component {
                     Today is:
                     <strong> {moment().format("dddd, DD/MM/Y")}</strong>
                   </p>
-                  {failureMessage ? (
-                    <div className="alert alert-danger">{failureMessage}</div>
-                  ) : (
-                    <TodoLists />
-                  )}
+                  <TodoLists />
                 </div>
               </Col>
             </Row>
@@ -62,11 +80,13 @@ export class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   userInfo: state.auth.userInfo,
-  failureMessage: state.todo.getTodoListFailureMessage
+  failureMessage: state.todo.getTodoListFailureMessage,
+  successMessage: state.todo.createTodoListSuccessMessage
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUserInfo: () => dispatch(getUserInfo())
+  getUserInfo: () => dispatch(getUserInfo()),
+  clearSuccessMessage: () => dispatch(clearCreateTodoListSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

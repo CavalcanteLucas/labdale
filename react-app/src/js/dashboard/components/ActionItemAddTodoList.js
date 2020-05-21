@@ -35,13 +35,13 @@ export class ActionItemAddTodoList extends React.Component {
     };
   }
 
-  componentDidUpdate() {
-    const { successMessage, clearCreateTodoListSuccessMessage } = this.props;
-    if (successMessage) {
-      this.closeModal();
-      clearCreateTodoListSuccessMessage();
-    }
-  }
+  // componentDidUpdate() {
+  //   const { successMessage, clearCreateTodoListSuccessMessage } = this.props;
+  //   if (successMessage) {
+  //     // this.closeModal();
+  //     clearCreateTodoListSuccessMessage();
+  //   }
+  // }
 
   closeModal = () => {
     const { clearCreateTodoListErrors } = this.props;
@@ -57,6 +57,7 @@ export class ActionItemAddTodoList extends React.Component {
     const { todoListTitle } = this.state;
     const { createTodoList } = this.props;
     createTodoList(todoListTitle);
+    this.closeModal();
   };
 
   handleInputChange = e => {

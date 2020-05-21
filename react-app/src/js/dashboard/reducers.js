@@ -39,7 +39,7 @@ export function todoReducers(state = initialState, action) {
         ...state,
         getTodoListsIsLoading: initialState.getTodoListsIsLoading,
         getTodoListFailureMessage:
-          "Opsy.. Could not retrieve your To-Do lists from database!"
+          "Opsy.. Something went wrong. We couldn't retrieve your To-Do lists from the database!"
       };
 
     // CREATE_TODO_LIST
