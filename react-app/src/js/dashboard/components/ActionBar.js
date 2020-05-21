@@ -1,9 +1,9 @@
 import React from "react";
 
-import ActionItemAddTodoList from "./ActionItemAddTodoList";
+import AddTodoListActionItem from "./AddTodoListActionItem";
 
 export default class ActionBar extends React.Component {
   render() {
-    return <ActionItemAddTodoList />;
+    return <AddTodoListActionItem />;
   }
 }

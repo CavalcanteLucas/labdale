@@ -5,24 +5,17 @@ import { Nav, Button, Modal, Form } from "react-bootstrap";
 
 import plusBtn from "../../../img/plus-btn.png";
 
-import {
-  createTodoList,
-  clearCreateTodoListErrors,
-  clearCreateTodoListSuccessMessage
-} from "../actions";
+import { createTodoList, clearCreateTodoListErrors } from "../actions";
 import FormErrors from "../../FormErrors";
 
-export class ActionItemAddTodoList extends React.Component {
+export class AddTodoListActionItem extends React.Component {
   static propTypes = {
     createTodoList: PropTypes.func.isRequired,
-    successMessage: PropTypes.string,
     errors: PropTypes.object,
-    clearCreateTodoListErrors: PropTypes.func.isRequired,
-    clearCreateTodoListSuccessMessage: PropTypes.func.isRequired
+    clearCreateTodoListErrors: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    successMessage: null,
     errors: null
   };
 
@@ -34,14 +27,6 @@ export class ActionItemAddTodoList extends React.Component {
       todoListTitle: ""
     };
   }
-
-  // componentDidUpdate() {
-  //   const { successMessage, clearCreateTodoListSuccessMessage } = this.props;
-  //   if (successMessage) {
-  //     // this.closeModal();
-  //     clearCreateTodoListSuccessMessage();
-  //   }
-  // }
 
   closeModal = () => {
     const { clearCreateTodoListErrors } = this.props;
@@ -128,12 +113,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   createTodoList: todoListTitle => dispatch(createTodoList(todoListTitle)),
-  clearCreateTodoListErrors: () => dispatch(clearCreateTodoListErrors()),
-  clearCreateTodoListSuccessMessage: () =>
-    dispatch(clearCreateTodoListSuccessMessage())
+  clearCreateTodoListErrors: () => dispatch(clearCreateTodoListErrors())
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ActionItemAddTodoList);
+)(AddTodoListActionItem);
