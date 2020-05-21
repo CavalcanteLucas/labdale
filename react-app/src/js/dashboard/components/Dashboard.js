@@ -31,6 +31,11 @@ export class Dashboard extends React.Component {
     getUserInfo();
   }
 
+  componentWillUnmount() {
+    const { clearSuccessMessage } = this.props;
+    clearSuccessMessage();
+  }
+
   handleCloseSuccessMessage = () => {
     const { clearSuccessMessage } = this.props;
     clearSuccessMessage();
