@@ -43,10 +43,13 @@ export class Dashboard extends React.Component {
         {userInfo ? (
           <Container fluid>
             <Row>
-              <Col xs={2} lg={1}>
-                <ActionBar />
-              </Col>
-              <Col xs={10} lg={11}>
+              <div className="action-bar ">
+                <Col xs={1}>
+                  <ActionBar />
+                </Col>
+              </div>
+
+              <Col xs={{ offset: 1, span: 8 }} sm={9}>
                 {failureMessage ? (
                   <Alert variant="danger">{failureMessage}</Alert>
                 ) : null}

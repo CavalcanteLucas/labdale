@@ -1,14 +1,19 @@
 .action-bar {
     background-color: #2A3037;
-
-    height: 100vh;
-    max-width: 4rem;
-    margin-left: -1rem;
     box-shadow: 0.1rem 0 0 #4A4E51;
+    margin-left: -16px;
 
-  &__add-btn {
-    height: 2rem;
-    width: 2rem;
-    filter: invert(1);
+  &__item{
+    margin-right: -16px;
+
+    &:hover {
+      box-shadow: inset -0.4rem 0 0 0 gold;
+      filter: brightness(0.6);
+    }
+
+    &__add-btn {
+      height: 2rem;
+      filter: invert(1);
+    }
   }
 }
