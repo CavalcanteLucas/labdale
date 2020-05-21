@@ -11,3 +11,6 @@ class TodoListAPIView(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         return reversed(TodoList.objects.filter(owner=user))
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)

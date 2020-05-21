@@ -32,7 +32,8 @@ export class TodoLists extends React.Component {
             {todoLists.map(todoList => (
               <ListGroup.Item key={todoList.id}>
                 <p>
-                  <strong>{todoList.title}</strong> ({todoList.id})
+                  <strong>{todoList.title}</strong> ({todoList.id}) - [
+                  {todoList.owner}]
                 </p>
                 <small>
                   {moment(todoList.created_at).format(
