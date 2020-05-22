@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import {
   passwordResetConfirm,
-  clearPasswordResetConfirmFailureMessage,
+  clearPasswordResetConfirmErros,
   clearPasswordResetConfirmSuccessMessage
 } from "../actions";
 import FormErrors from "../../FormErrors";
@@ -23,7 +23,7 @@ export class PasswordResetConfirmForm extends React.Component {
     successMessage: PropTypes.string,
     errors: PropTypes.object,
     match: PropTypes.object.isRequired,
-    clearPasswordResetConfirmFailureMessage: PropTypes.func.isRequired,
+    clearPasswordResetConfirmErros: PropTypes.func.isRequired,
     clearPasswordResetConfirmSuccessMessage: PropTypes.func.isRequired,
     setSuccessMessage: PropTypes.func.isRequired
   };
@@ -49,8 +49,8 @@ export class PasswordResetConfirmForm extends React.Component {
   }
 
   componentWillUnmount() {
-    const { clearPasswordResetConfirmFailureMessage } = this.props;
-    clearPasswordResetConfirmFailureMessage();
+    const { clearPasswordResetConfirmErros } = this.props;
+    clearPasswordResetConfirmErros();
   }
 
   onSubmit = e => {
@@ -131,8 +131,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   passwordResetConfirm: (uid, token, password1, password2) =>
     dispatch(passwordResetConfirm(uid, token, password1, password2)),
-  clearPasswordResetConfirmFailureMessage: () =>
-    dispatch(clearPasswordResetConfirmFailureMessage()),
+  clearPasswordResetConfirmErros: () =>
+    dispatch(clearPasswordResetConfirmErros()),
   clearPasswordResetConfirmSuccessMessage: () =>
     dispatch(clearPasswordResetConfirmSuccessMessage()),
   setSuccessMessage: successMessage =>

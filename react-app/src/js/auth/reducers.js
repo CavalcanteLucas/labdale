@@ -14,7 +14,7 @@ import {
   PASSWORD_RESET_CONFIRM_SUCCESS,
   PASSWORD_RESET_CONFIRM_FAILURE,
   CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE,
-  CLEAR_PASSWORD_RESET_CONFIRM_FAILURE_MESSAGE,
+  CLEAR_PASSWORD_RESET_CONFIRM_ERRORS,
   PASSWORD_RESET_REQUEST,
   PASSWORD_RESET_SUCCESS,
   PASSWORD_RESET_FAILURE,
@@ -151,7 +151,7 @@ export default function loginReducers(state = initialState, action) {
         passwordResetConfirmSuccessMessage:
           initialState.passwordResetConfirmSuccessMessage
       };
-    case CLEAR_PASSWORD_RESET_CONFIRM_FAILURE_MESSAGE:
+    case CLEAR_PASSWORD_RESET_CONFIRM_ERRORS:
       return {
         ...state,
         passwordResetConfirmErrors: initialState.passwordResetConfirmErrors
