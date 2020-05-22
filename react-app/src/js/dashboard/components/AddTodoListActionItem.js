@@ -24,11 +24,7 @@ export default class AddTodoListActionItem extends React.Component {
     return (
       <Nav.Item className="action-bar__item">
         <Nav.Link onClick={this.openModal}>
-          <img
-            src={plusBtn}
-            alt="Add Todo"
-            className="action-bar__item__add-btn"
-          />
+          <img src={plusBtn} alt="Add Todo" className="action-bar__add-btn" />
         </Nav.Link>
         <AddTodoListModal show={modalIsOpen} onHide={this.closeModal} />
       </Nav.Item>
