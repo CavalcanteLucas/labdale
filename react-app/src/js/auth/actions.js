@@ -21,8 +21,7 @@ export const PASSWORD_RESET_SUCCESS = "PASSWORD_RESET_SUCCESS";
 export const PASSWORD_RESET_FAILURE = "PASSWORD_RESET_FAILURE";
 export const CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE =
   "CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE";
-export const CLEAR_PASSWORD_RESET_FAILURE_MESSAGE =
-  "CLEAR_PASSWORD_RESET_FAILURE_MESSAGE";
+export const CLEAR_PASSWORD_RESET_ERRORS = "CLEAR_PASSWORD_RESET_ERRORS";
 
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -116,8 +115,8 @@ export const clearPasswordResetSuccessMessage = () => ({
   type: CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE
 });
 
-export const clearPasswordResetFailureMessage = () => ({
-  type: CLEAR_PASSWORD_RESET_FAILURE_MESSAGE
+export const clearPasswordResetErrors = () => ({
+  type: CLEAR_PASSWORD_RESET_ERRORS
 });
 
 export const register = (username, email, password1, password2) => {

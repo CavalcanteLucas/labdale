@@ -23,7 +23,7 @@ class LoginForm extends React.Component {
     errors: null
   };
 
-  componentDidMount() {
+  componentWillUnmount() {
     const { clearLoginErrors } = this.props;
     clearLoginErrors();
   }

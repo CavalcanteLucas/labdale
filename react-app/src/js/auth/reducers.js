@@ -19,7 +19,7 @@ import {
   PASSWORD_RESET_SUCCESS,
   PASSWORD_RESET_FAILURE,
   CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE,
-  CLEAR_PASSWORD_RESET_FAILURE_MESSAGE,
+  CLEAR_PASSWORD_RESET_ERRORS,
   GET_USER_INFO_REQUEST,
   GET_USER_INFO_FAILURE,
   GET_USER_INFO_SUCCESS
@@ -30,6 +30,7 @@ const initialState = {
   loginIsLoading: false,
   loginSuccessMessage: null,
   loginErrors: null,
+  logoutIsLoading: false,
   isAuthenticated: localStorage.getItem("token") ? true : false,
   passwordResetConfirmIsLoading: false,
   passwordResetConfirmSuccessMessage: null,
@@ -47,8 +48,8 @@ const initialState = {
 
 export default function loginReducers(state = initialState, action) {
   switch (action.type) {
+    // LOGIN
     case LOGIN_REQUEST:
-    case LOGOUT_REQUEST:
       return {
         ...state,
         loginIsLoading: true,
@@ -70,16 +71,57 @@ export default function loginReducers(state = initialState, action) {
         loginIsLoading: initialState.loginIsLoading,
         loginErrors: action.response.data
       };
-    case LOGOUT_SUCCESS:
-      localStorage.removeItem("token");
-      initialState.token = null;
-      initialState.isAuthenticated = false;
-      return initialState;
     case CLEAR_LOGIN_ERRORS:
       return {
         ...state,
         loginErrors: initialState.loginErrors
       };
+
+    // LOGOUT
+    case LOGOUT_REQUEST:
+      return {
+        ...state,
+        logoutIsLoading: true
+      };
+    case LOGOUT_SUCCESS:
+      localStorage.removeItem("token");
+      initialState.token = null;
+      initialState.isAuthenticated = false;
+      return initialState;
+
+    // PASSWORD_RESET
+    case PASSWORD_RESET_REQUEST:
+      return {
+        ...state,
+        passwordResetIsLoading: true,
+        passwordResetSuccessMessage: initialState.passwordResetSuccessMessage,
+        passwordResetErrors: initialState.passwordResetErrors
+      };
+    case PASSWORD_RESET_SUCCESS:
+      return {
+        ...state,
+        passwordResetIsLoading: initialState.passwordResetIsLoading,
+        passwordResetSuccessMessage:
+          "Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder."
+      };
+    case PASSWORD_RESET_FAILURE:
+      return {
+        ...state,
+        passwordResetIsLoading: initialState.passwordResetIsLoading,
+        passwordResetErrors: action.response.data
+      };
+    case CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE:
+      return {
+        ...state,
+        passwordResetSuccessMessage: initialState.passwordResetSuccessMessage
+      };
+    case CLEAR_PASSWORD_RESET_ERRORS:
+      return {
+        ...state,
+        passwordResetErrors: initialState.passwordResetErrors
+      };
+
+    // PASSWORD_RESET_CONFIRM
     case PASSWORD_RESET_CONFIRM_REQUEST:
       return {
         ...state,
@@ -114,36 +156,8 @@ export default function loginReducers(state = initialState, action) {
         ...state,
         passwordResetConfirmErrors: initialState.passwordResetConfirmErrors
       };
-    case PASSWORD_RESET_REQUEST:
-      return {
-        ...state,
-        passwordResetIsLoading: true,
-        passwordResetSuccessMessage: initialState.passwordResetSuccessMessage,
-        passwordResetErrors: initialState.passwordResetErrors
-      };
-    case PASSWORD_RESET_SUCCESS:
-      return {
-        ...state,
-        passwordResetIsLoading: initialState.passwordResetIsLoading,
-        passwordResetSuccessMessage:
-          "Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder."
-      };
-    case PASSWORD_RESET_FAILURE:
-      return {
-        ...state,
-        passwordResetIsLoading: initialState.passwordResetIsLoading,
-        passwordResetErrors: action.response.data
-      };
-    case CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        passwordResetSuccessMessage: initialState.passwordResetSuccessMessage
-      };
-    case CLEAR_PASSWORD_RESET_FAILURE_MESSAGE:
-      return {
-        ...state,
-        passwordResetErrors: initialState.passwordResetErrors
-      };
+
+    // REGISTER
     case REGISTER_REQUEST:
       return {
         ...state,
@@ -173,6 +187,8 @@ export default function loginReducers(state = initialState, action) {
         ...state,
         registerErrors: initialState.registerErrors
       };
+
+    // GET_USER_INFO
     case GET_USER_INFO_REQUEST:
       return {
         ...state,
