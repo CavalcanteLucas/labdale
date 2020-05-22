@@ -7,7 +7,10 @@
   height: 100%;
 
   &__item {
-    .nav-link { text-align: center; }
+    .nav-link {
+      padding: 0.5rem;
+      text-align: center;
+    }
 
     &:hover {
       box-shadow: inset -0.4rem 0 0 0 gold;

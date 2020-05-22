@@ -43,7 +43,7 @@ export class Dashboard extends React.Component {
         {userInfo ? (
           <Container fluid>
             <Row>
-              <Col xs={1}>
+              <Col xs={2} sm={1}>
                 <ActionBar />
               </Col>
 
