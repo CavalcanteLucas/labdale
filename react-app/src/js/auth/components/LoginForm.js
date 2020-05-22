@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { login, clearLoginSuccessMessage } from "../actions";
+import { login, clearLoginErrors } from "../actions";
 import FormErrors from "../../FormErrors";
 
 class LoginForm extends React.Component {
@@ -16,7 +16,7 @@ class LoginForm extends React.Component {
   static propTypes = {
     login: PropTypes.func.isRequired,
     errors: PropTypes.object,
-    clearLoginSuccessMessage: PropTypes.func.isRequired
+    clearLoginErrors: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -24,8 +24,8 @@ class LoginForm extends React.Component {
   };
 
   componentDidMount() {
-    const { clearLoginSuccessMessage } = this.props;
-    clearLoginSuccessMessage();
+    const { clearLoginErrors } = this.props;
+    clearLoginErrors();
   }
 
   onSubmit = e => {
@@ -99,7 +99,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   login: (username, password) => dispatch(login(username, password)),
-  clearLoginSuccessMessage: () => dispatch(clearLoginSuccessMessage())
+  clearLoginErrors: () => dispatch(clearLoginErrors())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

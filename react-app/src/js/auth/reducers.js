@@ -4,7 +4,7 @@ import {
   LOGIN_FAILURE,
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
-  CLEAR_LOGIN_SUCCESS_MESSAGE,
+  CLEAR_LOGIN_ERRORS,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
@@ -75,10 +75,10 @@ export default function loginReducers(state = initialState, action) {
       initialState.token = null;
       initialState.isAuthenticated = false;
       return initialState;
-    case CLEAR_LOGIN_SUCCESS_MESSAGE:
+    case CLEAR_LOGIN_ERRORS:
       return {
         ...state,
-        loginSuccessMessage: initialState.loginSuccessMessage
+        loginErrors: initialState.loginErrors
       };
     case PASSWORD_RESET_CONFIRM_REQUEST:
       return {

@@ -6,7 +6,7 @@ export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
-export const CLEAR_LOGIN_SUCCESS_MESSAGE = "CLEAR_LOGIN_SUCCESS_MESSAGE";
+export const CLEAR_LOGIN_ERRORS = "CLEAR_LOGIN_ERRORS";
 
 export const PASSWORD_RESET_CONFIRM_REQUEST = "PASSWORD_RESET_CONFIRM_REQUEST";
 export const PASSWORD_RESET_CONFIRM_SUCCESS = "PASSWORD_RESET_CONFIRM_SUCCESS";
@@ -63,8 +63,8 @@ export const logout = () => {
   };
 };
 
-export const clearLoginSuccessMessage = () => ({
-  type: CLEAR_LOGIN_SUCCESS_MESSAGE
+export const clearLoginErrors = () => ({
+  type: CLEAR_LOGIN_ERRORS
 });
 
 export const passwordResetConfirm = (uid, token, password1, password2) => {
