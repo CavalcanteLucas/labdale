@@ -9,13 +9,18 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('todo_list', '0001_initial'),
+        ("todo_list", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='todolist',
-            name='owner',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='todo_lists', to=settings.AUTH_USER_MODEL),
+            model_name="todolist",
+            name="owner",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="todo_lists",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]
