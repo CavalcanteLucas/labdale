@@ -1,8 +1,10 @@
 .dashboard {
   background-color: #E8EFF3;
   color: #2E3A42;
-  box-shadow:  inset 0 0 0.2rem black;
+  box-shadow: inset 0 0 0.2rem black;
 
-  &__content { padding-top: 4rem; min-height: 100vh;}
-
+  &__content {
+    padding-top: 4rem;
+    min-height: calc(100vh - 4rem);
+  }
 }
