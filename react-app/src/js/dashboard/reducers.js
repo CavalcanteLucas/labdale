@@ -8,6 +8,7 @@ import {
   CLEAR_CREATE_TODO_LIST_ERRORS,
   CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE
 } from "./actions";
+import { LOGOUT_SUCCESS } from "../auth/actions";
 
 const initialState = {
   todoLists: null,
@@ -75,6 +76,9 @@ export function todoReducers(state = initialState, action) {
         ...state,
         createTodoListSuccessMessage: initialState.createTodoListSuccessMessage
       };
+
+    case LOGOUT_SUCCESS:
+      return initialState;
 
     default:
       return state;
