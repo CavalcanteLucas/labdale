@@ -15,12 +15,12 @@ class LoginForm extends React.Component {
 
   static propTypes = {
     login: PropTypes.func.isRequired,
-    errors: PropTypes.object,
+    loginErrors: PropTypes.object,
     clearLoginErrors: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    errors: null
+    loginErrors: null
   };
 
   componentWillUnmount() {
@@ -42,7 +42,7 @@ class LoginForm extends React.Component {
 
   render() {
     const { username, password } = this.state;
-    const { errors } = this.props;
+    const { loginErrors } = this.props;
 
     return (
       <div className="auth-form-card">
@@ -78,7 +78,7 @@ class LoginForm extends React.Component {
                   <Link to="/password_reset">Forgot password?</Link>
                 </Form.Text>
               </Form.Group>
-              {errors ? <FormErrors errors={errors} /> : null}
+              {loginErrors ? <FormErrors errors={loginErrors} /> : null}
               <Button variant="success" type="submit" block>
                 Sign in
               </Button>
@@ -94,7 +94,7 @@ class LoginForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  errors: state.auth.loginErrors
+  loginErrors: state.auth.loginErrors
 });
 
 const mapDispatchToProps = dispatch => ({

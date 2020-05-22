@@ -1,25 +1,31 @@
 import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGOUT_REQUEST,
-  LOGOUT_SUCCESS,
-  CLEAR_LOGIN_ERRORS,
+  // REGISTER
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
   CLEAR_REGISTER_SUCCESS_MESSAGE,
   CLEAR_REGISTER_FAILURE_MESSAGE,
-  PASSWORD_RESET_CONFIRM_REQUEST,
-  PASSWORD_RESET_CONFIRM_SUCCESS,
-  PASSWORD_RESET_CONFIRM_FAILURE,
-  CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE,
-  CLEAR_PASSWORD_RESET_CONFIRM_ERRORS,
+  // LOGIN
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  CLEAR_LOGIN_ERRORS,
+  // LOGOUT
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  // PASSWORD_RESET
   PASSWORD_RESET_REQUEST,
   PASSWORD_RESET_SUCCESS,
   PASSWORD_RESET_FAILURE,
   CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE,
   CLEAR_PASSWORD_RESET_ERRORS,
+  // PASSWORD_RESET_CONFIRM
+  PASSWORD_RESET_CONFIRM_REQUEST,
+  PASSWORD_RESET_CONFIRM_SUCCESS,
+  PASSWORD_RESET_CONFIRM_FAILURE,
+  CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE,
+  CLEAR_PASSWORD_RESET_CONFIRM_ERRORS,
+  // GET_USER_INFO
   GET_USER_INFO_REQUEST,
   GET_USER_INFO_FAILURE,
   GET_USER_INFO_SUCCESS
@@ -27,27 +33,64 @@ import {
 
 const initialState = {
   token: localStorage.getItem("token"),
-  loginIsLoading: false,
-  loginSuccessMessage: null,
-  loginErrors: null,
-  logoutIsLoading: false,
   isAuthenticated: localStorage.getItem("token") ? true : false,
-  passwordResetConfirmIsLoading: false,
-  passwordResetConfirmSuccessMessage: null,
-  passwordResetConfirmErrors: null,
-  passwordResetIsLoading: false,
-  passwordResetSuccessMessage: null,
-  passwordResetErrors: null,
+  // REGISTER
   registerIsLoading: false,
   registerSuccessMessage: null,
   registerErrors: null,
-  userInfo: null,
-  userInfoIsLoading: false,
-  userInfoErrors: null
+  // LOGIN
+  loginIsLoading: false,
+  loginSuccessMessage: null,
+  loginErrors: null,
+  // LOGOUT
+  logoutIsLoading: false,
+  // PASSWORD_RESET
+  passwordResetIsLoading: false,
+  passwordResetSuccessMessage: null,
+  passwordResetErrors: null,
+  // PASSWORD_RESET_CONFIRM
+  passwordResetConfirmIsLoading: false,
+  passwordResetConfirmSuccessMessage: null,
+  passwordResetConfirmErrors: null,
+  // USER_INFO
+  getUserInfo: null,
+  getUserInfoIsLoading: false,
+  getUserInfoErrors: null
 };
 
 export default function loginReducers(state = initialState, action) {
   switch (action.type) {
+    // REGISTER
+    case REGISTER_REQUEST:
+      return {
+        ...state,
+        registerIsLoading: true,
+        registerSuccessMessage: initialState.registerSuccessMessage,
+        registerErrors: initialState.registerErrors
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        registerIsLoading: initialState.registerIsLoading,
+        registerSuccessMessage: "User successfully created!"
+      };
+    case REGISTER_FAILURE:
+      return {
+        ...state,
+        registerIsLoading: initialState.registerIsLoading,
+        registerErrors: action.response.data
+      };
+    case CLEAR_REGISTER_SUCCESS_MESSAGE:
+      return {
+        ...state,
+        registerSuccessMessage: initialState.registerSuccessMessage
+      };
+    case CLEAR_REGISTER_FAILURE_MESSAGE:
+      return {
+        ...state,
+        registerErrors: initialState.registerErrors
+      };
+
     // LOGIN
     case LOGIN_REQUEST:
       return {
@@ -157,55 +200,24 @@ export default function loginReducers(state = initialState, action) {
         passwordResetConfirmErrors: initialState.passwordResetConfirmErrors
       };
 
-    // REGISTER
-    case REGISTER_REQUEST:
-      return {
-        ...state,
-        registerIsLoading: true,
-        registerSuccessMessage: initialState.registerSuccessMessage,
-        registerErrors: initialState.registerErrors
-      };
-    case REGISTER_SUCCESS:
-      return {
-        ...state,
-        registerIsLoading: initialState.registerIsLoading,
-        registerSuccessMessage: "User successfully created!"
-      };
-    case REGISTER_FAILURE:
-      return {
-        ...state,
-        registerIsLoading: initialState.registerIsLoading,
-        registerErrors: action.response.data
-      };
-    case CLEAR_REGISTER_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        registerSuccessMessage: initialState.registerSuccessMessage
-      };
-    case CLEAR_REGISTER_FAILURE_MESSAGE:
-      return {
-        ...state,
-        registerErrors: initialState.registerErrors
-      };
-
     // GET_USER_INFO
     case GET_USER_INFO_REQUEST:
       return {
         ...state,
-        userInfoIsLoading: true,
-        userInfoErrors: initialState.userInfoErrors
+        getUserInfoIsLoading: true,
+        getUserInfoErrors: initialState.getUserInfoErrors
       };
     case GET_USER_INFO_SUCCESS:
       return {
         ...state,
-        userInfoIsLoading: initialState.userInfoIsLoading,
+        getUserInfoIsLoading: initialState.getUserInfoIsLoading,
         userInfo: action.response.data
       };
     case GET_USER_INFO_FAILURE:
       return {
         ...state,
-        userInfoIsLoading: initialState.userInfoIsLoading,
-        userInfoErrors: action.response.data
+        getUserInfoIsLoading: initialState.getUserInfoIsLoading,
+        getUserInfoErrors: action.response.data
       };
     default:
       return state;

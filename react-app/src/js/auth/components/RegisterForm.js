@@ -23,7 +23,7 @@ export class RegisterForm extends React.Component {
     register: PropTypes.func.isRequired,
     history: PropTypes.object,
     successMessage: PropTypes.string,
-    errors: PropTypes.object,
+    registerErrors: PropTypes.object,
     clearRegisterFailureMessage: PropTypes.func.isRequired,
     clearRegisterSuccessMessage: PropTypes.func.isRequired,
     setSuccessMessage: PropTypes.func.isRequired
@@ -32,7 +32,7 @@ export class RegisterForm extends React.Component {
   static defaultProps = {
     history: null,
     successMessage: null,
-    errors: null
+    registerErrors: null
   };
 
   componentDidMount() {
@@ -67,7 +67,7 @@ export class RegisterForm extends React.Component {
 
   render() {
     const { username, email, password1, password2 } = this.state;
-    const { errors } = this.props;
+    const { registerErrors } = this.props;
 
     return (
       <div className="auth-page">
@@ -124,7 +124,9 @@ export class RegisterForm extends React.Component {
                       onChange={this.handleInputChange}
                     />
                   </Form.Group>
-                  {errors ? <FormErrors errors={errors} /> : null}
+                  {registerErrors ? (
+                    <FormErrors errors={registerErrors} />
+                  ) : null}
                   <Button variant="primary" type="submit" block>
                     Create account
                   </Button>
@@ -140,7 +142,7 @@ export class RegisterForm extends React.Component {
 
 const mapStateToProps = state => ({
   successMessage: state.auth.registerSuccessMessage,
-  errors: state.auth.registerErrors
+  registerErrors: state.auth.registerErrors
 });
 
 const mapDispatchToProps = dispatch => ({
