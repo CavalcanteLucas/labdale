@@ -33,8 +33,7 @@ export const createTodoList = todoListTitle => {
       authorization: `Token ${localStorage.token}`
     },
     body: JSON.stringify({
-      title: todoListTitle,
-      owner: 1
+      title: todoListTitle
     })
   };
   return {
