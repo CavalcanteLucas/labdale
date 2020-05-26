@@ -7,16 +7,37 @@ by Lucas Cavalcante (lucas@labcodes.com.br)
 We require the following softwares to install our dependencies:
 - `wget`;
 - `make`;
+- `curl`;
 - `python>=3.6`;
-- `nodejs>=8.10`. 
+- `nodejs>=8.10`;
+- `npm`.
 
 On Ubuntu 18.04, you also need:
 - `libpq-dev`;
-- `python3-dev`.
+- `python3-dev`;
+- `python3-pip`;
+- `python3-virtualenv`.
 
-If you want to run the project locally, [download the zip with the boilerplate from github](https://github.com/labcodes/django-react-webpack/archive/feature/update.zip), create a virtualenv in it, be sure to have your virtualenv active (running `source bin/activate` from the project folder), then run `make install_dependencies`.
+After clonning the repository, create and activate a virtualenv from the project's folder:
+```
+virtualenv venv
+source venv/bin/activate
+```
 
-You can copy the `env.example` file to `.env`, so that the django app has access to evironment variables via python-decouple, then run `python manage.py migrate` to create a dev database, and finally `make run`, so that both webpack and django run in parallel.
+Then run:
+```
+make install_dependencies
+```
+
+You can copy the `env.example` file to `.env`, so that the django app has access to evironment variables via python-decouple, then run:
+```
+python manage.py migrate
+```
+to create a dev database. Finally:
+```
+make run
+```
+so that both webpack and Django run in parallel.
 
 If everything went right, you should have a server running at `localhost:8000`. Visit that on your browser to make sure everything is working <3
 
@@ -24,8 +45,8 @@ If everything went right, you should have a server running at `localhost:8000`. 
 
 If you wish to add new dependencies, just note that:
 
-- for python dependencies, use `pip install name_of_the_dependency` to install then `pip freeze > requirements.txt` to permanently add it to the requirements;
-- for js dependencies, we're using nvm and yarn, so be sure to run `nvm use` before running `npx yarn add name_of_the_dependency` or, if it's a development-only dependency, `npx yarn add name_of_the_dependency -D`.
+- For python dependencies, use `pip install name_of_the_dependency` to install then `pip freeze > requirements.txt` to permanently add it to the requirements;
+- For js dependencies, we're using nvm and yarn, so be sure to run `nvm use` before running `npx yarn add name_of_the_dependency` or, if it's a development-only dependency, `npx yarn add name_of_the_dependency -D`.
 
 ## Deploying to Heroku
 
