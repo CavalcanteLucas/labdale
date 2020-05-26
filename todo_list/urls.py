@@ -4,5 +4,5 @@ from rest_framework import routers
 from .views import TodoListAPIView
 
 urlpatterns = [
-    path("", TodoListAPIView.as_view()),
+    path("", TodoListAPIView.as_view(), name="dashboard"),
 ]
