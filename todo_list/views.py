@@ -1,5 +1,6 @@
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from .models import TodoList
 from .serializers import TodoListSerializer
@@ -7,10 +8,11 @@ from .serializers import TodoListSerializer
 
 class TodoListAPIView(generics.ListCreateAPIView):
     serializer_class = TodoListSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
-        return reversed(TodoList.objects.filter(owner=user))
+        return TodoList.objects.filter(owner=user).order_by("-id")
 
     def create(self, request, *args, **kwargs):
         data = request.data
