@@ -18,6 +18,12 @@ On Ubuntu 18.04, you also need:
 - `python3-pip`;
 - `python3-virtualenv`.
 
+# Automatically
+
+Download the script `.create_project.sh` and execute it!
+
+# Manually
+
 After clonning the repository, create and activate a virtualenv from the project's folder:
 ```
 virtualenv venv
@@ -40,6 +46,13 @@ make run
 so that both webpack and Django run in parallel.
 
 If everything went right, you should have a server running at `localhost:8000`. Visit that on your browser to make sure everything is working <3
+
+# After installation
+
+Don't forget to create a superuser for managing Django admin with
+```
+python manage.py createsuperuser
+```
 
 ## Adding new dependencies
 
