@@ -1,18 +1,16 @@
+#!/bin/bash
 echo ""
 echo -e "--------------> \033[1mThank you for choosing our boilerplate! We'll begin installation right now :]\033[0m"
 echo ""
 echo "--------------> Downloading, unpacking and cleaning base code..."
 echo ""
-wget https://github.com/labcodes/django-react-webpack/archive/feature/update.zip
-unzip -qq update.zip
-rm update.zip
-cd django-react-webpack-feature-update
-
+git clone https://github.com/CavalcanteLucas/todolist
+cd todolist
 echo ""
 echo "--------------> Creating the python virtualenv..."
 echo ""
-python3 -m venv .
-source bin/activate
+python3 -m virtualenv venv
+source venv/bin/activate
 
 echo ""
 echo "--------------> Installing python and js dependencies..."
