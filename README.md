@@ -1,6 +1,6 @@
 # This is a Django-React App for managing To-Do activities.
 
-by Lucas Cavalcante (lucas@labcodes.com.br)
+by Lucas Cavalcante (lucas@labcodes.com.br) and Luciano Ratamero (luciano@labcodes.com.br), built from the boilerplate at https://github.com/labcodes/django-react-webpack/
 
 ## Running it
 
