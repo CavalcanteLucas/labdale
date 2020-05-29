@@ -23,13 +23,11 @@ class TodoListTests(TestCase):
 
     def test_list_todo_lists(self):
         # Create user
-        user = User.objects.create_user(baker.prepare("User"))
+        user = baker.make("User")
         self.assertEqual(1, User.objects.count())
 
         # Create todo list
-        todo_list = TodoList.objects.create(
-            title=baker.prepare("TodoList").title, owner=user
-        )
+        todo_list = baker.make("TodoList", owner=user)
         self.assertEqual(1, TodoList.objects.count())
 
         # Authenticate user
@@ -46,15 +44,15 @@ class TodoListTests(TestCase):
 
     def test_list_todo_lists_is_private(self):
         # Create two distinct users
-        user_1 = User.objects.create_user(baker.prepare("User"))
-        user_2 = User.objects.create_user(baker.prepare("User"))
+        user_1 = baker.make("User")
+        user_2 = baker.make("User")
         self.assertEqual(2, User.objects.count())
 
-        # Create todo list with user_1 as owner
-        TodoList.objects.create(title=baker.prepare("TodoList").title, owner=user_1)
+        # Create todo list with 'user_1' as owner
+        baker.make("TodoList", owner=user_1)
         self.assertEqual(1, TodoList.objects.count())
 
-        # Authenticate user_2
+        # Authenticate 'user_2'
         token, created = Token.objects.get_or_create(user=user_2)
         self.assertTrue(created)
         client = Client(HTTP_AUTHORIZATION="Token " + token.key)
@@ -66,7 +64,7 @@ class TodoListTests(TestCase):
 
     def test_create_todo_list(self):
         # Create user
-        user = User.objects.create_user(baker.prepare("User"))
+        user = baker.make("User")
         self.assertEqual(1, User.objects.count())
 
         # Authenticate user
