@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { login, clearLoginSuccessMessage } from "../actions";
+import { login, clearLoginErrors } from "../actions";
 import FormErrors from "../../FormErrors";
 
 class LoginForm extends React.Component {
@@ -15,17 +15,17 @@ class LoginForm extends React.Component {
 
   static propTypes = {
     login: PropTypes.func.isRequired,
-    errors: PropTypes.object,
-    clearLoginSuccessMessage: PropTypes.func.isRequired
+    loginErrors: PropTypes.object,
+    clearLoginErrors: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    errors: null
+    loginErrors: null
   };
 
-  componentDidMount() {
-    const { clearLoginSuccessMessage } = this.props;
-    clearLoginSuccessMessage();
+  componentWillUnmount() {
+    const { clearLoginErrors } = this.props;
+    clearLoginErrors();
   }
 
   onSubmit = e => {
@@ -42,7 +42,7 @@ class LoginForm extends React.Component {
 
   render() {
     const { username, password } = this.state;
-    const { errors } = this.props;
+    const { loginErrors } = this.props;
 
     return (
       <div className="auth-form-card">
@@ -78,7 +78,7 @@ class LoginForm extends React.Component {
                   <Link to="/password_reset">Forgot password?</Link>
                 </Form.Text>
               </Form.Group>
-              {errors ? <FormErrors errors={errors} /> : null}
+              {loginErrors ? <FormErrors errors={loginErrors} /> : null}
               <Button variant="success" type="submit" block>
                 Sign in
               </Button>
@@ -94,12 +94,12 @@ class LoginForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  errors: state.auth.errors
+  loginErrors: state.auth.loginErrors
 });
 
 const mapDispatchToProps = dispatch => ({
   login: (username, password) => dispatch(login(username, password)),
-  clearLoginSuccessMessage: () => dispatch(clearLoginSuccessMessage())
+  clearLoginErrors: () => dispatch(clearLoginErrors())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

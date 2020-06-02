@@ -15,15 +15,15 @@ export class Dashboard extends React.Component {
   static propTypes = {
     getUserInfo: PropTypes.func.isRequired,
     userInfo: PropTypes.object,
-    failureMessage: PropTypes.string,
-    successMessage: PropTypes.string,
+    getTodoListFailureMessage: PropTypes.string,
+    createTodoListSuccessMessage: PropTypes.string,
     clearSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     userInfo: null,
-    failureMessage: "",
-    successMessage: ""
+    getTodoListFailureMessage: "",
+    createTodoListSuccessMessage: ""
   };
 
   componentDidMount() {
@@ -37,7 +37,12 @@ export class Dashboard extends React.Component {
   };
 
   render() {
-    const { userInfo, failureMessage, successMessage } = this.props;
+    const {
+      userInfo,
+      getTodoListFailureMessage,
+      createTodoListSuccessMessage
+    } = this.props;
+
     return (
       <div className="dashboard">
         {userInfo ? (
@@ -48,16 +53,16 @@ export class Dashboard extends React.Component {
               </Col>
 
               <Col xs={{ offset: 1, span: 8 }} sm={9}>
-                {failureMessage ? (
-                  <Alert variant="danger">{failureMessage}</Alert>
+                {getTodoListFailureMessage ? (
+                  <Alert variant="danger">{getTodoListFailureMessage}</Alert>
                 ) : null}
-                {successMessage ? (
+                {createTodoListSuccessMessage ? (
                   <Alert
                     variant="success"
                     onClose={this.handleCloseSuccessMessage}
                     dismissible
                   >
-                    {successMessage}
+                    {createTodoListSuccessMessage}
                   </Alert>
                 ) : null}
                 <div className="dashboard__content">
@@ -81,8 +86,8 @@ export class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   userInfo: state.auth.userInfo,
-  failureMessage: state.todo.getTodoListFailureMessage,
-  successMessage: state.todo.createTodoListSuccessMessage
+  getTodoListFailureMessage: state.todo.getTodoListFailureMessage,
+  createTodoListSuccessMessage: state.todo.createTodoListSuccessMessage
 });
 
 const mapDispatchToProps = dispatch => ({

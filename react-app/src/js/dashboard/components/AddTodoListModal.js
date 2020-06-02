@@ -9,16 +9,16 @@ import FormErrors from "../../FormErrors";
 export class AddTodoListModal extends React.Component {
   static propTypes = {
     createTodoList: PropTypes.func.isRequired,
-    errors: PropTypes.object,
+    createTodoListErrors: PropTypes.object,
     clearCreateTodoListErrors: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,
-    successMessage: PropTypes.string
+    createTodoListSuccessMessage: PropTypes.string
   };
 
   static defaultProps = {
-    errors: null,
-    successMessage: ""
+    createTodoListErrors: null,
+    createTodoListSuccessMessage: ""
   };
 
   constructor(props) {
@@ -30,8 +30,11 @@ export class AddTodoListModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { successMessage } = this.props;
-    if (successMessage && !prevProps.successMessage) {
+    const { createTodoListSuccessMessage } = this.props;
+    if (
+      createTodoListSuccessMessage &&
+      !prevProps.createTodoListSuccessMessage
+    ) {
       this.handleCloseModal();
     }
   }
@@ -57,7 +60,7 @@ export class AddTodoListModal extends React.Component {
 
   render() {
     const { todoListTitle } = this.state;
-    const { show, errors } = this.props;
+    const { show, createTodoListErrors } = this.props;
 
     return (
       <Modal show={show} onHide={this.handleCloseModal}>
@@ -79,7 +82,9 @@ export class AddTodoListModal extends React.Component {
                 onChange={this.handleInputChange}
               />
             </Form.Group>
-            {errors ? <FormErrors errors={errors} /> : null}
+            {createTodoListErrors ? (
+              <FormErrors errors={createTodoListErrors} />
+            ) : null}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleCloseModal}>
@@ -96,8 +101,8 @@ export class AddTodoListModal extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  errors: state.todo.createTodoListErrors,
-  successMessage: state.todo.createTodoListSuccessMessage
+  createTodoListErrors: state.todo.createTodoListErrors,
+  createTodoListSuccessMessage: state.todo.createTodoListSuccessMessage
 });
 
 const mapDispatchToProps = dispatch => ({

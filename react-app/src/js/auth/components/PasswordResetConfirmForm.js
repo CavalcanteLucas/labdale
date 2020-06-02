@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import {
   passwordResetConfirm,
-  clearPasswordResetConfirmFailureMessage,
+  clearPasswordResetConfirmErrors,
   clearPasswordResetConfirmSuccessMessage
 } from "../actions";
 import FormErrors from "../../FormErrors";
@@ -20,18 +20,18 @@ export class PasswordResetConfirmForm extends React.Component {
   static propTypes = {
     passwordResetConfirm: PropTypes.func.isRequired,
     history: PropTypes.object,
-    successMessage: PropTypes.string,
-    errors: PropTypes.object,
+    passwordResetConfirmSuccessMessage: PropTypes.string,
+    passwordResetConfirmErrors: PropTypes.object,
     match: PropTypes.object.isRequired,
-    clearPasswordResetConfirmFailureMessage: PropTypes.func.isRequired,
+    clearPasswordResetConfirmErrors: PropTypes.func.isRequired,
     clearPasswordResetConfirmSuccessMessage: PropTypes.func.isRequired,
     setSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     history: null,
-    successMessage: null,
-    errors: null
+    passwordResetConfirmSuccessMessage: null,
+    passwordResetConfirmErrors: null
   };
 
   componentDidMount() {
@@ -40,17 +40,21 @@ export class PasswordResetConfirmForm extends React.Component {
   }
 
   componentDidUpdate() {
-    const { successMessage, setSuccessMessage, history } = this.props;
+    const {
+      passwordResetConfirmSuccessMessage,
+      setSuccessMessage,
+      history
+    } = this.props;
 
-    if (successMessage) {
-      setSuccessMessage(successMessage);
+    if (passwordResetConfirmSuccessMessage) {
+      setSuccessMessage(passwordResetConfirmSuccessMessage);
       history.push("/");
     }
   }
 
   componentWillUnmount() {
-    const { clearPasswordResetConfirmFailureMessage } = this.props;
-    clearPasswordResetConfirmFailureMessage();
+    const { clearPasswordResetConfirmErrors } = this.props;
+    clearPasswordResetConfirmErrors();
   }
 
   onSubmit = e => {
@@ -69,7 +73,7 @@ export class PasswordResetConfirmForm extends React.Component {
 
   render() {
     const { password1, password2 } = this.state;
-    const { errors } = this.props;
+    const { passwordResetConfirmErrors } = this.props;
 
     return (
       <div className="auth-page">
@@ -105,12 +109,14 @@ export class PasswordResetConfirmForm extends React.Component {
                       onChange={this.handleInputChange}
                     />
                   </Form.Group>
-                  {errors ? <FormErrors errors={errors} /> : null}
+                  {passwordResetConfirmErrors ? (
+                    <FormErrors errors={passwordResetConfirmErrors} />
+                  ) : null}
                   <Button variant="success" type="submit" block>
                     Change password
                   </Button>
                   <small>
-                    Make sure it`s at least 15 characters OR at least 8
+                    Make sure it is at least 15 characters OR at least 8
                     characters including a number and a lowercase letter.
                   </small>
                 </Form>
@@ -124,15 +130,16 @@ export class PasswordResetConfirmForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.auth.passwordResetConfirmSuccessMessage,
-  errors: state.auth.passwordResetConfirmErrors
+  passwordResetConfirmSuccessMessage:
+    state.auth.passwordResetConfirmSuccessMessage,
+  passwordResetConfirmErrors: state.auth.passwordResetConfirmErrors
 });
 
 const mapDispatchToProps = dispatch => ({
   passwordResetConfirm: (uid, token, password1, password2) =>
     dispatch(passwordResetConfirm(uid, token, password1, password2)),
-  clearPasswordResetConfirmFailureMessage: () =>
-    dispatch(clearPasswordResetConfirmFailureMessage()),
+  clearPasswordResetConfirmErrors: () =>
+    dispatch(clearPasswordResetConfirmErrors()),
   clearPasswordResetConfirmSuccessMessage: () =>
     dispatch(clearPasswordResetConfirmSuccessMessage()),
   setSuccessMessage: successMessage =>
