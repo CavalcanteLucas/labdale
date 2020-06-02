@@ -75,6 +75,7 @@ class TodoListTests(TestCase):
             path=self.url, content_type="application/json", **headers
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(1, len(response.data))
         self.assertEqual("required", response.data["title"][0].code)
 
     def test_create_todo_list(self):
