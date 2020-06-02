@@ -159,7 +159,7 @@ export const clearPasswordResetConfirmSuccessMessage = () => ({
   type: CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE
 });
 
-export const clearPasswordResetConfirmErros = () => ({
+export const clearPasswordResetConfirmErrors = () => ({
   type: CLEAR_PASSWORD_RESET_CONFIRM_ERRORS
 });
 

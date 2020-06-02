@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import {
   passwordResetConfirm,
-  clearPasswordResetConfirmErros,
+  clearPasswordResetConfirmErrors,
   clearPasswordResetConfirmSuccessMessage
 } from "../actions";
 import FormErrors from "../../FormErrors";
@@ -23,7 +23,7 @@ export class PasswordResetConfirmForm extends React.Component {
     passwordResetConfirmSuccessMessage: PropTypes.string,
     passwordResetConfirmErrors: PropTypes.object,
     match: PropTypes.object.isRequired,
-    clearPasswordResetConfirmErros: PropTypes.func.isRequired,
+    clearPasswordResetConfirmErrors: PropTypes.func.isRequired,
     clearPasswordResetConfirmSuccessMessage: PropTypes.func.isRequired,
     setSuccessMessage: PropTypes.func.isRequired
   };
@@ -53,8 +53,8 @@ export class PasswordResetConfirmForm extends React.Component {
   }
 
   componentWillUnmount() {
-    const { clearPasswordResetConfirmErros } = this.props;
-    clearPasswordResetConfirmErros();
+    const { clearPasswordResetConfirmErrors } = this.props;
+    clearPasswordResetConfirmErrors();
   }
 
   onSubmit = e => {
@@ -116,7 +116,7 @@ export class PasswordResetConfirmForm extends React.Component {
                     Change password
                   </Button>
                   <small>
-                    Make sure it`s at least 15 characters OR at least 8
+                    Make sure it is at least 15 characters OR at least 8
                     characters including a number and a lowercase letter.
                   </small>
                 </Form>
@@ -138,8 +138,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   passwordResetConfirm: (uid, token, password1, password2) =>
     dispatch(passwordResetConfirm(uid, token, password1, password2)),
-  clearPasswordResetConfirmErros: () =>
-    dispatch(clearPasswordResetConfirmErros()),
+  clearPasswordResetConfirmErrors: () =>
+    dispatch(clearPasswordResetConfirmErrors()),
   clearPasswordResetConfirmSuccessMessage: () =>
     dispatch(clearPasswordResetConfirmSuccessMessage()),
   setSuccessMessage: successMessage =>
