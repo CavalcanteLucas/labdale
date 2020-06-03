@@ -26,13 +26,7 @@ export class TodoLists extends React.Component {
 
     return (
       <div className="todo-list">
-        <ListGroup variant="flush">
-          {todoLists.map(todoList => (
-            <ListGroup.Item action variant="light" key={todoList.id}>
-              <strong>{todoList.title}</strong>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
+        <p>This space will contain some info about a Todo List.</p>
       </div>
     );
   }

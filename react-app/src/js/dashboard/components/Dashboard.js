@@ -5,7 +5,7 @@ import { capitalize as _capitalize } from "lodash";
 import { connect } from "react-redux";
 import { Alert, Container, Row, Col } from "react-bootstrap";
 
-import TodoLists from "./TodoLists";
+import TodoList from "./TodoList";
 import ActionBar from "./ActionBar";
 import { getUserInfo } from "../../auth/actions";
 
@@ -47,12 +47,12 @@ export class Dashboard extends React.Component {
       <div className="dashboard">
         {userInfo ? (
           <Container fluid>
-            <Row>
-              <Col xs={2} sm={1}>
+            <Row xs={4}>
+              <Col>
                 <ActionBar />
               </Col>
 
-              <Col xs={{ offset: 1, span: 8 }} sm={9}>
+              <Col xs={{ offset: 1, span: 7 }}>
                 {getTodoListFailureMessage ? (
                   <Alert variant="danger">{getTodoListFailureMessage}</Alert>
                 ) : null}
@@ -73,7 +73,7 @@ export class Dashboard extends React.Component {
                     Today is:
                     <strong> {moment().format("dddd, DD/MM/Y")}</strong>
                   </p>
-                  <TodoLists />
+                  <TodoList />
                 </div>
               </Col>
             </Row>
