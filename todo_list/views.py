@@ -3,8 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from .models import TodoList
-from .serializers import TodoListSerializer, TodoListDetailSerializer
-
+from .serializers import TodoListSerializer
 
 class TodoListAPIView(generics.ListCreateAPIView):
     serializer_class = TodoListSerializer
@@ -30,7 +29,7 @@ class TodoListAPIView(generics.ListCreateAPIView):
 
 class TodoListDetailAPIView(generics.RetrieveUpdateAPIView):
     queryset = TodoList.objects.all()
-    serializer_class = TodoListDetailSerializer
+    serializer_class = TodoListSerializer
     permission_classes = [IsAuthenticated]
 
     def update(self, request, *args, **kwargs):

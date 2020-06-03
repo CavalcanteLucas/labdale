@@ -6,8 +6,3 @@ class TodoListSerializer(serializers.ModelSerializer):
     class Meta:
         model = TodoList
         fields = "__all__"
-
-class TodoListDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TodoList
-        exclude = ("id","owner")
