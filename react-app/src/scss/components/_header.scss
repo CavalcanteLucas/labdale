@@ -6,13 +6,16 @@
   justify-content: space-between;
   align-items: center;
 
-  &__logo {
-    height: 2rem;
-    width: 2rem;
-    filter: invert(1);
+  &__title {
+    font-family: $font-family-bungee;
+    font-size: 2.4rem;
 
-    &:hover{
-      filter: invert(1) brightness(0.6);
+    &:hover,
+    &:focus,
+    &:visited {
+      text-decoration: none;
+      color: white;
+      filter: brightness(0.6);
     }
   }
 }

@@ -33,7 +33,7 @@ export class Welcome extends React.Component {
     return (
       <div className="welcome">
         <Helmet>
-          <title>- To-Do LABC -</title>
+          <title>- LABDALE -</title>
         </Helmet>
         {successMessage ? (
           <Alert
@@ -48,17 +48,15 @@ export class Welcome extends React.Component {
           <Container>
             <Row>
               <Col
-                xs={{ span: 10, offset: 1 }}
+                xs={{ span: 12, offset: 0 }}
                 md={{ span: 6, offset: 0 }}
                 lg={{ span: 5, offset: 1 }}
                 xl={{ span: 4, offset: 2 }}
               >
-                <h1 className="welcome__title">
-                  Welcome to the To-Do LABC App!
-                </h1>
+                <h1 className="welcome__title">Welcome to LABDALE!</h1>
 
                 <p className="welcome__message">
-                  This is a Django-React App for managing To-Do activities.
+                  This is a Django-React App for managing To-Do activities. Join for free!
                 </p>
               </Col>
               <Col
