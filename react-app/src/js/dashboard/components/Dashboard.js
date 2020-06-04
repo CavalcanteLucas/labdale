@@ -1,11 +1,9 @@
 import React from "react";
-import moment from "moment";
 import PropTypes from "prop-types";
-import { capitalize as _capitalize } from "lodash";
 import { connect } from "react-redux";
 import { Alert, Container, Row, Col } from "react-bootstrap";
 
-import TodoList from "./TodoList";
+import TodoListDetail from "./TodoListDetail";
 import ActionBar from "./ActionBar";
 import { getUserInfo } from "../../auth/actions";
 
@@ -15,6 +13,7 @@ export class Dashboard extends React.Component {
   static propTypes = {
     getUserInfo: PropTypes.func.isRequired,
     userInfo: PropTypes.object,
+    getTodoListsFailureMessage: PropTypes.string,
     getTodoListFailureMessage: PropTypes.string,
     createTodoListSuccessMessage: PropTypes.string,
     clearSuccessMessage: PropTypes.func.isRequired
@@ -22,6 +21,7 @@ export class Dashboard extends React.Component {
 
   static defaultProps = {
     userInfo: null,
+    getTodoListsFailureMessage: "",
     getTodoListFailureMessage: "",
     createTodoListSuccessMessage: ""
   };
@@ -39,6 +39,7 @@ export class Dashboard extends React.Component {
   render() {
     const {
       userInfo,
+      getTodoListsFailureMessage,
       getTodoListFailureMessage,
       createTodoListSuccessMessage
     } = this.props;
@@ -53,6 +54,9 @@ export class Dashboard extends React.Component {
               </Col>
 
               <Col xs={{ offset: 1, span: 7 }}>
+                {getTodoListsFailureMessage ? (
+                  <Alert variant="danger">{getTodoListsFailureMessage}</Alert>
+                ) : null}
                 {getTodoListFailureMessage ? (
                   <Alert variant="danger">{getTodoListFailureMessage}</Alert>
                 ) : null}
@@ -66,14 +70,7 @@ export class Dashboard extends React.Component {
                   </Alert>
                 ) : null}
                 <div className="dashboard__content">
-                  <h3>
-                    Hi <strong>{_capitalize(userInfo.username)}</strong>,
-                  </h3>
-                  <p>
-                    Today is:
-                    <strong> {moment().format("dddd, DD/MM/Y")}</strong>
-                  </p>
-                  <TodoList />
+                  <TodoListDetail />
                 </div>
               </Col>
             </Row>
@@ -86,6 +83,7 @@ export class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   userInfo: state.auth.userInfo,
+  getTodoListsFailureMessage: state.todo.getTodoListsFailureMessage,
   getTodoListFailureMessage: state.todo.getTodoListFailureMessage,
   createTodoListSuccessMessage: state.todo.createTodoListSuccessMessage
 });

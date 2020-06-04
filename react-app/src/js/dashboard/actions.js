@@ -3,6 +3,9 @@ import { fetchFromApi } from "react-redux-api-tools";
 export const GET_TODO_LISTS_REQUEST = "GET_TODO_LISTS_REQUEST";
 export const GET_TODO_LISTS_SUCCESS = "GET_TODO_LISTS_SUCCESS";
 export const GET_TODO_LISTS_FAILURE = "GET_TODO_LISTS_FAILURE";
+export const GET_TODO_LIST_REQUEST = "GET_TODO_LIST_REQUEST";
+export const GET_TODO_LIST_SUCCESS = "GET_TODO_LIST_SUCCESS";
+export const GET_TODO_LIST_FAILURE = "GET_TODO_LIST_FAILURE";
 export const CREATE_TODO_LIST_REQUEST = "CREATE_TODO_LIST_REQUEST";
 export const CREATE_TODO_LIST_SUCCESS = "CREATE_TODO_LIST_SUCCESS";
 export const CREATE_TODO_LIST_FAILURE = "CREATE_TODO_LIST_FAILURE";
@@ -23,6 +26,23 @@ export const getTodoLists = () => {
       failure: GET_TODO_LISTS_FAILURE
     },
     apiCallFunction: () => fetchFromApi("api/todo-list/", requestData)
+  };
+};
+
+export const getTodoList = todoListId => {
+  const requestData = {
+    headers: {
+      authorization: `Token ${localStorage.token}`
+    }
+  };
+  return {
+    types: {
+      request: GET_TODO_LIST_REQUEST,
+      success: GET_TODO_LIST_SUCCESS,
+      failure: GET_TODO_LIST_FAILURE
+    },
+    apiCallFunction: () =>
+      fetchFromApi(`api/todo-list/${todoListId}/`, requestData)
   };
 };
 
