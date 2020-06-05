@@ -38,9 +38,7 @@ export class TodoListDetail extends React.Component {
         {todoListDetail ? (
           <div>
             <h1>
-              <strong>{todoListDetail.title}</strong>&nbsp;(id:&nbsp;
-              {todoListDetail.id})&nbsp;(owner:&nbsp;{todoListDetail.owner}
-              )&nbsp;
+              <strong>{todoListDetail.title}</strong>
               <Button variant="no-style" onClick={this.openModal}>
                 <img
                   src={pencilBtn}
@@ -54,10 +52,11 @@ export class TodoListDetail extends React.Component {
                 todoList={todoListDetail}
               />
             </h1>
-
             <p>
               <strong>Created: </strong>
               {moment(todoListDetail.created_at).format("dddd, DD/MM/Y")}
+              <br />(<strong>id</strong>:{todoListDetail.id}) (
+              <strong>owner</strong>: {todoListDetail.owner})
             </p>
           </div>
         ) : null}
