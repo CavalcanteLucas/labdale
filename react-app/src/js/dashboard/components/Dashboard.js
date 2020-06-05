@@ -37,12 +37,13 @@ export class Dashboard extends React.Component {
     getUserInfo();
   }
 
-  handleCloseSuccessMessage = () => {
-    const {
-      clearCreateTodoListSuccessMessage,
-      clearEditTodoListTitleSuccessMessage
-    } = this.props;
+  handleCloseCreateTodoListSuccessMessage = () => {
+    const { clearCreateTodoListSuccessMessage } = this.props;
     clearCreateTodoListSuccessMessage();
+  };
+
+  handleCloseEditTodoListTitleSuccessMessage = () => {
+    const { clearEditTodoListTitleSuccessMessage } = this.props;
     clearEditTodoListTitleSuccessMessage();
   };
 
@@ -74,7 +75,7 @@ export class Dashboard extends React.Component {
                 {createTodoListSuccessMessage ? (
                   <Alert
                     variant="success"
-                    onClose={this.handleCloseSuccessMessage}
+                    onClose={this.handleCloseCreateTodoListSuccessMessage}
                     dismissible
                   >
                     {createTodoListSuccessMessage}
@@ -83,7 +84,7 @@ export class Dashboard extends React.Component {
                 {editTodoListTitleSuccessMessage ? (
                   <Alert
                     variant="success"
-                    onClose={this.handleCloseSuccessMessage}
+                    onClose={this.handleCloseEditTodoListTitleSuccessMessage}
                     dismissible
                   >
                     {editTodoListTitleSuccessMessage}
