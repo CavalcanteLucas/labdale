@@ -14,6 +14,7 @@ import {
   EDIT_TODO_LIST_TITLE_FAILURE,
   CLEAR_CREATE_TODO_LIST_ERRORS,
   CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE,
+  CLEAR_EDIT_TODO_LIST_TITLE_ERRORS,
   CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE
 } from "./actions";
 import { LOGOUT_SUCCESS } from "../auth/actions";
@@ -111,16 +112,17 @@ export function todoReducers(state = initialState, action) {
         editTodoListTitleErrors: initialState.editTodoListTitleErrors
       };
     case EDIT_TODO_LIST_TITLE_SUCCESS:
+      const todoListDetail = action.response.data;
       const newTodoLists = state.todoLists.map(item => {
-        if (item.id !== action.response.data.id) return item;
+        if (item.id !== todoListDetail.id) return item;
         return update(item, {
-          title: { $set: action.response.data.title }
+          title: { $set: todoListDetail.title }
         });
       });
       return {
         ...state,
+        todoListDetail,
         todoLists: newTodoLists,
-        todoListDetail: action.response.data,
         editTodoListTitleIsLoading: initialState.editTodoListTitleIsLoading,
         editTodoListTitleSuccessMessage:
           "Todo List's title changed successfully."
@@ -142,6 +144,11 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         createTodoListSuccessMessage: initialState.createTodoListSuccessMessage
+      };
+    case CLEAR_EDIT_TODO_LIST_TITLE_ERRORS:
+      return {
+        ...state,
+        editTodoListTitleErrors: initialState.editTodoListTitleErrors
       };
     case CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE:
       return {

@@ -3,22 +3,22 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
 
-import { editTodoListTitle, clearCreateTodoListErrors } from "../actions";
+import { editTodoListTitle, clearEditTodoListTitleErrors } from "../actions";
 import FormErrors from "../../FormErrors";
 
 export class EditTodoListTitleModal extends React.Component {
   static propTypes = {
     todoList: PropTypes.object.isRequired,
     editTodoListTitle: PropTypes.func.isRequired,
-    createTodoListErrors: PropTypes.object,
-    clearCreateTodoListErrors: PropTypes.func.isRequired,
+    editTodoListTitleErrors: PropTypes.object,
+    clearEditTodoListTitleErrors: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,
     editTodoListTitleSuccessMessage: PropTypes.string
   };
 
   static defaultProps = {
-    createTodoListErrors: null,
+    editTodoListTitleErrors: null,
     editTodoListTitleSuccessMessage: ""
   };
 
@@ -41,9 +41,9 @@ export class EditTodoListTitleModal extends React.Component {
   }
 
   handleCloseModal = () => {
-    const { clearCreateTodoListErrors, onHide } = this.props;
+    const { clearEditTodoListTitleErrors, onHide } = this.props;
     this.setState({ newTitle: "" });
-    clearCreateTodoListErrors();
+    clearEditTodoListTitleErrors();
     onHide();
   };
 
@@ -61,7 +61,7 @@ export class EditTodoListTitleModal extends React.Component {
 
   render() {
     const { newTitle } = this.state;
-    const { show, createTodoListErrors, todoList } = this.props;
+    const { show, editTodoListTitleErrors, todoList } = this.props;
 
     return (
       <Modal show={show} onHide={this.handleCloseModal}>
@@ -83,8 +83,8 @@ export class EditTodoListTitleModal extends React.Component {
                 onChange={this.handleInputChange}
               />
             </Form.Group>
-            {createTodoListErrors ? (
-              <FormErrors errors={createTodoListErrors} />
+            {editTodoListTitleErrors ? (
+              <FormErrors errors={editTodoListTitleErrors} />
             ) : null}
           </Modal.Body>
           <Modal.Footer>
@@ -102,14 +102,14 @@ export class EditTodoListTitleModal extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  createTodoListErrors: state.todo.createTodoListErrors,
+  editTodoListTitleErrors: state.todo.editTodoListTitleErrors,
   editTodoListTitleSuccessMessage: state.todo.editTodoListTitleSuccessMessage
 });
 
 const mapDispatchToProps = dispatch => ({
   editTodoListTitle: (todoListId, newTitle) =>
     dispatch(editTodoListTitle(todoListId, newTitle)),
-  clearCreateTodoListErrors: () => dispatch(clearCreateTodoListErrors())
+  clearEditTodoListTitleErrors: () => dispatch(clearEditTodoListTitleErrors())
 });
 
 export default connect(

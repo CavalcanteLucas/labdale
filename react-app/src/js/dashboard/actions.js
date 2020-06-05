@@ -17,6 +17,7 @@ export const CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE =
   "CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE";
 export const CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE =
   "CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE";
+export const CLEAR_EDIT_TODO_LIST_TITLE_ERRORS = "CLEAR_EDIT_TODO_LIST_TITLE_ERRORS";
 
 export const getTodoLists = () => {
   const requestData = {
@@ -102,4 +103,8 @@ export const clearCreateTodoListSuccessMessage = () => ({
 
 export const clearEditTodoListTitleSuccessMessage = () => ({
   type: CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE
+});
+
+export const clearEditTodoListTitleErrors = () => ({
+  type: CLEAR_EDIT_TODO_LIST_TITLE_ERRORS
 });
