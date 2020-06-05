@@ -99,7 +99,7 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         createTodoListIsLoading: initialState.createTodoListIsLoading,
-        createTodoListErrors: action.response.data
+        createTodoListErrors: action.response.data || [["Server Error"]]
       };
 
     // EDIT_TODO_LIST_TITLE
