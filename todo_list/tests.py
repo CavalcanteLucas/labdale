@@ -11,12 +11,9 @@ User = get_user_model()
 
 
 class TodoListTests(TestCase):
-    def setUp(self):
-        # Route
-        self.url = reverse("todo_list:todo_list")
-
     def test_list_todo_lists_requires_authorization(self):
-        response = self.client.get(path=self.url)
+        url = reverse("todo_list:todo_list")
+        response = self.client.get(path=url)
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_list_todo_lists(self):
@@ -34,7 +31,8 @@ class TodoListTests(TestCase):
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
         # Client asks for todo lists successfully
-        response = self.client.get(path=self.url, **headers)
+        url = reverse("todo_list:todo_list")
+        response = self.client.get(path=url, **headers)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(1, len(response.data))
         self.assertEqual(todo_list.title, response.data[0]["title"])
@@ -56,7 +54,8 @@ class TodoListTests(TestCase):
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
         # Client asks for todo lists, none should be available
-        response = self.client.get(path=self.url, **headers)
+        url = reverse("todo_list:todo_list")
+        response = self.client.get(path=url, **headers)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(0, len(response.data))
 
@@ -71,8 +70,9 @@ class TodoListTests(TestCase):
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
         # Try to create list passing no 'title' as data, results in bad request
+        url = reverse("todo_list:todo_list")
         response = self.client.post(
-            path=self.url, content_type="application/json", **headers
+            path=url, content_type="application/json", **headers
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual(1, len(response.data))
@@ -90,15 +90,112 @@ class TodoListTests(TestCase):
 
         # Client creates todo list successfully
         self.assertEqual(0, TodoList.objects.count())
-        todo_list_sample = {"title": "This is a sample title for a To-Do List"}
+        data_sample = {"title": "This is a sample title for a To-Do List"}
+        url = reverse("todo_list:todo_list")
         response = self.client.post(
-            path=self.url,
+            path=url,
             content_type="application/json",
-            data=todo_list_sample,
+            data=data_sample,
             **headers
         )
         todo_list_created = TodoList.objects.get()
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(1, response.data["id"])
-        self.assertEqual(todo_list_sample["title"], todo_list_created.title)
+        self.assertEqual(data_sample["title"], todo_list_created.title)
         self.assertEqual(user.id, todo_list_created.owner.pk)
+
+    def test_edit_todo_list_requires_authorization(self):
+        # Create user
+        user = baker.make("User")
+        self.assertEqual(1, User.objects.count())
+
+        # Create todo list
+        todo_list = baker.make("TodoList", owner=user)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Edit todo list title
+        data_sample = {"title": "This is a new title for the To-Do List"}
+        url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
+        response = self.client.put(
+            path=url,
+            content_type="application/json",
+            data=data_sample,
+        )
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
+    def test_edit_todo_list_requires_data(self):
+        # Create user
+        user = baker.make("User")
+        self.assertEqual(1, User.objects.count())
+
+        # Create todo list
+        baker.make("TodoList", owner=user)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Authenticate user
+        token, created = Token.objects.get_or_create(user=user)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Edit todo list title
+        url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
+        response = self.client.put(
+            path=url,
+            content_type="application/json",
+            **headers
+        )
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual("required", response.data["title"][0].code)
+
+    def test_edit_todo_list_is_private(self):
+        # Create two distinct users
+        user_1 = baker.make("User")
+        user_2 = baker.make("User")
+        self.assertEqual(2, User.objects.count())
+
+        # Create todo list with 'user_1' as owner
+        baker.make("TodoList", owner=user_1)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Authenticate 'user_2'
+        token, created = Token.objects.get_or_create(user=user_2)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Client tries to edit todo list but fails
+        data_sample = {"title": "This is a new title for the To-Do List"}
+        url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
+        response = self.client.put(
+            path=url,
+            content_type="application/json",
+            data=data_sample,
+            **headers
+        )
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+
+    def test_edit_todo_list_title(self):
+        # Create user
+        user = baker.make("User")
+        self.assertEqual(1, User.objects.count())
+
+        # Create todo list
+        baker.make("TodoList", owner=user)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Authenticate user
+        token, created = Token.objects.get_or_create(user=user)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Edit todo list title
+        data_sample = {"title": "This is a new title for the To-Do List"}
+        url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
+        response = self.client.put(
+            path=url,
+            content_type="application/json",
+            data=data_sample,
+            **headers
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(data_sample["title"], response.data["title"])
+        self.assertEqual(data_sample["title"], TodoList.objects.get().title)
