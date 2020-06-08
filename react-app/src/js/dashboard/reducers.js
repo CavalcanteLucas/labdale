@@ -1,4 +1,3 @@
-import update from "react-addons-update";
 import {
   GET_TODO_LISTS_REQUEST,
   GET_TODO_LISTS_SUCCESS,
@@ -115,9 +114,7 @@ export function todoReducers(state = initialState, action) {
       const todoListDetail = action.response.data;
       const newTodoLists = state.todoLists.map(item => {
         if (item.id !== todoListDetail.id) return item;
-        return update(item, {
-          title: { $set: todoListDetail.title }
-        });
+        return todoListDetail;
       });
       return {
         ...state,
