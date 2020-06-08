@@ -9,7 +9,8 @@ import { getUserInfo } from "../../auth/actions";
 
 import {
   clearCreateTodoListSuccessMessage,
-  clearEditTodoListTitleSuccessMessage
+  clearEditTodoListTitleSuccessMessage,
+  clearDeleteTodoListSuccessMessage
 } from "../actions";
 
 export class Dashboard extends React.Component {
@@ -21,7 +22,10 @@ export class Dashboard extends React.Component {
     createTodoListSuccessMessage: PropTypes.string,
     clearCreateTodoListSuccessMessage: PropTypes.func.isRequired,
     editTodoListTitleSuccessMessage: PropTypes.string,
-    clearEditTodoListTitleSuccessMessage: PropTypes.func.isRequired
+    clearEditTodoListTitleSuccessMessage: PropTypes.func.isRequired,
+    deleteTodoListSuccessMessage: PropTypes.string,
+    clearDeleteTodoListSuccessMessage: PropTypes.func.isRequired,
+    deleteTodoListFailureMessage: PropTypes.string
   };
 
   static defaultProps = {
@@ -29,7 +33,9 @@ export class Dashboard extends React.Component {
     getTodoListsFailureMessage: "",
     getTodoListFailureMessage: "",
     createTodoListSuccessMessage: "",
-    editTodoListTitleSuccessMessage: ""
+    editTodoListTitleSuccessMessage: "",
+    deleteTodoListSuccessMessage: "",
+    deleteTodoListFailureMessage: ""
   };
 
   componentDidMount() {
@@ -47,13 +53,20 @@ export class Dashboard extends React.Component {
     clearEditTodoListTitleSuccessMessage();
   };
 
+  handleCloseDeleteTodoListSuccessMessage = () => {
+    const { clearDeleteTodoListSuccessMessage } = this.props;
+    clearDeleteTodoListSuccessMessage();
+  };
+
   render() {
     const {
       userInfo,
       getTodoListsFailureMessage,
       getTodoListFailureMessage,
       createTodoListSuccessMessage,
-      editTodoListTitleSuccessMessage
+      editTodoListTitleSuccessMessage,
+      deleteTodoListSuccessMessage,
+      deleteTodoListFailureMessage
     } = this.props;
 
     return (
@@ -71,6 +84,9 @@ export class Dashboard extends React.Component {
                 ) : null}
                 {getTodoListFailureMessage ? (
                   <Alert variant="danger">{getTodoListFailureMessage}</Alert>
+                ) : null}
+                {deleteTodoListFailureMessage ? (
+                  <Alert variant="danger">{deleteTodoListFailureMessage}</Alert>
                 ) : null}
                 {createTodoListSuccessMessage ? (
                   <Alert
@@ -90,6 +106,15 @@ export class Dashboard extends React.Component {
                     {editTodoListTitleSuccessMessage}
                   </Alert>
                 ) : null}
+                {deleteTodoListSuccessMessage ? (
+                  <Alert
+                    variant="success"
+                    onClose={this.handleCloseDeleteTodoListSuccessMessage}
+                    dismissible
+                  >
+                    {deleteTodoListSuccessMessage}
+                  </Alert>
+                ) : null}
                 <div className="dashboard__content">
                   <TodoListDetail />
                 </div>
@@ -107,7 +132,9 @@ const mapStateToProps = state => ({
   getTodoListsFailureMessage: state.todo.getTodoListsFailureMessage,
   getTodoListFailureMessage: state.todo.getTodoListFailureMessage,
   createTodoListSuccessMessage: state.todo.createTodoListSuccessMessage,
-  editTodoListTitleSuccessMessage: state.todo.editTodoListTitleSuccessMessage
+  editTodoListTitleSuccessMessage: state.todo.editTodoListTitleSuccessMessage,
+  deleteTodoListSuccessMessage: state.todo.deleteTodoListSuccessMessage,
+  deleteTodoListFailureMessage: state.todo.deleteTodoListFailureMessage
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -115,7 +142,9 @@ const mapDispatchToProps = dispatch => ({
   clearCreateTodoListSuccessMessage: () =>
     dispatch(clearCreateTodoListSuccessMessage()),
   clearEditTodoListTitleSuccessMessage: () =>
-    dispatch(clearEditTodoListTitleSuccessMessage())
+    dispatch(clearEditTodoListTitleSuccessMessage()),
+  clearDeleteTodoListSuccessMessage: () =>
+    dispatch(clearDeleteTodoListSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -5,12 +5,15 @@ import { connect } from "react-redux";
 import moment from "moment";
 
 import pencilBtn from "../../../img/pencil-btn.png";
+import garbageBtn from "../../../img/garbage-btn.png";
 
 import EditTodoListTitleModal from "./EditTodoListTitleModal";
+import { deleteTodoList } from "../actions";
 
 export class TodoListDetail extends React.Component {
   static propTypes = {
-    todoListDetail: PropTypes.object
+    todoListDetail: PropTypes.object,
+    deleteTodoList: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -29,6 +32,11 @@ export class TodoListDetail extends React.Component {
 
   openModal = () => this.setState({ modalIsOpen: true });
 
+  handleDelete = () => {
+    const { todoListDetail, deleteTodoList } = this.props;
+    deleteTodoList(todoListDetail.id);
+  };
+
   render() {
     const { modalIsOpen } = this.state;
     const { todoListDetail } = this.props;
@@ -42,8 +50,15 @@ export class TodoListDetail extends React.Component {
               <Button variant="no-style" onClick={this.openModal}>
                 <img
                   src={pencilBtn}
-                  alt="Edit Todo"
+                  alt="Edit Todo List"
                   className="todo-list-detail__edit-btn"
+                />
+              </Button>
+              <Button variant="no-style" onClick={this.handleDelete}>
+                <img
+                  src={garbageBtn}
+                  alt="Delete Todo List"
+                  className="todo-list-detail__delete-btn"
                 />
               </Button>
               <EditTodoListTitleModal
@@ -69,4 +84,8 @@ const mapStateToProps = state => ({
   todoListDetail: state.todo.todoListDetail
 });
 
-export default connect(mapStateToProps, null)(TodoListDetail);
+const mapDispatchToProps = dispatch => ({
+  deleteTodoList: todoListId => dispatch(deleteTodoList(todoListId))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoListDetail);
