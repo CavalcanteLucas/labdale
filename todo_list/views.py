@@ -4,9 +4,11 @@ from rest_framework.response import Response
 from .models import TodoList
 from .serializers import TodoListSerializer
 
+
 class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.owner == request.user
+
 
 class TodoListAPIView(generics.ListCreateAPIView):
     serializer_class = TodoListSerializer
@@ -18,6 +20,7 @@ class TodoListAPIView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
 
 class TodoListDetailAPIView(generics.RetrieveUpdateAPIView):
     queryset = TodoList.objects.all()

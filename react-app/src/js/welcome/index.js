@@ -56,7 +56,8 @@ export class Welcome extends React.Component {
                 <h1 className="welcome__title">Welcome to LABDALE!</h1>
 
                 <p className="welcome__message">
-                  This is a Django-React App for managing To-Do activities. Join for free!
+                  This is a Django-React App for managing To-Do activities. Join
+                  for free!
                 </p>
               </Col>
               <Col

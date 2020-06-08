@@ -93,10 +93,7 @@ class TodoListTests(TestCase):
         data_sample = {"title": "This is a sample title for a To-Do List"}
         url = reverse("todo_list:todo_list")
         response = self.client.post(
-            path=url,
-            content_type="application/json",
-            data=data_sample,
-            **headers
+            path=url, content_type="application/json", data=data_sample, **headers
         )
         todo_list_created = TodoList.objects.get()
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
@@ -115,10 +112,7 @@ class TodoListTests(TestCase):
 
         # Attempt to retrieve todo list
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
-        response = self.client.get(
-            path=url,
-            content_type="application/json",
-        )
+        response = self.client.get(path=url, content_type="application/json",)
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_get_todo_list_is_private(self):
@@ -138,11 +132,7 @@ class TodoListTests(TestCase):
 
         # Attempt to retrieve todo list from 'user 1'
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
-        response = self.client.get(
-            path=url,
-            content_type="application/json",
-            **headers
-        )
+        response = self.client.get(path=url, content_type="application/json", **headers)
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
     def test_get_todo_list(self):
@@ -161,16 +151,11 @@ class TodoListTests(TestCase):
 
         # Retrieve todo list
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
-        response = self.client.get(
-            path=url,
-            content_type="application/json",
-            **headers
-        )
+        response = self.client.get(path=url, content_type="application/json", **headers)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(todo_list.title, response.data["title"])
         self.assertEqual(todo_list.owner.pk, response.data["owner"])
         self.assertEqual(todo_list.id, response.data["id"])
-
 
     def test_edit_todo_list_requires_authorization(self):
         # Create user
@@ -185,9 +170,7 @@ class TodoListTests(TestCase):
         data_sample = {"title": "This is a new title for the To-Do List"}
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(
-            path=url,
-            content_type="application/json",
-            data=data_sample,
+            path=url, content_type="application/json", data=data_sample,
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
@@ -207,11 +190,7 @@ class TodoListTests(TestCase):
 
         # Edit todo list title
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
-        response = self.client.put(
-            path=url,
-            content_type="application/json",
-            **headers
-        )
+        response = self.client.put(path=url, content_type="application/json", **headers)
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         self.assertEqual("required", response.data["title"][0].code)
 
@@ -234,10 +213,7 @@ class TodoListTests(TestCase):
         data_sample = {"title": "This is a new title for the To-Do List"}
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(
-            path=url,
-            content_type="application/json",
-            data=data_sample,
-            **headers
+            path=url, content_type="application/json", data=data_sample, **headers
         )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
@@ -259,10 +235,7 @@ class TodoListTests(TestCase):
         data_sample = {"title": "This is a new title for the To-Do List"}
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(
-            path=url,
-            content_type="application/json",
-            data=data_sample,
-            **headers
+            path=url, content_type="application/json", data=data_sample, **headers
         )
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(data_sample["title"], response.data["title"])
