@@ -16,6 +16,27 @@ class TodoListTests(TestCase):
         response = self.client.get(path=url)
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
+    def test_list_todo_lists_is_private(self):
+        # Create two distinct users
+        user_1 = baker.make("User")
+        user_2 = baker.make("User")
+        self.assertEqual(2, User.objects.count())
+
+        # Create todo list with 'user_1' as owner
+        baker.make("TodoList", owner=user_1)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Authenticate 'user_2'
+        token, created = Token.objects.get_or_create(user=user_2)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Client asks for todo lists, none should be available
+        url = reverse("todo_list:todo_list")
+        response = self.client.get(path=url, **headers)
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(0, len(response.data))
+
     def test_list_todo_lists(self):
         # Create user
         user = baker.make("User")
@@ -37,27 +58,6 @@ class TodoListTests(TestCase):
         self.assertEqual(1, len(response.data))
         self.assertEqual(todo_list.title, response.data[0]["title"])
         self.assertEqual(todo_list.owner.pk, response.data[0]["owner"])
-
-    def test_list_todo_lists_is_private(self):
-        # Create two distinct users
-        user_1 = baker.make("User")
-        user_2 = baker.make("User")
-        self.assertEqual(2, User.objects.count())
-
-        # Create todo list with 'user_1' as owner
-        baker.make("TodoList", owner=user_1)
-        self.assertEqual(1, TodoList.objects.count())
-
-        # Authenticate 'user_2'
-        token, created = Token.objects.get_or_create(user=user_2)
-        self.assertTrue(created)
-        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
-
-        # Client asks for todo lists, none should be available
-        url = reverse("todo_list:todo_list")
-        response = self.client.get(path=url, **headers)
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(0, len(response.data))
 
     def test_create_todo_list_requires_data(self):
         # Create user
@@ -104,13 +104,81 @@ class TodoListTests(TestCase):
         self.assertEqual(data_sample["title"], todo_list_created.title)
         self.assertEqual(user.id, todo_list_created.owner.pk)
 
-    def test_edit_todo_list_requires_authorization(self):
+    def test_get_todo_list_requires_authorization(self):
+        # Create user
+        user = baker.make("User")
+        self.assertEqual(1, User.objects.count())
+
+        # Create todo list
+        baker.make("TodoList", owner=user)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Attempt to retrieve todo list
+        url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
+        response = self.client.get(
+            path=url,
+            content_type="application/json",
+        )
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
+    def test_get_todo_list_is_private(self):
+        # Create two distinct users
+        user_1 = baker.make("User")
+        user_2 = baker.make("User")
+        self.assertEqual(2, User.objects.count())
+
+        # Create todo list with 'user_1' as owner
+        baker.make("TodoList", owner=user_1)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Authenticate 'user_2'
+        token, created = Token.objects.get_or_create(user=user_2)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Attempt to retrieve todo list from 'user 1'
+        url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
+        response = self.client.get(
+            path=url,
+            content_type="application/json",
+            **headers
+        )
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+
+    def test_get_todo_list(self):
         # Create user
         user = baker.make("User")
         self.assertEqual(1, User.objects.count())
 
         # Create todo list
         todo_list = baker.make("TodoList", owner=user)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Authenticate user
+        token, created = Token.objects.get_or_create(user=user)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Retrieve todo list
+        url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
+        response = self.client.get(
+            path=url,
+            content_type="application/json",
+            **headers
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(todo_list.title, response.data["title"])
+        self.assertEqual(todo_list.owner.pk, response.data["owner"])
+        self.assertEqual(todo_list.id, response.data["id"])
+
+
+    def test_edit_todo_list_requires_authorization(self):
+        # Create user
+        user = baker.make("User")
+        self.assertEqual(1, User.objects.count())
+
+        # Create todo list
+        baker.make("TodoList", owner=user)
         self.assertEqual(1, TodoList.objects.count())
 
         # Edit todo list title
