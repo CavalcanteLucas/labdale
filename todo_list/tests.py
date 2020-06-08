@@ -69,7 +69,7 @@ class TodoListTests(TestCase):
         self.assertTrue(created)
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
-        # Try to create list passing no 'title' as data, results in bad request
+        # Attempt to create list, should fail with 400
         url = reverse("todo_list:todo_list")
         response = self.client.post(
             path=url, content_type="application/json", **headers
@@ -106,7 +106,7 @@ class TodoListTests(TestCase):
         baker.make("TodoList")
         self.assertEqual(1, TodoList.objects.count())
 
-        # Attempt to retrieve todo list
+        # Attempt to retrieve todo list, should fail with 401
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
         response = self.client.get(path=url, content_type="application/json",)
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
@@ -126,7 +126,7 @@ class TodoListTests(TestCase):
         self.assertTrue(created)
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
-        # Attempt to retrieve todo list from 'user 1'
+        # Attempt to retrieve todo list from 'user 1', should fail with 403
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
         response = self.client.get(path=url, content_type="application/json", **headers)
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
@@ -162,7 +162,7 @@ class TodoListTests(TestCase):
         baker.make("TodoList", owner=user)
         self.assertEqual(1, TodoList.objects.count())
 
-        # Edit todo list title
+        # Attempt to edit todo list title, should fail with 401
         data_sample = {"title": "This is a new title for the To-Do List"}
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(
@@ -184,7 +184,7 @@ class TodoListTests(TestCase):
         self.assertTrue(created)
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
-        # Edit todo list title
+        # Attempt to edit todo list title, should fail with 400
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(path=url, content_type="application/json", **headers)
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
@@ -206,7 +206,7 @@ class TodoListTests(TestCase):
         self.assertTrue(created)
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
-        # Client tries to edit todo list but fails
+        # Attempt to edit todo list title as 'user_1', should fail with 403
         data_sample = {"title": "This is a new title for the To-Do List"}
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(
@@ -229,7 +229,7 @@ class TodoListTests(TestCase):
         self.assertTrue(created)
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
-        # Edit todo list title
+        # Edit todo list title successfully
         data_sample = {"title": "This is a new title for the To-Do List"}
         url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(
@@ -238,3 +238,61 @@ class TodoListTests(TestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(data_sample["title"], response.data["title"])
         self.assertEqual(data_sample["title"], TodoList.objects.get().title)
+
+    def test_delete_todo_list_requires_authorization(self):
+        # Create user
+        user = baker.make("User")
+        self.assertEqual(1, User.objects.count())
+
+        # Create todo list
+        baker.make("TodoList", owner=user)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Attempt to delete todo list, should fail with 401
+        url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
+        response = self.client.delete(path=url, content_type="application/json")
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
+    def test_delete_todo_list_is_private(self):
+        # Create two distinct users
+        user_1 = baker.make("User")
+        user_2 = baker.make("User")
+        self.assertEqual(2, User.objects.count())
+
+        # Create todo list with 'user_1' as owner
+        baker.make("TodoList", owner=user_1)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Authenticate 'user_2'
+        token, created = Token.objects.get_or_create(user=user_2)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Attempto to delete todo list, should fail with 403
+        url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
+        response = self.client.delete(
+            path=url, content_type="application/json", **headers
+        )
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+
+    def test_delete_todo_list(self):
+        # Create user
+        user = baker.make("User")
+        self.assertEqual(1, User.objects.count())
+
+        # Create todo list
+        baker.make("TodoList", owner=user)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Authenticate user
+        token, created = Token.objects.get_or_create(user=user)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Delete todo list successfully
+        url = reverse("todo_list:todo_list_detail", kwargs={"pk": 1})
+        response = self.client.delete(
+            path=url, content_type="application/json", **headers
+        )
+        self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
+        self.assertEqual(0, TodoList.objects.count())
