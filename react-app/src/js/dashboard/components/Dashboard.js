@@ -1,29 +1,35 @@
 import React from "react";
-import moment from "moment";
 import PropTypes from "prop-types";
-import { capitalize as _capitalize } from "lodash";
 import { connect } from "react-redux";
 import { Alert, Container, Row, Col } from "react-bootstrap";
 
-import TodoLists from "./TodoLists";
+import TodoListDetail from "./TodoListDetail";
 import ActionBar from "./ActionBar";
 import { getUserInfo } from "../../auth/actions";
 
-import { clearCreateTodoListSuccessMessage } from "../actions";
+import {
+  clearCreateTodoListSuccessMessage,
+  clearEditTodoListTitleSuccessMessage
+} from "../actions";
 
 export class Dashboard extends React.Component {
   static propTypes = {
     getUserInfo: PropTypes.func.isRequired,
     userInfo: PropTypes.object,
+    getTodoListsFailureMessage: PropTypes.string,
     getTodoListFailureMessage: PropTypes.string,
     createTodoListSuccessMessage: PropTypes.string,
-    clearSuccessMessage: PropTypes.func.isRequired
+    clearCreateTodoListSuccessMessage: PropTypes.func.isRequired,
+    editTodoListTitleSuccessMessage: PropTypes.string,
+    clearEditTodoListTitleSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     userInfo: null,
+    getTodoListsFailureMessage: "",
     getTodoListFailureMessage: "",
-    createTodoListSuccessMessage: ""
+    createTodoListSuccessMessage: "",
+    editTodoListTitleSuccessMessage: ""
   };
 
   componentDidMount() {
@@ -31,49 +37,61 @@ export class Dashboard extends React.Component {
     getUserInfo();
   }
 
-  handleCloseSuccessMessage = () => {
-    const { clearSuccessMessage } = this.props;
-    clearSuccessMessage();
+  handleCloseCreateTodoListSuccessMessage = () => {
+    const { clearCreateTodoListSuccessMessage } = this.props;
+    clearCreateTodoListSuccessMessage();
+  };
+
+  handleCloseEditTodoListTitleSuccessMessage = () => {
+    const { clearEditTodoListTitleSuccessMessage } = this.props;
+    clearEditTodoListTitleSuccessMessage();
   };
 
   render() {
     const {
       userInfo,
+      getTodoListsFailureMessage,
       getTodoListFailureMessage,
-      createTodoListSuccessMessage
+      createTodoListSuccessMessage,
+      editTodoListTitleSuccessMessage
     } = this.props;
 
     return (
       <div className="dashboard">
         {userInfo ? (
           <Container fluid>
-            <Row>
-              <Col xs={2} sm={1}>
+            <Row xs={4}>
+              <Col>
                 <ActionBar />
               </Col>
 
-              <Col xs={{ offset: 1, span: 8 }} sm={9}>
+              <Col xs={{ offset: 1, span: 7 }}>
+                {getTodoListsFailureMessage ? (
+                  <Alert variant="danger">{getTodoListsFailureMessage}</Alert>
+                ) : null}
                 {getTodoListFailureMessage ? (
                   <Alert variant="danger">{getTodoListFailureMessage}</Alert>
                 ) : null}
                 {createTodoListSuccessMessage ? (
                   <Alert
                     variant="success"
-                    onClose={this.handleCloseSuccessMessage}
+                    onClose={this.handleCloseCreateTodoListSuccessMessage}
                     dismissible
                   >
                     {createTodoListSuccessMessage}
                   </Alert>
                 ) : null}
+                {editTodoListTitleSuccessMessage ? (
+                  <Alert
+                    variant="success"
+                    onClose={this.handleCloseEditTodoListTitleSuccessMessage}
+                    dismissible
+                  >
+                    {editTodoListTitleSuccessMessage}
+                  </Alert>
+                ) : null}
                 <div className="dashboard__content">
-                  <h3>
-                    Hi <strong>{_capitalize(userInfo.username)}</strong>,
-                  </h3>
-                  <p>
-                    Today is:
-                    <strong> {moment().format("dddd, DD/MM/Y")}</strong>
-                  </p>
-                  <TodoLists />
+                  <TodoListDetail />
                 </div>
               </Col>
             </Row>
@@ -86,13 +104,18 @@ export class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   userInfo: state.auth.userInfo,
+  getTodoListsFailureMessage: state.todo.getTodoListsFailureMessage,
   getTodoListFailureMessage: state.todo.getTodoListFailureMessage,
-  createTodoListSuccessMessage: state.todo.createTodoListSuccessMessage
+  createTodoListSuccessMessage: state.todo.createTodoListSuccessMessage,
+  editTodoListTitleSuccessMessage: state.todo.editTodoListTitleSuccessMessage
 });
 
 const mapDispatchToProps = dispatch => ({
   getUserInfo: () => dispatch(getUserInfo()),
-  clearSuccessMessage: () => dispatch(clearCreateTodoListSuccessMessage())
+  clearCreateTodoListSuccessMessage: () =>
+    dispatch(clearCreateTodoListSuccessMessage()),
+  clearEditTodoListTitleSuccessMessage: () =>
+    dispatch(clearEditTodoListTitleSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

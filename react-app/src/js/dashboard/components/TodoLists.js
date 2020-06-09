@@ -1,14 +1,14 @@
 import React from "react";
-import moment from "moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Card, ListGroup } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 
-import { getTodoLists } from "../actions";
+import { getTodoLists, getTodoList } from "../actions";
 
 export class TodoLists extends React.Component {
   static propTypes = {
     getTodoLists: PropTypes.func.isRequired,
+    getTodoList: PropTypes.func.isRequired,
     todoLists: PropTypes.array
   };
 
@@ -21,29 +21,29 @@ export class TodoLists extends React.Component {
     getTodoLists();
   }
 
+  handleSelect = eventKey => {
+    const { getTodoList } = this.props;
+    getTodoList(eventKey);
+  };
+
   render() {
     const { todoLists } = this.props;
     if (!todoLists) return null;
 
     return (
       <div className="todo-list">
-        <Card body>
-          <ListGroup variant="flush">
-            {todoLists.map(todoList => (
-              <ListGroup.Item key={todoList.id}>
-                <p>
-                  <strong>{todoList.title}</strong> ({todoList.id}) - [
-                  {todoList.owner}]
-                </p>
-                <small>
-                  {moment(todoList.created_at).format(
-                    "MMMM Do YYYY, h:mm:ss a"
-                  )}
-                </small>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-        </Card>
+        <ListGroup variant="flush" onSelect={this.handleSelect}>
+          {todoLists.map(todoList => (
+            <ListGroup.Item
+              action
+              variant="dark"
+              key={todoList.id}
+              eventKey={todoList.id}
+            >
+              <strong>{todoList.title}</strong>
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
       </div>
     );
   }
@@ -54,7 +54,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getTodoLists: () => dispatch(getTodoLists())
+  getTodoLists: () => dispatch(getTodoLists()),
+  getTodoList: todoListId => dispatch(getTodoList(todoListId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoLists);
