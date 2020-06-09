@@ -201,7 +201,8 @@ class TodoListTests(TestCase):
         self.assertEqual(2, User.objects.count())
 
         # Create todo list with 'user_1' as owner
-        baker.make("TodoList", owner=user_1)
+        todo_list = baker.make("TodoList", owner=user_1)
+        todo_list_title = todo_list.title
         self.assertEqual(1, TodoList.objects.count())
 
         # Authenticate 'user_2'
@@ -216,6 +217,7 @@ class TodoListTests(TestCase):
             path=url, content_type="application/json", data=data_sample, **headers
         )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+        self.assertEqual(todo_list_title, TodoList.objects.get().title)
 
     def test_edit_todo_list_title(self):
         # Create user
