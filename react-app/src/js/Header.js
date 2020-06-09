@@ -31,9 +31,9 @@ class Header extends React.Component {
 
     return (
       <header className="header">
-        <a href={userInfo ? "/dashboard" : "/"} className="header__title">
+        <Link to={userInfo ? "/dashboard" : "/"} className="header__title">
           LABDALE
-        </a>
+        </Link>
         {userInfo ? (
           <DropdownButton title={userInfo.username} variant="dark">
             <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>

@@ -5,14 +5,14 @@ from .models import TodoList
 from .serializers import TodoListSerializer
 
 
-class IsOwnerOrReadOnly(permissions.BasePermission):
+class IsTodoListOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.owner == request.user
 
 
 class TodoListAPIView(generics.ListCreateAPIView):
     serializer_class = TodoListSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsTodoListOwnerOrReadOnly]
 
     def get_queryset(self):
         user = self.request.user
@@ -25,7 +25,7 @@ class TodoListAPIView(generics.ListCreateAPIView):
 class TodoListDetailAPIView(generics.RetrieveUpdateAPIView):
     queryset = TodoList.objects.all()
     serializer_class = TodoListSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsTodoListOwnerOrReadOnly]
 
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)

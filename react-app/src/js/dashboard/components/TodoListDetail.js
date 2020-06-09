@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -36,7 +36,7 @@ export class TodoListDetail extends React.Component {
     return (
       <div className="todo-list-detail">
         {todoListDetail ? (
-          <div>
+          <Fragment>
             <h1>
               <strong>{todoListDetail.title}</strong>
               <Button variant="no-style" onClick={this.openModal}>
@@ -58,7 +58,7 @@ export class TodoListDetail extends React.Component {
               <br />(<strong>id</strong>:{todoListDetail.id}) (
               <strong>owner</strong>: {todoListDetail.owner})
             </p>
-          </div>
+          </Fragment>
         ) : null}
       </div>
     );

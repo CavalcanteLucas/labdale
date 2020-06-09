@@ -102,12 +102,8 @@ class TodoListTests(TestCase):
         self.assertEqual(user.id, todo_list_created.owner.pk)
 
     def test_get_todo_list_requires_authorization(self):
-        # Create user
-        user = baker.make("User")
-        self.assertEqual(1, User.objects.count())
-
         # Create todo list
-        baker.make("TodoList", owner=user)
+        baker.make("TodoList")
         self.assertEqual(1, TodoList.objects.count())
 
         # Attempt to retrieve todo list
