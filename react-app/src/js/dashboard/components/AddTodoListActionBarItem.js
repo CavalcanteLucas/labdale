@@ -5,7 +5,7 @@ import plusBtn from "../../../img/plus-btn.png";
 
 import AddTodoListModal from "./AddTodoListModal";
 
-export default class AddTodoListActionItem extends React.Component {
+export default class AddTodoListActionBarItem extends React.Component {
   constructor(props) {
     super(props);
 
@@ -22,9 +22,13 @@ export default class AddTodoListActionItem extends React.Component {
     const { modalIsOpen } = this.state;
 
     return (
-      <Nav.Item className="action-bar__item">
+      <Nav.Item className="add-todo-list-action-bar-item">
         <Nav.Link onClick={this.openModal}>
-          <img src={plusBtn} alt="Add Todo" className="action-bar__add-btn" />
+          <img
+            src={plusBtn}
+            alt="Add Todo"
+            className="add-todo-list-action-bar-item__btn"
+          />
         </Nav.Link>
         <AddTodoListModal show={modalIsOpen} onHide={this.closeModal} />
       </Nav.Item>

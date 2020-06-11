@@ -18,6 +18,9 @@ const PasswordResetConfirmEmailSent = React.lazy(() =>
   import("./auth/components/PasswordResetConfirmEmailSent")
 );
 const Dashboard = React.lazy(() => import("./dashboard"));
+const TodoListDetail = React.lazy(() =>
+  import("./dashboard/components/TodoListDetail")
+);
 
 export default class Routes extends React.Component {
   render() {
@@ -44,6 +47,7 @@ export default class Routes extends React.Component {
               component={PasswordResetConfirmForm}
             />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/todo-list/:id" component={TodoListDetail} />
             <Route component={NoMatch404} />
           </Switch>
         </React.Suspense>
