@@ -10,7 +10,7 @@ import garbageBtn from "../../../img/garbage-btn.png";
 import EditTodoListTitleModal from "./EditTodoListTitleModal";
 import { getTodoList, deleteTodoList } from "../actions";
 
-import Dashboard from "./Dashboard";
+import DashboardPage from "./DashboardPage";
 
 export class TodoListDetail extends React.Component {
   static propTypes = {
@@ -61,7 +61,7 @@ export class TodoListDetail extends React.Component {
     const { modalIsOpen } = this.state;
     const { todoListDetail } = this.props;
     return (
-      <Dashboard>
+      <DashboardPage>
         <div className="todo-list-detail">
           {todoListDetail ? (
             <Fragment>
@@ -96,7 +96,7 @@ export class TodoListDetail extends React.Component {
             </Fragment>
           ) : null}
         </div>
-      </Dashboard>
+      </DashboardPage>
     );
   }
 }
@@ -108,7 +108,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   deleteTodoList: todoListId => dispatch(deleteTodoList(todoListId)),
   getTodoList: todoListId => {
-    dispatch(getTodoList(todoListId))
+    dispatch(getTodoList(todoListId));
   }
 });
 

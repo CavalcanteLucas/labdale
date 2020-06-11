@@ -26,6 +26,13 @@ class Header extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    const { getUserInfo, isAuthenticated } = this.props;
+    if (isAuthenticated) {
+      getUserInfo();
+    }
+  }
+
   render() {
     const { userInfo, logout } = this.props;
 

@@ -176,7 +176,7 @@ export const getUserInfo = () => {
       success: GET_USER_INFO_SUCCESS,
       failure: GET_USER_INFO_FAILURE
     },
-    shouldDispatch: state => !state.userInfo,
+    shouldDispatch: state => !state.auth.userInfo,
     apiCallFunction: () => fetchFromApi("/api/rest-auth/user/", requestData)
   };
 };

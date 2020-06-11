@@ -26,7 +26,10 @@ export class TodoListsActionBarItem extends React.Component {
     if (!todoLists) return null;
 
     return (
-      <ListGroup className="todo-lists-action-bar-item">
+      <ListGroup
+        className="todo-lists-action-bar-item"
+        defaultActiveKey={todoLists[0].id}
+      >
         {todoLists.map(todoList => (
           <ListGroup.Item
             as={Link}
