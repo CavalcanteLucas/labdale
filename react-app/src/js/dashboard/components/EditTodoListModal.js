@@ -6,7 +6,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import { editTodoListTitle, clearEditTodoListTitleErrors } from "../actions";
 import FormErrors from "../../FormErrors";
 
-export class EditTodoListTitleModal extends React.Component {
+export class EditTodoListModal extends React.Component {
   static propTypes = {
     todoList: PropTypes.object.isRequired,
     editTodoListTitle: PropTypes.func.isRequired,
@@ -112,7 +112,4 @@ const mapDispatchToProps = dispatch => ({
   clearEditTodoListTitleErrors: () => dispatch(clearEditTodoListTitleErrors())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EditTodoListTitleModal);
+export default connect(mapStateToProps, mapDispatchToProps)(EditTodoListModal);

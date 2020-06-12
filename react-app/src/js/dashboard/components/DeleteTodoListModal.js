@@ -65,7 +65,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteTodoList: todoListId => dispatch(deleteTodoList(todoListId)),
+  deleteTodoList: todoListId => dispatch(deleteTodoList(todoListId))
 });
 
 export default connect(

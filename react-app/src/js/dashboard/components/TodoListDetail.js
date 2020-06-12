@@ -7,7 +7,7 @@ import moment from "moment";
 import pencilBtn from "../../../img/pencil-btn.png";
 import garbageBtn from "../../../img/garbage-btn.png";
 
-import EditTodoListTitleModal from "./EditTodoListTitleModal";
+import EditTodoListModal from "./EditTodoListModal";
 import DeleteTodoListModal from "./DeleteTodoListModal";
 import { getTodoList } from "../actions";
 
@@ -88,7 +88,7 @@ export class TodoListDetail extends React.Component {
                     className="todo-list-detail__delete-btn"
                   />
                 </Button>
-                <EditTodoListTitleModal
+                <EditTodoListModal
                   show={editModalIsOpen}
                   onHide={this.closeEditModal}
                   todoList={todoListDetail}
