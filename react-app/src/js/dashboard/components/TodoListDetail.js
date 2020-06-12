@@ -21,11 +21,18 @@ export class TodoListDetail extends React.Component {
       params: PropTypes.shape({
         id: PropTypes.string.isRequired
       }).isRequired
+    }).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func
+    }),
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired
     }).isRequired
   };
 
   static defaultProps = {
-    todoListDetail: null
+    todoListDetail: null,
+    history: undefined
   };
 
   constructor(props) {
@@ -53,8 +60,9 @@ export class TodoListDetail extends React.Component {
   openModal = () => this.setState({ modalIsOpen: true });
 
   handleDelete = () => {
-    const { match, deleteTodoList } = this.props;
+    const { history, match, deleteTodoList } = this.props;
     deleteTodoList(match.params.id);
+    history.push("/dashboard");
   };
 
   render() {

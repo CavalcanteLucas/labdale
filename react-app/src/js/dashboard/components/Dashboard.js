@@ -8,7 +8,7 @@ import DashboardPage from "./DashboardPage";
 
 class Dashboard extends React.Component {
   static propTypes = {
-    history: PropTypes.shape({ push: PropTypes.func.isRequired }),
+    history: PropTypes.shape({ push: PropTypes.func }),
     todoLists: PropTypes.array
   };
 
@@ -37,7 +37,6 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
   todoLists: state.todo.todoLists
 });
 

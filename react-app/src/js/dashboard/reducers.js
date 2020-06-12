@@ -148,12 +148,8 @@ export function todoReducers(state = initialState, action) {
         deleteTodoListErrors: initialState.deleteTodoListErrors
       };
     case DELETE_TODO_LIST_SUCCESS:
-      const todoListsAfterDelete = state.todoLists.filter(
-        value => value.id !== action.extraData.todoListId
-      );
       return {
         ...state,
-        todoLists: todoListsAfterDelete,
         todoListDetail: initialState.todoListDetail,
         deleteTodoListIsLoading: initialState.deleteTodoListIsLoading,
         deleteTodoListSuccessMessage: "Todo List deleted successfully."

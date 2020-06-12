@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import { isEmpty as _isEmpty } from "lodash";
 import { getTodoLists } from "../actions";
 
 export class TodoListsActionBarItem extends React.Component {
@@ -25,7 +26,7 @@ export class TodoListsActionBarItem extends React.Component {
     const { todoLists } = this.props;
     if (!todoLists) return null;
 
-    return (
+    return !_isEmpty(todoLists) ? (
       <ListGroup
         className="todo-lists-action-bar-item"
         defaultActiveKey={todoLists[0].id}
@@ -43,7 +44,7 @@ export class TodoListsActionBarItem extends React.Component {
           </ListGroup.Item>
         ))}
       </ListGroup>
-    );
+    ) : null;
   }
 }
 
