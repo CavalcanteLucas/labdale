@@ -8,14 +8,14 @@ import pencilBtn from "../../../img/pencil-btn.png";
 import garbageBtn from "../../../img/garbage-btn.png";
 
 import EditTodoListTitleModal from "./EditTodoListTitleModal";
-import { getTodoList, deleteTodoList } from "../actions";
+import DeleteTodoListModal from "./DeleteTodoListModal";
+import { getTodoList } from "../actions";
 
 import DashboardPage from "./DashboardPage";
 
 export class TodoListDetail extends React.Component {
   static propTypes = {
     todoListDetail: PropTypes.object,
-    deleteTodoList: PropTypes.func.isRequired,
     getTodoList: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -39,7 +39,8 @@ export class TodoListDetail extends React.Component {
     super(props);
 
     this.state = {
-      modalIsOpen: false
+      editModalIsOpen: false,
+      deleteModalIsOpen: false
     };
   }
 
@@ -55,18 +56,16 @@ export class TodoListDetail extends React.Component {
     }
   }
 
-  closeModal = () => this.setState({ modalIsOpen: false });
+  closeEditModal = () => this.setState({ editModalIsOpen: false });
 
-  openModal = () => this.setState({ modalIsOpen: true });
+  closeDeleteModal = () => this.setState({ deleteModalIsOpen: false });
 
-  handleDelete = () => {
-    const { history, match, deleteTodoList } = this.props;
-    deleteTodoList(match.params.id);
-    history.push("/dashboard");
-  };
+  openEditModal = () => this.setState({ editModalIsOpen: true });
+
+  openDeleteModal = () => this.setState({ deleteModalIsOpen: true });
 
   render() {
-    const { modalIsOpen } = this.state;
+    const { editModalIsOpen, deleteModalIsOpen } = this.state;
     const { todoListDetail } = this.props;
     return (
       <DashboardPage>
@@ -75,14 +74,14 @@ export class TodoListDetail extends React.Component {
             <Fragment>
               <h1>
                 <strong>{todoListDetail.title}</strong>
-                <Button variant="no-style" onClick={this.openModal}>
+                <Button variant="no-style" onClick={this.openEditModal}>
                   <img
                     src={pencilBtn}
                     alt="Edit Todo List"
                     className="todo-list-detail__edit-btn"
                   />
                 </Button>
-                <Button variant="no-style" onClick={this.handleDelete}>
+                <Button variant="no-style" onClick={this.openDeleteModal}>
                   <img
                     src={garbageBtn}
                     alt="Delete Todo List"
@@ -90,8 +89,13 @@ export class TodoListDetail extends React.Component {
                   />
                 </Button>
                 <EditTodoListTitleModal
-                  show={modalIsOpen}
-                  onHide={this.closeModal}
+                  show={editModalIsOpen}
+                  onHide={this.closeEditModal}
+                  todoList={todoListDetail}
+                />
+                <DeleteTodoListModal
+                  show={deleteModalIsOpen}
+                  onHide={this.closeDeleteModal}
                   todoList={todoListDetail}
                 />
               </h1>
@@ -114,7 +118,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteTodoList: todoListId => dispatch(deleteTodoList(todoListId)),
   getTodoList: todoListId => {
     dispatch(getTodoList(todoListId));
   }
