@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "rest_auth.registration",
-    "todo_list.apps.TodoListConfig",
+    "todo_lists.apps.TodoListsConfig",
     "todos.apps.TodosConfig"
 ]
 

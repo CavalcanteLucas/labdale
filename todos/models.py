@@ -1,6 +1,6 @@
 from django.db import models
 
-from todo_list.models import TodoList
+from todo_lists.models import TodoList
 
 class Todo(models.Model):
     title = models.CharField(max_length=255)

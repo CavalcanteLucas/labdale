@@ -37,7 +37,7 @@ export const getTodoLists = () => {
       success: GET_TODO_LISTS_SUCCESS,
       failure: GET_TODO_LISTS_FAILURE
     },
-    apiCallFunction: () => fetchFromApi("/api/todo-list/", requestData)
+    apiCallFunction: () => fetchFromApi("/api/todo-lists/", requestData)
   };
 };
 
@@ -54,7 +54,7 @@ export const getTodoList = todoListId => {
       failure: GET_TODO_LIST_FAILURE
     },
     apiCallFunction: () =>
-      fetchFromApi(`/api/todo-list/${todoListId}/`, requestData)
+      fetchFromApi(`/api/todo-lists/${todoListId}/`, requestData)
   };
 };
 
@@ -74,7 +74,7 @@ export const createTodoList = todoListTitle => {
       success: CREATE_TODO_LIST_SUCCESS,
       failure: CREATE_TODO_LIST_FAILURE
     },
-    apiCallFunction: () => fetchFromApi("/api/todo-list/", requestData)
+    apiCallFunction: () => fetchFromApi("/api/todo-lists/", requestData)
   };
 };
 
@@ -95,7 +95,7 @@ export const editTodoListTitle = (todoListId, newTitle) => {
       failure: EDIT_TODO_LIST_TITLE_FAILURE
     },
     apiCallFunction: () =>
-      fetchFromApi(`/api/todo-list/${todoListId}/`, requestData)
+      fetchFromApi(`/api/todo-lists/${todoListId}/`, requestData)
   };
 };
 
@@ -116,7 +116,7 @@ export const deleteTodoList = todoListId => {
       todoListId
     },
     apiCallFunction: () =>
-      fetchFromApi(`/api/todo-list/${todoListId}/`, requestData)
+      fetchFromApi(`/api/todo-lists/${todoListId}/`, requestData)
   };
 };
 
