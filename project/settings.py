@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "rest_auth.registration",
     "todo_list.apps.TodoListConfig",
+    "todos.apps.TodosConfig"
 ]
 
 REST_FRAMEWORK = {
