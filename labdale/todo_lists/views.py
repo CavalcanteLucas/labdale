@@ -1,13 +1,16 @@
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 
-from .models import TodoList
-from .serializers import TodoListSerializer
-
+from .models import TodoList, Todo
+from .serializers import TodoListSerializer, TodoSerializer
 
 class IsTodoListOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.owner == request.user
+
+class IsTodoOwnerOrReadOnly(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.todo_list.owner == request.user
 
 
 class TodoListAPIView(generics.ListCreateAPIView):
@@ -29,3 +32,9 @@ class TodoListDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class TodoAPIView(generics.CreateAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+    permission_classes = [permissions.IsAuthenticated, IsTodoOwnerOrReadOnly]
