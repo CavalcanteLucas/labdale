@@ -51,8 +51,8 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "rest_auth.registration",
-    "todo_lists.apps.TodoListsConfig",
-    "todos.apps.TodosConfig"
+    "labdale.todo_lists.apps.TodoListsConfig",
+    "labdale.todos.apps.TodosConfig"
 ]
 
 REST_FRAMEWORK = {

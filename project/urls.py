@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.urls import re_path, path, include
 
-from todo_lists import urls as todo_lists_enpoints
+from labdale.todo_lists import urls as todo_lists_enpoints
 
 frontend_urls = [
     path("", include("pwa.urls")),
