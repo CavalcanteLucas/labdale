@@ -16,6 +16,9 @@ class TodoListTests(TestCase):
         self.assertEqual(todo_list.__str__(),todo_list.title)
         self.assertEqual(str(todo_list),todo_list.title)
 
+    ##
+    # LIST
+    ##
     def test_list_todo_lists_requires_authorization(self):
         url = reverse("todo_lists:todo_list")
         response = self.client.get(path=url)
@@ -64,6 +67,9 @@ class TodoListTests(TestCase):
         self.assertEqual(todo_list.title, response.data[0]["title"])
         self.assertEqual(todo_list.owner.pk, response.data[0]["owner"])
 
+    ##
+    # CREATE
+    ##
     def test_create_todo_list_requires_authorization(self):
         pass
 
@@ -112,6 +118,9 @@ class TodoListTests(TestCase):
         self.assertEqual(data_sample["title"], todo_list_created.title)
         self.assertEqual(user.id, todo_list_created.owner.pk)
 
+    ##
+    # READ
+    ##
     def test_get_todo_list_requires_authorization(self):
         # Create todo list
         baker.make("TodoList")
@@ -164,6 +173,9 @@ class TodoListTests(TestCase):
         self.assertEqual(todo_list.owner.pk, response.data["owner"])
         self.assertEqual(todo_list.id, response.data["id"])
 
+    ##
+    # UPDATE
+    ##
     def test_edit_todo_list_requires_authorization(self):
         # Create user
         user = baker.make("User")
@@ -250,6 +262,9 @@ class TodoListTests(TestCase):
         self.assertEqual(data_sample["title"], response.data["title"])
         self.assertEqual(data_sample["title"], TodoList.objects.get().title)
 
+    ##
+    # DESTROY
+    ##
     def test_delete_todo_list_requires_authorization(self):
         # Create user
         user = baker.make("User")
