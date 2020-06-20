@@ -19,8 +19,21 @@ class TodoTests(TestCase):
     # CREATE
     ##
     def test_create_todo_requires_authorization(self):
+        # Create user
+        user = baker.make("User")
+        self.assertEqual(1, User.objects.count())
+
+        # Create todo list
+        todo_list = baker.make("TodoList", owner=user)
+        self.assertEqual(1, TodoList.objects.count())
+
         # Attempt to create todo list, should fail with 401
-        pass
+        sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list))
+        url = reverse("todo_lists:todo")
+        response = self.client.post(
+            path=url, content_type="application/json", data=sample.data,
+        )
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_create_todo_is_private(self):
         # Attempt to create todo list as 'user_1', should fail with 403
