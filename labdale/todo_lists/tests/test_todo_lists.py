@@ -1,14 +1,13 @@
-from django.test import TestCase
-from django.contrib.auth import get_user_model
-from django.urls import reverse
+from model_bakery import baker
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from model_bakery import baker
+
+from django.contrib.auth.models import User
+from django.test import TestCase
+from django.urls import reverse
 
 from labdale.todo_lists.models import TodoList
-
-User = get_user_model()
-
+from labdale.todo_lists.serializers import TodoListSerializer
 
 class TodoListTests(TestCase):
     def test_todo_list__str__(self):
@@ -20,6 +19,7 @@ class TodoListTests(TestCase):
     # LIST
     ##
     def test_list_todo_lists_requires_authorization(self):
+        # Attempt to retrieve todo lists, should fail with 401
         url = reverse("todo_lists:todo_list")
         response = self.client.get(path=url)
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
@@ -71,9 +71,11 @@ class TodoListTests(TestCase):
     # CREATE
     ##
     def test_create_todo_list_requires_authorization(self):
+        # Attempt to create todo list, should fail with 401
         pass
 
     def test_create_todo_list_is_private(self):
+        # Attempt to create todo list as 'user_1', should fail with 403
         pass
 
     def test_create_todo_list_requires_data(self):
@@ -86,7 +88,7 @@ class TodoListTests(TestCase):
         self.assertTrue(created)
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
-        # Attempt to create list, should fail with 400
+        # Attempt to create todo list, should fail with 400
         url = reverse("todo_lists:todo_list")
         response = self.client.post(
             path=url, content_type="application/json", **headers
@@ -107,15 +109,15 @@ class TodoListTests(TestCase):
 
         # Client creates todo list successfully
         self.assertEqual(0, TodoList.objects.count())
-        data_sample = {"title": "This is a sample title for a To-Do List"}
+        sample = TodoListSerializer(baker.prepare("TodoList"))
         url = reverse("todo_lists:todo_list")
         response = self.client.post(
-            path=url, content_type="application/json", data=data_sample, **headers
+            path=url, content_type="application/json", data=sample.data, **headers
         )
         todo_list_created = TodoList.objects.get()
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(1, response.data["id"])
-        self.assertEqual(data_sample["title"], todo_list_created.title)
+        self.assertEqual(sample.data["title"], todo_list_created.title)
         self.assertEqual(user.id, todo_list_created.owner.pk)
 
     ##
@@ -253,14 +255,14 @@ class TodoListTests(TestCase):
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
         # Edit todo list title successfully
-        data_sample = {"title": "This is a new title for the To-Do List"}
+        sample = TodoListSerializer(baker.prepare("TodoList"))
         url = reverse("todo_lists:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(
-            path=url, content_type="application/json", data=data_sample, **headers
+            path=url, content_type="application/json", data=sample.data, **headers
         )
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(data_sample["title"], response.data["title"])
-        self.assertEqual(data_sample["title"], TodoList.objects.get().title)
+        self.assertEqual(sample.data["title"], response.data["title"])
+        self.assertEqual(sample.data["title"], TodoList.objects.get().title)
 
     ##
     # DESTROY
@@ -294,7 +296,7 @@ class TodoListTests(TestCase):
         self.assertTrue(created)
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
-        # Attempto to delete todo list, should fail with 403
+        # Attempt to delete todo list, should fail with 403
         url = reverse("todo_lists:todo_list_detail", kwargs={"pk": 1})
         response = self.client.delete(
             path=url, content_type="application/json", **headers
