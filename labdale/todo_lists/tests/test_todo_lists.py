@@ -71,8 +71,17 @@ class TodoListTests(TestCase):
     # CREATE
     ##
     def test_create_todo_list_requires_authorization(self):
+        # Create user
+        user = baker.make("User")
+        self.assertEqual(1, User.objects.count())
+
         # Attempt to create todo list, should fail with 401
-        pass
+        sample = {"title": "This is a new title for the To-Do List"}
+        url = reverse("todo_lists:todo")
+        response = self.client.post(
+            path=url, content_type="application/json", data=sample.data,
+        )
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_create_todo_list_is_private(self):
         # Attempt to create todo list as 'user_1', should fail with 403
@@ -188,10 +197,10 @@ class TodoListTests(TestCase):
         self.assertEqual(1, TodoList.objects.count())
 
         # Attempt to edit todo list title, should fail with 401
-        data_sample = {"title": "This is a new title for the To-Do List"}
+        sample = {"title": "This is a new title for the To-Do List"}
         url = reverse("todo_lists:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(
-            path=url, content_type="application/json", data=data_sample,
+            path=url, content_type="application/json", data=sample,
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
@@ -212,10 +221,10 @@ class TodoListTests(TestCase):
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
         # Attempt to edit todo list title as 'user_1', should fail with 403
-        data_sample = {"title": "This is a new title for the To-Do List"}
+        sample = {"title": "This is a new title for the To-Do List"}
         url = reverse("todo_lists:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(
-            path=url, content_type="application/json", data=data_sample, **headers
+            path=url, content_type="application/json", data=sample, **headers
         )
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
         self.assertEqual(todo_list_title, TodoList.objects.get().title)
