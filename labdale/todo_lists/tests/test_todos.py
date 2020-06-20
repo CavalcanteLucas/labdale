@@ -35,10 +35,6 @@ class TodoTests(TestCase):
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
-    def test_create_todo_is_private(self):
-        # Attempt to create todo list as 'user_1', should fail with 403
-        pass
-
     def test_create_todo_requires_data(self):
         # Create user
         user = baker.make("User")

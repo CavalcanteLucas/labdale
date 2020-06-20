@@ -79,13 +79,9 @@ class TodoListTests(TestCase):
         sample = {"title": "This is a new title for the To-Do List"}
         url = reverse("todo_lists:todo")
         response = self.client.post(
-            path=url, content_type="application/json", data=sample.data,
+            path=url, content_type="application/json", data=sample.data
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-    def test_create_todo_list_is_private(self):
-        # Attempt to create todo list as 'user_1', should fail with 403
-        pass
 
     def test_create_todo_list_requires_data(self):
         # Create user
