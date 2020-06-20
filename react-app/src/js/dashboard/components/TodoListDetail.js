@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import moment from "moment";
 
 import pencilBtn from "../../../img/pencil-btn.png";
 import garbageBtn from "../../../img/garbage-btn.png";
@@ -100,8 +99,6 @@ export class TodoListDetail extends React.Component {
                 />
               </h1>
               <p>
-                <strong>Created: </strong>
-                {moment(todoListDetail.created_at).format("dddd, DD/MM/Y")}
                 <br />(<strong>id</strong>:{todoListDetail.id}) (
                 <strong>owner</strong>: {todoListDetail.owner})
               </p>

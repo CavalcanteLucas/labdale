@@ -8,7 +8,6 @@ class TodoListAdmin(admin.ModelAdmin):
         "id",
         "title",
         "owner",
-        "created_at"
     ]
 
 
@@ -18,7 +17,6 @@ class TodoAdmin(admin.ModelAdmin):
         "title",
         "deadline",
         "todo_list",
-        "created_at"
     ]
 
 
