@@ -22,8 +22,10 @@ setup_node_environment:
 	export NVM_DIR=$$HOME/.nvm; . ~/.nvm/nvm.sh ; nvm install
 
 test:
-	coverage run --source="." --omit="venv/*,manage.py,project/*" manage.py test && coverage report
+	coverage run --source="." --omit="venv/*,manage.py,project/*,*/migrations/*" manage.py test
+	coverage report
 
 coverage_report:
 	make test
+	coverage html
 	google-chrome htmlcov/index.html
