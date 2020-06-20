@@ -7,7 +7,6 @@ class TodoList(models.Model):
     owner = models.ForeignKey(
         User, related_name="todo_lists", on_delete=models.CASCADE, null=False
     )
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title

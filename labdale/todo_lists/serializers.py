@@ -23,6 +23,7 @@ class TodoListSerializer(serializers.Serializer):
 
 class TodoSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
+    title = serializers.CharField()
     deadline = serializers.DateTimeField()
     todo_list = serializers.PrimaryKeyRelatedField(queryset=TodoList.objects.all())
 
