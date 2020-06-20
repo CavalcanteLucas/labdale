@@ -79,7 +79,7 @@ class TodoListTests(TestCase):
         sample = {"title": "This is a new title for the To-Do List"}
         url = reverse("todo_lists:todo")
         response = self.client.post(
-            path=url, content_type="application/json", data=sample.data
+            path=url, content_type="application/json", data=sample
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 

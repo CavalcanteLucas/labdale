@@ -15,7 +15,7 @@ class IsTodoOwnerOrReadOnly(permissions.BasePermission):
 
 class TodoListAPIView(generics.ListCreateAPIView):
     serializer_class = TodoListSerializer
-    permission_classes = [permissions.IsAuthenticated, IsTodoListOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated & IsTodoListOwnerOrReadOnly]
 
     def get_queryset(self):
         user = self.request.user
@@ -28,7 +28,7 @@ class TodoListAPIView(generics.ListCreateAPIView):
 class TodoListDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TodoList.objects.all()
     serializer_class = TodoListSerializer
-    permission_classes = [permissions.IsAuthenticated, IsTodoListOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated & IsTodoListOwnerOrReadOnly]
 
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
@@ -37,4 +37,5 @@ class TodoListDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class TodoAPIView(generics.CreateAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
-    permission_classes = [permissions.IsAuthenticated, IsTodoOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated & IsTodoOwnerOrReadOnly]
+
