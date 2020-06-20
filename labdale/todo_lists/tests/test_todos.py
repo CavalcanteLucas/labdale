@@ -19,13 +19,33 @@ class TodoTests(TestCase):
     # CREATE
     ##
     def test_create_todo_requires_authorization(self):
+        # Attempt to create todo list, should fail with 401
         pass
 
     def test_create_todo_is_private(self):
+        # Attempt to create todo list as 'user_1', should fail with 403
         pass
 
     def test_create_todo_requires_data(self):
-        pass
+        # Create user
+        user = baker.make("User")
+        self.assertEqual(1, User.objects.count())
+
+        # Authenticate user
+        token, created = Token.objects.get_or_create(user=user)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Attempt to create todo, should fail with 400
+        url = reverse("todo_lists:todo")
+        response = self.client.post(
+            path=url, content_type="application/json", **headers
+        )
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+        self.assertEqual(3, len(response.data))
+        self.assertEqual("required", response.data["title"][0].code)
+        self.assertEqual("required", response.data["deadline"][0].code)
+        self.assertEqual("required", response.data["todo_list"][0].code)
 
     def test_create_todo(self):
         # Create user
