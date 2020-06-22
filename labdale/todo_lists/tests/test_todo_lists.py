@@ -77,7 +77,7 @@ class TodoListTests(TestCase):
 
         # Attempt to create todo list, should fail with 401
         sample = {"title": "This is a new title for the To-Do List"}
-        url = reverse("todo_lists:todo")
+        url = reverse("todo_lists:todo_list")
         response = self.client.post(
             path=url, content_type="application/json", data=sample
         )
