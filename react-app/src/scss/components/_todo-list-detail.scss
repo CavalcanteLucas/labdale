@@ -1,10 +1,21 @@
 .todo-list-detail {
     &__edit-btn {
         height: 1.5rem;
+        margin: 0 -0.5rem;
         filter: invert(0.6);
 
         &:hover {
             filter: invert(0.25);
+          }
+      }
+
+    &__delete-btn {
+        height: 1.5rem;
+        margin: 0 -0.5rem;
+        filter: invert(0.7);
+
+        &:hover {
+            filter: invert(0.1);
           }
       }
  }

@@ -1,0 +1,19 @@
+.add-todo-list-action-bar-item {
+    .nav-link {
+      padding: 0.5rem;
+      text-align: center;
+      background-color: #6b6b6a;
+      margin: 16px;
+      border-radius: 5px;
+    }
+
+    &:hover {
+      filter: brightness(0.6);
+    }
+
+  &__btn {
+    height: 2rem;
+    flex: 1;
+    filter: invert(1);
+  }
+}

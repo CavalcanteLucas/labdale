@@ -22,7 +22,7 @@ class TodoListAPIView(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class TodoListDetailAPIView(generics.RetrieveUpdateAPIView):
+class TodoListDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TodoList.objects.all()
     serializer_class = TodoListSerializer
     permission_classes = [permissions.IsAuthenticated, IsTodoListOwnerOrReadOnly]

@@ -19,6 +19,11 @@ export const CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE =
   "CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE";
 export const CLEAR_EDIT_TODO_LIST_TITLE_ERRORS =
   "CLEAR_EDIT_TODO_LIST_TITLE_ERRORS";
+export const DELETE_TODO_LIST_REQUEST = "DELETE_TODO_LIST_REQUEST";
+export const DELETE_TODO_LIST_SUCCESS = "DELETE_TODO_LIST_SUCCESS";
+export const DELETE_TODO_LIST_FAILURE = "DELETE_TODO_LIST_FAILURE";
+export const CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE =
+  "CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE";
 
 export const getTodoLists = () => {
   const requestData = {
@@ -32,7 +37,7 @@ export const getTodoLists = () => {
       success: GET_TODO_LISTS_SUCCESS,
       failure: GET_TODO_LISTS_FAILURE
     },
-    apiCallFunction: () => fetchFromApi("api/todo-list/", requestData)
+    apiCallFunction: () => fetchFromApi("/api/todo-list/", requestData)
   };
 };
 
@@ -49,7 +54,7 @@ export const getTodoList = todoListId => {
       failure: GET_TODO_LIST_FAILURE
     },
     apiCallFunction: () =>
-      fetchFromApi(`api/todo-list/${todoListId}/`, requestData)
+      fetchFromApi(`/api/todo-list/${todoListId}/`, requestData)
   };
 };
 
@@ -69,7 +74,7 @@ export const createTodoList = todoListTitle => {
       success: CREATE_TODO_LIST_SUCCESS,
       failure: CREATE_TODO_LIST_FAILURE
     },
-    apiCallFunction: () => fetchFromApi("api/todo-list/", requestData)
+    apiCallFunction: () => fetchFromApi("/api/todo-list/", requestData)
   };
 };
 
@@ -90,16 +95,36 @@ export const editTodoListTitle = (todoListId, newTitle) => {
       failure: EDIT_TODO_LIST_TITLE_FAILURE
     },
     apiCallFunction: () =>
-      fetchFromApi(`api/todo-list/${todoListId}/`, requestData)
+      fetchFromApi(`/api/todo-list/${todoListId}/`, requestData)
   };
 };
 
-export const clearCreateTodoListErrors = () => ({
-  type: CLEAR_CREATE_TODO_LIST_ERRORS
-});
+export const deleteTodoList = todoListId => {
+  const requestData = {
+    method: "DELETE",
+    headers: {
+      authorization: `Token ${localStorage.token}`
+    }
+  };
+  return {
+    types: {
+      request: DELETE_TODO_LIST_REQUEST,
+      success: DELETE_TODO_LIST_SUCCESS,
+      failure: DELETE_TODO_LIST_FAILURE
+    },
+    extraData: {
+      todoListId
+    },
+    apiCallFunction: () =>
+      fetchFromApi(`/api/todo-list/${todoListId}/`, requestData)
+  };
+};
 
 export const clearCreateTodoListSuccessMessage = () => ({
   type: CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE
+});
+export const clearCreateTodoListErrors = () => ({
+  type: CLEAR_CREATE_TODO_LIST_ERRORS
 });
 
 export const clearEditTodoListTitleSuccessMessage = () => ({
@@ -108,4 +133,8 @@ export const clearEditTodoListTitleSuccessMessage = () => ({
 
 export const clearEditTodoListTitleErrors = () => ({
   type: CLEAR_EDIT_TODO_LIST_TITLE_ERRORS
+});
+
+export const clearDeleteTodoListSuccessMessage = () => ({
+  type: CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE
 });

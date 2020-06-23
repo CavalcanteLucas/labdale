@@ -1,121 +1,47 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Alert, Container, Row, Col } from "react-bootstrap";
+import { isEmpty as _isEmpty } from "lodash";
+import { getTodoLists } from "../actions";
 
-import TodoListDetail from "./TodoListDetail";
-import ActionBar from "./ActionBar";
-import { getUserInfo } from "../../auth/actions";
+import DashboardPage from "./DashboardPage";
 
-import {
-  clearCreateTodoListSuccessMessage,
-  clearEditTodoListTitleSuccessMessage
-} from "../actions";
-
-export class Dashboard extends React.Component {
+class Dashboard extends React.Component {
   static propTypes = {
-    getUserInfo: PropTypes.func.isRequired,
-    userInfo: PropTypes.object,
-    getTodoListsFailureMessage: PropTypes.string,
-    getTodoListFailureMessage: PropTypes.string,
-    createTodoListSuccessMessage: PropTypes.string,
-    clearCreateTodoListSuccessMessage: PropTypes.func.isRequired,
-    editTodoListTitleSuccessMessage: PropTypes.string,
-    clearEditTodoListTitleSuccessMessage: PropTypes.func.isRequired
+    history: PropTypes.shape({ push: PropTypes.func }),
+    todoLists: PropTypes.array
   };
 
   static defaultProps = {
-    userInfo: null,
-    getTodoListsFailureMessage: "",
-    getTodoListFailureMessage: "",
-    createTodoListSuccessMessage: "",
-    editTodoListTitleSuccessMessage: ""
+    history: undefined,
+    todoLists: null
   };
 
-  componentDidMount() {
-    const { getUserInfo } = this.props;
-    getUserInfo();
+  componentDidUpdate() {
+    const { history, todoLists } = this.props;
+    if (!_isEmpty(todoLists)) {
+      history.push(`/todo-list/${todoLists[0].id}`);
+    }
   }
 
-  handleCloseCreateTodoListSuccessMessage = () => {
-    const { clearCreateTodoListSuccessMessage } = this.props;
-    clearCreateTodoListSuccessMessage();
-  };
-
-  handleCloseEditTodoListTitleSuccessMessage = () => {
-    const { clearEditTodoListTitleSuccessMessage } = this.props;
-    clearEditTodoListTitleSuccessMessage();
-  };
-
   render() {
-    const {
-      userInfo,
-      getTodoListsFailureMessage,
-      getTodoListFailureMessage,
-      createTodoListSuccessMessage,
-      editTodoListTitleSuccessMessage
-    } = this.props;
-
+    const { todoLists } = this.props;
     return (
-      <div className="dashboard">
-        {userInfo ? (
-          <Container fluid>
-            <Row xs={4}>
-              <Col>
-                <ActionBar />
-              </Col>
-
-              <Col xs={{ offset: 1, span: 7 }}>
-                {getTodoListsFailureMessage ? (
-                  <Alert variant="danger">{getTodoListsFailureMessage}</Alert>
-                ) : null}
-                {getTodoListFailureMessage ? (
-                  <Alert variant="danger">{getTodoListFailureMessage}</Alert>
-                ) : null}
-                {createTodoListSuccessMessage ? (
-                  <Alert
-                    variant="success"
-                    onClose={this.handleCloseCreateTodoListSuccessMessage}
-                    dismissible
-                  >
-                    {createTodoListSuccessMessage}
-                  </Alert>
-                ) : null}
-                {editTodoListTitleSuccessMessage ? (
-                  <Alert
-                    variant="success"
-                    onClose={this.handleCloseEditTodoListTitleSuccessMessage}
-                    dismissible
-                  >
-                    {editTodoListTitleSuccessMessage}
-                  </Alert>
-                ) : null}
-                <div className="dashboard__content">
-                  <TodoListDetail />
-                </div>
-              </Col>
-            </Row>
-          </Container>
+      <DashboardPage>
+        {todoLists && _isEmpty(todoLists) ? (
+          <h1>Hello, create some Todo Lists to start!</h1>
         ) : null}
-      </div>
+      </DashboardPage>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  userInfo: state.auth.userInfo,
-  getTodoListsFailureMessage: state.todo.getTodoListsFailureMessage,
-  getTodoListFailureMessage: state.todo.getTodoListFailureMessage,
-  createTodoListSuccessMessage: state.todo.createTodoListSuccessMessage,
-  editTodoListTitleSuccessMessage: state.todo.editTodoListTitleSuccessMessage
+  todoLists: state.todo.todoLists
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUserInfo: () => dispatch(getUserInfo()),
-  clearCreateTodoListSuccessMessage: () =>
-    dispatch(clearCreateTodoListSuccessMessage()),
-  clearEditTodoListTitleSuccessMessage: () =>
-    dispatch(clearEditTodoListTitleSuccessMessage())
+  getTodoLists: () => dispatch(getTodoLists())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

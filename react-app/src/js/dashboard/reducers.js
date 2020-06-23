@@ -14,7 +14,11 @@ import {
   CLEAR_CREATE_TODO_LIST_ERRORS,
   CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE,
   CLEAR_EDIT_TODO_LIST_TITLE_ERRORS,
-  CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE
+  CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE,
+  DELETE_TODO_LIST_REQUEST,
+  DELETE_TODO_LIST_SUCCESS,
+  DELETE_TODO_LIST_FAILURE,
+  CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE
 } from "./actions";
 import { LOGOUT_SUCCESS } from "../auth/actions";
 
@@ -30,7 +34,10 @@ const initialState = {
   getTodoListFailureMessage: null,
   editTodoListTitleIsLoading: false,
   editTodoListTitleSuccessMessage: null,
-  editTodoListTitleErrors: null
+  editTodoListTitleErrors: null,
+  deleteTodoListIsLoading: false,
+  deleteTodoListSuccessMessage: null,
+  deleteTodoListErrors: null
 };
 
 export function todoReducers(state = initialState, action) {
@@ -91,6 +98,7 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         todoLists: [action.response.data, ...state.todoLists],
+        todoListDetail: action.response.data,
         createTodoListIsLoading: initialState.createTodoListIsLoading,
         createTodoListSuccessMessage: "Todo List created successfully."
       };
@@ -112,14 +120,14 @@ export function todoReducers(state = initialState, action) {
       };
     case EDIT_TODO_LIST_TITLE_SUCCESS:
       const todoListDetail = action.response.data;
-      const newTodoLists = state.todoLists.map(item => {
+      const todoListsAfterEdit = state.todoLists.map(item => {
         if (item.id !== todoListDetail.id) return item;
         return todoListDetail;
       });
       return {
         ...state,
         todoListDetail,
-        todoLists: newTodoLists,
+        todoLists: todoListsAfterEdit,
         editTodoListTitleIsLoading: initialState.editTodoListTitleIsLoading,
         editTodoListTitleSuccessMessage:
           "Todo List's title changed successfully."
@@ -131,27 +139,54 @@ export function todoReducers(state = initialState, action) {
         editTodoListTitleErrors: action.response.data
       };
 
-    // CLEAR
-    case CLEAR_CREATE_TODO_LIST_ERRORS:
+    // DELETE_TODO_LIST:
+    case DELETE_TODO_LIST_REQUEST:
       return {
         ...state,
-        createTodoListErrors: initialState.createTodoListErrors
+        deleteTodoListIsLoading: true,
+        deleteTodoListSuccessMessage: initialState.deleteTodoListSuccessMessage,
+        deleteTodoListErrors: initialState.deleteTodoListErrors
       };
+    case DELETE_TODO_LIST_SUCCESS:
+      return {
+        ...state,
+        todoListDetail: initialState.todoListDetail,
+        deleteTodoListIsLoading: initialState.deleteTodoListIsLoading,
+        deleteTodoListSuccessMessage: "Todo List deleted successfully."
+      };
+    case DELETE_TODO_LIST_FAILURE:
+      return {
+        ...state,
+        deleteTodoListIsLoading: initialState.deleteTodoListIsLoading,
+        deleteTodoListFailureMessage: "Opsy.. Something went wrong. Try again!"
+      };
+
+    // CLEAR ERRORS/SUCCESS MESSAGES
     case CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE:
       return {
         ...state,
         createTodoListSuccessMessage: initialState.createTodoListSuccessMessage
       };
-    case CLEAR_EDIT_TODO_LIST_TITLE_ERRORS:
+    case CLEAR_CREATE_TODO_LIST_ERRORS:
       return {
         ...state,
-        editTodoListTitleErrors: initialState.editTodoListTitleErrors
+        createTodoListErrors: initialState.createTodoListErrors
       };
     case CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE:
       return {
         ...state,
         editTodoListTitleSuccessMessage:
           initialState.editTodoListTitleSuccessMessage
+      };
+    case CLEAR_EDIT_TODO_LIST_TITLE_ERRORS:
+      return {
+        ...state,
+        editTodoListTitleErrors: initialState.editTodoListTitleErrors
+      };
+    case CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE:
+      return {
+        ...state,
+        deleteTodoListSuccessMessage: initialState.deleteTodoListSuccessMessage
       };
 
     case LOGOUT_SUCCESS:

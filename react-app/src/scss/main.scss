@@ -46,13 +46,14 @@
 
 // then, we import our custom css
 @import "components/dashboard";
-@import "components/todo-list";
 @import "components/todo-list-detail";
 @import "components/welcome";
 @import "components/auth-form-card";
 @import "components/auth-page";
 @import "components/header";
 @import "components/action-bar";
+@import "components/add_todo_list_action_bar_item";
+@import "components/todo_lists_action_bar_item";
 
 // finally, we import the overrides needed for customizing third-party css
 @import "overrides";

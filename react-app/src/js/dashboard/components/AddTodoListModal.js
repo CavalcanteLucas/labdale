@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
@@ -13,10 +14,14 @@ export class AddTodoListModal extends React.Component {
     clearCreateTodoListErrors: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,
-    createTodoListSuccessMessage: PropTypes.string
+    createTodoListSuccessMessage: PropTypes.string,
+    history: PropTypes.shape({
+      push: PropTypes.func
+    })
   };
 
   static defaultProps = {
+    history: undefined,
     createTodoListErrors: null,
     createTodoListSuccessMessage: ""
   };
@@ -30,12 +35,13 @@ export class AddTodoListModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { createTodoListSuccessMessage } = this.props;
+    const { history, createTodoListSuccessMessage } = this.props;
     if (
       createTodoListSuccessMessage &&
       !prevProps.createTodoListSuccessMessage
     ) {
       this.handleCloseModal();
+      history.push("/dashboard");
     }
   }
 
@@ -110,4 +116,7 @@ const mapDispatchToProps = dispatch => ({
   clearCreateTodoListErrors: () => dispatch(clearCreateTodoListErrors())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddTodoListModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(AddTodoListModal));
