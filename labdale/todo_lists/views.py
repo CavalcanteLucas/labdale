@@ -11,8 +11,7 @@ class IsTodoListOwner(permissions.BasePermission):
 
 class IsTodoOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        todo_list = TodoList.objects.get(id=obj["todo_list"].id)
-        return todo_list.owner.id == request.user.id
+        return obj["todo_list"].owner == request.user
 
 
 class TodoListAPIView(generics.ListCreateAPIView):
@@ -41,7 +40,9 @@ class TodoAPIView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated & IsTodoOwner]
 
     def get_queryset(self):
-        todo_list = TodoList.objects.get(id=self.kwargs['todo_list'])
+        todo_list_id = self.kwargs['todo_list']
+        user = self.request.user
+        todo_list = TodoList.objects.filter(id=todo_list_id, owner=user).last()
         return Todo.objects.filter(todo_list=todo_list)
 
     def create(self, request, *args, **kwargs):
