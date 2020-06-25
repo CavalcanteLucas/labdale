@@ -36,10 +36,13 @@ class TodoListDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         serializer.save(owner=self.request.user)
 
 
-class TodoAPIView(generics.CreateAPIView):
-    queryset = Todo.objects.all()
+class TodoAPIView(generics.ListCreateAPIView):
     serializer_class = TodoSerializer
     permission_classes = [permissions.IsAuthenticated & IsTodoOwner]
+
+    def get_queryset(self):
+        todo_list = TodoList.objects.get(id=self.kwargs['todo_list'])
+        return Todo.objects.filter(todo_list=todo_list)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

@@ -29,16 +29,20 @@ class TodoTests(TestCase):
 
         # Attempt to create todo list, should fail with 401
         sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list))
-        url = reverse("todo_lists:todo")
+        url = reverse("todo_lists:todos", kwargs={'todo_list':todo_list.id})
         response = self.client.post(
             path=url, content_type="application/json", data=sample.data,
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
-    def test_create_todo_requires_data(self):
+    def test_create_todo_for_a_todo_list_requires_data(self):
         # Create user
         user = baker.make("User")
         self.assertEqual(1, User.objects.count())
+
+        # Create todo list
+        todo_list = baker.make("TodoList", owner=user)
+        self.assertEqual(1, TodoList.objects.count())
 
         # Authenticate user
         token, created = Token.objects.get_or_create(user=user)
@@ -46,7 +50,7 @@ class TodoTests(TestCase):
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
         # Attempt to create todo, should fail with 400
-        url = reverse("todo_lists:todo")
+        url = reverse("todo_lists:todos", kwargs={'todo_list':todo_list.id})
         response = self.client.post(
             path=url, content_type="application/json", **headers
         )
@@ -56,7 +60,7 @@ class TodoTests(TestCase):
         self.assertEqual("required", response.data["deadline"][0].code)
         self.assertEqual("required", response.data["todo_list"][0].code)
 
-    def test_create_todo(self):
+    def test_create_todo_for_a_todo_list(self):
         # Create user
         user = baker.make("User")
         self.assertEqual(1, User.objects.count())
@@ -73,7 +77,7 @@ class TodoTests(TestCase):
         # Client creates todo successfully
         self.assertEqual(0, Todo.objects.count())
         sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list))
-        url = reverse("todo_lists:todo")
+        url = reverse("todo_lists:todos", kwargs={'todo_list':todo_list.id})
         response = self.client.post(
             path=url,
             content_type="application/json",
