@@ -1,4 +1,5 @@
 import {
+  // TODOLIST
   GET_TODO_LISTS_REQUEST,
   GET_TODO_LISTS_SUCCESS,
   GET_TODO_LISTS_FAILURE,
@@ -18,11 +19,16 @@ import {
   DELETE_TODO_LIST_REQUEST,
   DELETE_TODO_LIST_SUCCESS,
   DELETE_TODO_LIST_FAILURE,
-  CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE
+  CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE,
+  // TODO
+  GET_TODOS_REQUEST,
+  GET_TODOS_SUCCESS,
+  GET_TODOS_FAILURE
 } from "./actions";
 import { LOGOUT_SUCCESS } from "../auth/actions";
 
 const initialState = {
+  // TODOLIST
   todoLists: null,
   getTodoListsIsLoading: false,
   getTodoListsFailureMessage: null,
@@ -37,11 +43,18 @@ const initialState = {
   editTodoListTitleErrors: null,
   deleteTodoListIsLoading: false,
   deleteTodoListSuccessMessage: null,
-  deleteTodoListErrors: null
+  deleteTodoListErrors: null,
+  // TODO
+  todos: null,
+  getTodosIsLoading: false,
+  getTodosFailureMessage: null
 };
 
 export function todoReducers(state = initialState, action) {
   switch (action.type) {
+    //
+    // TODOLIST
+    //
     // GET_TODO_LISTS
     case GET_TODO_LISTS_REQUEST:
       return {
@@ -189,6 +202,35 @@ export function todoReducers(state = initialState, action) {
         deleteTodoListSuccessMessage: initialState.deleteTodoListSuccessMessage
       };
 
+    //
+    // TODO
+    //
+    // GET_TODOS
+    case GET_TODOS_REQUEST:
+      return {
+        ...state,
+        getTodosIsLoading: true,
+        getTodoListsFailureMessage: initialState.getTodoListsFailureMessage,
+        todos: initialState.todoLists
+      };
+
+    case GET_TODOS_SUCCESS:
+      console.log(action.response)
+      return {
+        ...state,
+        getTodosIsLoading: initialState.getTodosIsLoading,
+        todos: action.response.data
+      };
+
+    case GET_TODOS_FAILURE:
+      return {
+        ...state,
+        getTodosIsLoading: initialState.getTodosIsLoading,
+        getTodosFailureMessage:
+          "Opsy.. Something went wrong. We couldn't retrieve your To-Dos from the database!"
+      };
+
+    // LOGOUT
     case LOGOUT_SUCCESS:
       return initialState;
 

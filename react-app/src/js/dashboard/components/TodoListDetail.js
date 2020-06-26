@@ -6,11 +6,12 @@ import { connect } from "react-redux";
 import pencilBtn from "../../../img/pencil-btn.png";
 import garbageBtn from "../../../img/garbage-btn.png";
 
-import EditTodoListModal from "./EditTodoListModal";
-import DeleteTodoListModal from "./DeleteTodoListModal";
 import { getTodoList } from "../actions";
 
+import EditTodoListModal from "./EditTodoListModal";
+import DeleteTodoListModal from "./DeleteTodoListModal";
 import DashboardPage from "./DashboardPage";
+import Todos from "./Todos";
 
 export class TodoListDetail extends React.Component {
   static propTypes = {
@@ -80,6 +81,11 @@ export class TodoListDetail extends React.Component {
                     className="todo-list-detail__edit-btn"
                   />
                 </Button>
+                <EditTodoListModal
+                  show={editModalIsOpen}
+                  onHide={this.closeEditModal}
+                  todoList={todoListDetail}
+                />
                 <Button variant="no-style" onClick={this.openDeleteModal}>
                   <img
                     src={garbageBtn}
@@ -87,11 +93,6 @@ export class TodoListDetail extends React.Component {
                     className="todo-list-detail__delete-btn"
                   />
                 </Button>
-                <EditTodoListModal
-                  show={editModalIsOpen}
-                  onHide={this.closeEditModal}
-                  todoList={todoListDetail}
-                />
                 <DeleteTodoListModal
                   show={deleteModalIsOpen}
                   onHide={this.closeDeleteModal}
@@ -102,6 +103,7 @@ export class TodoListDetail extends React.Component {
                 <br />(<strong>id</strong>:{todoListDetail.id}) (
                 <strong>owner</strong>: {todoListDetail.owner})
               </p>
+              <Todos todoList={todoListDetail} />
             </Fragment>
           ) : null}
         </div>
