@@ -57,14 +57,12 @@ class TodoTests(TestCase):
         # Client asks for todo lists, none should be available
         url = reverse("todo_lists:todos", kwargs={'todo_list': todo_list_1.id})
         response = self.client.get(path=url, **headers)
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(0, len(response.data))
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
         # Client asks for todo lists, none should be available
         url = reverse("todo_lists:todos", kwargs={'todo_list': todo_list_2.id})
         response = self.client.get(path=url, **headers)
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(0, len(response.data))
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
         # Test privacy among todo lists
         ##
@@ -103,7 +101,12 @@ class TodoTests(TestCase):
         self.assertTrue(created)
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
-        # Client asks for the list of Todos of a TodoList successfully
+        # Client asks for the list of Todos of a non existent TodoList
+        url = reverse("todo_lists:todos", kwargs={'todo_list': todo_list.id+1})
+        response = self.client.get(path=url, **headers)
+        self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
+
+        # Client asks for the list of Todos of a valid TodoList successfully
         url = reverse("todo_lists:todos", kwargs={'todo_list': todo_list.id})
         response = self.client.get(path=url, **headers)
         self.assertEqual(status.HTTP_200_OK, response.status_code)

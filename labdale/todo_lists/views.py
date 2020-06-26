@@ -1,5 +1,6 @@
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
+from rest_framework.exceptions import PermissionDenied, NotFound
 
 from .models import TodoList, Todo
 from .serializers import TodoListSerializer, TodoSerializer
@@ -42,7 +43,12 @@ class TodoAPIView(generics.ListCreateAPIView):
     def get_queryset(self):
         todo_list_id = self.kwargs['todo_list']
         user = self.request.user
-        todo_list = TodoList.objects.filter(id=todo_list_id, owner=user).last()
+        try:
+            todo_list = TodoList.objects.get(id=todo_list_id)
+        except:
+            raise NotFound()
+        if todo_list.owner != self.request.user:
+            raise PermissionDenied()
         return Todo.objects.filter(todo_list=todo_list)
 
     def create(self, request, *args, **kwargs):
