@@ -44,9 +44,12 @@ export class Todos extends React.Component {
       <>
         {!_isEmpty(todos) ? (
           <ListGroup variant="flush">
-            {todos.map((todo, index) => (
-              <ListGroup.Item key={index} action>
-                <strong>{todo.title}</strong>
+            {todos.map(todo => (
+              <ListGroup.Item key={`a${todo.id}`} action>
+                <p>
+                  <strong>{todo.title} - </strong>
+                  <strong>{todo.id}</strong>
+                </p>
               </ListGroup.Item>
             ))}
           </ListGroup>
