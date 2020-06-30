@@ -39,8 +39,8 @@ export class TodoListDetail extends React.Component {
     super(props);
 
     this.state = {
-      editModalIsOpen: false,
-      deleteModalIsOpen: false
+      editTodoListModalIsOpen: false,
+      deleteTodoListModalIsOpen: false
     };
   }
 
@@ -56,16 +56,20 @@ export class TodoListDetail extends React.Component {
     }
   }
 
-  closeEditModal = () => this.setState({ editModalIsOpen: false });
+  closeEditTodoListModal = () =>
+    this.setState({ editTodoListModalIsOpen: false });
 
-  closeDeleteModal = () => this.setState({ deleteModalIsOpen: false });
+  closeDeleteTodoListModal = () =>
+    this.setState({ deleteTodoListModalIsOpen: false });
 
-  openEditModal = () => this.setState({ editModalIsOpen: true });
+  openEditTodoListModal = () =>
+    this.setState({ editTodoListModalIsOpen: true });
 
-  openDeleteModal = () => this.setState({ deleteModalIsOpen: true });
+  openDeleteTodoListModal = () =>
+    this.setState({ deleteTodoListModalIsOpen: true });
 
   render() {
-    const { editModalIsOpen, deleteModalIsOpen } = this.state;
+    const { editTodoListModalIsOpen, deleteTodoListModalIsOpen } = this.state;
     const { todoListDetail } = this.props;
     return (
       <DashboardPage>
@@ -74,7 +78,7 @@ export class TodoListDetail extends React.Component {
             <Fragment>
               <h1>
                 <strong>{todoListDetail.title}</strong>
-                <Button variant="no-style" onClick={this.openEditModal}>
+                <Button variant="no-style" onClick={this.openEditTodoListModal}>
                   <img
                     src={pencilBtn}
                     alt="Edit Todo List"
@@ -82,11 +86,14 @@ export class TodoListDetail extends React.Component {
                   />
                 </Button>
                 <EditTodoListModal
-                  show={editModalIsOpen}
-                  onHide={this.closeEditModal}
+                  show={editTodoListModalIsOpen}
+                  onHide={this.closeEditTodoListModal}
                   todoList={todoListDetail}
                 />
-                <Button variant="no-style" onClick={this.openDeleteModal}>
+                <Button
+                  variant="no-style"
+                  onClick={this.openDeleteTodoListModal}
+                >
                   <img
                     src={garbageBtn}
                     alt="Delete Todo List"
@@ -94,8 +101,8 @@ export class TodoListDetail extends React.Component {
                   />
                 </Button>
                 <DeleteTodoListModal
-                  show={deleteModalIsOpen}
-                  onHide={this.closeDeleteModal}
+                  show={deleteTodoListModalIsOpen}
+                  onHide={this.closeDeleteTodoListModal}
                   todoList={todoListDetail}
                 />
               </h1>
