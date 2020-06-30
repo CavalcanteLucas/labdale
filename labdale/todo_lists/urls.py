@@ -1,11 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 
-from .views import (
-    TodoListAPIView,
-    TodoListDetailAPIView,
-    TodoAPIView
-)
+from .views import TodoListAPIView, TodoListDetailAPIView, TodoAPIView
 
 app_name = "todo_lists"
 urlpatterns = [

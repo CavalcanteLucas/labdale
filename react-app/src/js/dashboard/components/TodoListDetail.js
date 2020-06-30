@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import pencilBtn from "../../../img/pencil-btn.png";
 import garbageBtn from "../../../img/garbage-btn.png";
+import plusBtn from "../../../img/plus-btn.png";
 
 import { getTodoList } from "../actions";
 
@@ -12,6 +13,7 @@ import EditTodoListModal from "./EditTodoListModal";
 import DeleteTodoListModal from "./DeleteTodoListModal";
 import DashboardPage from "./DashboardPage";
 import Todos from "./Todos";
+import AddTodoModal from "./AddTodoModal";
 
 export class TodoListDetail extends React.Component {
   static propTypes = {
@@ -40,7 +42,8 @@ export class TodoListDetail extends React.Component {
 
     this.state = {
       editTodoListModalIsOpen: false,
-      deleteTodoListModalIsOpen: false
+      deleteTodoListModalIsOpen: false,
+      addTodoModalIsOpen: false
     };
   }
 
@@ -68,8 +71,16 @@ export class TodoListDetail extends React.Component {
   openDeleteTodoListModal = () =>
     this.setState({ deleteTodoListModalIsOpen: true });
 
+  closeAddTodoModal = () => this.setState({ addTodoModalIsOpen: false });
+
+  openAddTodoModal = () => this.setState({ addTodoModalIsOpen: true });
+
   render() {
-    const { editTodoListModalIsOpen, deleteTodoListModalIsOpen } = this.state;
+    const {
+      editTodoListModalIsOpen,
+      deleteTodoListModalIsOpen,
+      addTodoModalIsOpen
+    } = this.state;
     const { todoListDetail } = this.props;
     return (
       <DashboardPage>
@@ -107,10 +118,19 @@ export class TodoListDetail extends React.Component {
                 />
               </h1>
               <p>
-                <br />(<strong>id</strong>:{todoListDetail.id}) (
+                (<strong>id</strong>:{todoListDetail.id}) (
                 <strong>owner</strong>: {todoListDetail.owner})
               </p>
               <Todos todoListId={todoListDetail.id} />
+              <br />
+              <Button variant="dark" onClick={this.openAddTodoModal}>
+                <img src={plusBtn} alt="Add Todo" className="todos__add-btn" />
+              </Button>
+              <AddTodoModal
+                show={addTodoModalIsOpen}
+                onHide={this.closeAddTodoModal}
+                todoListId={todoListDetail.id}
+              />
             </Fragment>
           ) : null}
         </div>

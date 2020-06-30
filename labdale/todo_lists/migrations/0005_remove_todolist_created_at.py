@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('todo_lists', '0004_remove_todo_created_at'),
+        ("todo_lists", "0004_remove_todo_created_at"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='todolist',
-            name='created_at',
-        ),
+        migrations.RemoveField(model_name="todolist", name="created_at",),
     ]

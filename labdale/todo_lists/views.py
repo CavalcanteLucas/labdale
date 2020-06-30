@@ -5,6 +5,7 @@ from rest_framework.exceptions import PermissionDenied, NotFound
 from .models import TodoList, Todo
 from .serializers import TodoListSerializer, TodoSerializer
 
+
 class IsTodoListOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.owner == request.user
@@ -41,7 +42,7 @@ class TodoAPIView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated & IsTodoOwner]
 
     def get_queryset(self):
-        todo_list_id = self.kwargs['todo_list']
+        todo_list_id = self.kwargs["todo_list"]
         user = self.request.user
         try:
             todo_list = TodoList.objects.get(id=todo_list_id)
@@ -57,5 +58,6 @@ class TodoAPIView(generics.ListCreateAPIView):
         self.check_object_permissions(request, serializer.validated_data)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.validated_data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )

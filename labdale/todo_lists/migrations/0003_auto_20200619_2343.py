@@ -6,13 +6,11 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('todo_lists', '0002_todo'),
+        ("todo_lists", "0002_todo"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='todo',
-            name='deadline',
-            field=models.DateTimeField(),
+            model_name="todo", name="deadline", field=models.DateTimeField(),
         ),
     ]
