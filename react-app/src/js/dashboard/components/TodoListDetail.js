@@ -103,7 +103,7 @@ export class TodoListDetail extends React.Component {
                 <br />(<strong>id</strong>:{todoListDetail.id}) (
                 <strong>owner</strong>: {todoListDetail.owner})
               </p>
-              <Todos todoList={todoListDetail} />
+              <Todos todoListId={todoListDetail.id} />
             </Fragment>
           ) : null}
         </div>

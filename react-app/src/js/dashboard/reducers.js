@@ -23,7 +23,12 @@ import {
   // TODO
   GET_TODOS_REQUEST,
   GET_TODOS_SUCCESS,
-  GET_TODOS_FAILURE
+  GET_TODOS_FAILURE,
+  CREATE_TODO_REQUEST,
+  CREATE_TODO_SUCCESS,
+  CREATE_TODO_FAILURE,
+  CLEAR_CREATE_TODO_SUCCESS_MESSAGE,
+  CLEAR_CREATE_TODO_ERRORS
 } from "./actions";
 import { LOGOUT_SUCCESS } from "../auth/actions";
 
@@ -47,7 +52,10 @@ const initialState = {
   // TODO
   todos: null,
   getTodosIsLoading: false,
-  getTodosFailureMessage: null
+  getTodosFailureMessage: null,
+  createTodoIsLoading: false,
+  createTodoSuccessMessage: null,
+  createTodoErrors: null
 };
 
 export function todoReducers(state = initialState, action) {
@@ -213,21 +221,51 @@ export function todoReducers(state = initialState, action) {
         getTodoListsFailureMessage: initialState.getTodoListsFailureMessage,
         todos: initialState.todoLists
       };
-
     case GET_TODOS_SUCCESS:
-      console.log(action.response)
       return {
         ...state,
         getTodosIsLoading: initialState.getTodosIsLoading,
         todos: action.response.data
       };
-
     case GET_TODOS_FAILURE:
       return {
         ...state,
         getTodosIsLoading: initialState.getTodosIsLoading,
         getTodosFailureMessage:
           "Opsy.. Something went wrong. We couldn't retrieve your To-Dos from the database!"
+      };
+    // CREATE_TODO
+    case CREATE_TODO_REQUEST:
+      return {
+        ...state,
+        createTodoIsLoading: true,
+        createTodoSuccessMessage: initialState.createTodoSuccessMessage,
+        createTodoErrors: initialState.createTodoErrors
+      };
+    case CREATE_TODO_SUCCESS:
+      return {
+        ...state,
+        todos: [state.todos, action.response.data],
+        todoDetail: action.response.data,
+        createTodoIsLoading: initialState.createTodoIsLoading,
+        createTodoSuccessMessage: "Todo created successfully."
+      };
+    case CREATE_TODO_FAILURE:
+      return {
+        ...state,
+        createTodoIsLoading: initialState.createTodoIsLoading,
+        createTodoErrors: action.response.data || [["Server Error"]]
+      };
+    // CLEAR ERRORS/SUCCESS MESSAGES
+    case CLEAR_CREATE_TODO_SUCCESS_MESSAGE:
+      return {
+        ...state,
+        createTodoSuccessMessage: initialState.createTodoSuccessMessage
+      };
+    case CLEAR_CREATE_TODO_ERRORS:
+      return {
+        ...state,
+        createTodoErrors: initialState.createTodoErrors
       };
 
     // LOGOUT

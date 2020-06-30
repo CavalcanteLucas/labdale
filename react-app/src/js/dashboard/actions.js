@@ -1,3 +1,4 @@
+import moment from "moment";
 import { fetchFromApi } from "react-redux-api-tools";
 
 /*
@@ -41,7 +42,14 @@ export const CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE =
 export const GET_TODOS_REQUEST = "GET_TODOS_REQUEST";
 export const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS";
 export const GET_TODOS_FAILURE = "GET_TODOS_FAILURE";
-
+// CREATE
+export const CREATE_TODO_REQUEST = "CREATE_TODO_REQUEST";
+export const CREATE_TODO_SUCCESS = "CREATE_TODO_SUCCESS";
+export const CREATE_TODO_FAILURE = "CREATE_TODO_FAILURE";
+// MESSAGING
+export const CLEAR_CREATE_TODO_SUCCESS_MESSAGE =
+  "CLEAR_CREATE_TODO_SUCCESS_MESSAGE";
+export const CLEAR_CREATE_TODO_ERRORS = "CLEAR_CREATE_TODO_ERRORS";
 /***/
 
 /*
@@ -188,3 +196,36 @@ export const getTodos = todoListId => {
       fetchFromApi(`/api/todo-lists/${todoListId}/todos/`, requestData)
   };
 };
+
+// CREATE
+export const createTodo = (todoListId, todoTitle, todoDeadline) => {
+  const requestData = {
+    method: "POST",
+    headers: {
+      authorization: `Token ${localStorage.token}`
+    },
+    body: JSON.stringify({
+      title: todoTitle,
+      deadline: moment(todoDeadline).format(),
+      todo_list: todoListId
+    })
+  };
+  return {
+    types: {
+      request: CREATE_TODO_REQUEST,
+      success: CREATE_TODO_SUCCESS,
+      failure: CREATE_TODO_FAILURE
+    },
+    apiCallFunction: () =>
+      fetchFromApi(`/api/todo-lists/${todoListId}/todos/`, requestData)
+  };
+};
+
+// MESSAGING
+export const clearCreateTodoSuccessMessage = () => ({
+  type: CLEAR_CREATE_TODO_SUCCESS_MESSAGE
+});
+
+export const clearCreateTodoErrors = () => ({
+  type: CLEAR_CREATE_TODO_ERRORS
+});

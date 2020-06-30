@@ -1,14 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { ListGroup } from "react-bootstrap";
+import { ListGroup, Button } from "react-bootstrap";
+import { isEmpty as _isEmpty } from "lodash";
 
+import plusBtn from "../../../img/plus-btn.png";
 import { getTodos } from "../actions";
+import AddTodoModal from "./AddTodoModal";
 
 export class Todos extends React.Component {
   static propTypes = {
     getTodos: PropTypes.func.isRequired,
-    todoList: PropTypes.number.isRequired,
+    todoListId: PropTypes.number.isRequired,
     todos: PropTypes.array
   };
 
@@ -16,23 +19,48 @@ export class Todos extends React.Component {
     todos: null
   };
 
-  componentDidMount() {
-    const { todoList, getTodos } = this.props;
-    getTodos(todoList.id);
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalIsOpen: false
+    };
   }
 
+  componentDidMount() {
+    const { todoListId, getTodos } = this.props;
+    getTodos(todoListId);
+  }
+
+  closeModal = () => this.setState({ modalIsOpen: false });
+
+  openModal = () => this.setState({ modalIsOpen: true });
+
   render() {
-    const { todos } = this.props;
-    if (!todos) return null;
+    const { modalIsOpen } = this.state;
+    const { todoListId, todos } = this.props;
 
     return (
-      <ListGroup variant="flush">
-        {todos.map(todo => (
-          <ListGroup.Item key={todo.id} action>
-            <strong>{todo.title}</strong>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
+      <>
+        {!_isEmpty(todos) ? (
+          <ListGroup variant="flush">
+            {todos.map((todo, index) => (
+              <ListGroup.Item key={index} action>
+                <strong>{todo.title}</strong>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        ) : null}
+        <br />
+        <Button variant="dark" onClick={this.openModal}>
+          <img src={plusBtn} alt="Add Todo" className="todos__add-btn" />
+        </Button>
+        <AddTodoModal
+          show={modalIsOpen}
+          onHide={this.closeModal}
+          todoListId={todoListId}
+        />
+      </>
     );
   }
 }
