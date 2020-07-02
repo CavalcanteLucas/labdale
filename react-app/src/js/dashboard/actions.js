@@ -1,9 +1,12 @@
 import moment from "moment";
 import { fetchFromApi } from "react-redux-api-tools";
 
-/*
-  TodoList
-*/
+// ----
+// DISPATCHES
+// ----
+
+// TODOLIST
+//
 // LIST
 export const GET_TODO_LISTS_REQUEST = "GET_TODO_LISTS_REQUEST";
 export const GET_TODO_LISTS_SUCCESS = "GET_TODO_LISTS_SUCCESS";
@@ -12,6 +15,9 @@ export const GET_TODO_LISTS_FAILURE = "GET_TODO_LISTS_FAILURE";
 export const CREATE_TODO_LIST_REQUEST = "CREATE_TODO_LIST_REQUEST";
 export const CREATE_TODO_LIST_SUCCESS = "CREATE_TODO_LIST_SUCCESS";
 export const CREATE_TODO_LIST_FAILURE = "CREATE_TODO_LIST_FAILURE";
+export const CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE =
+  "CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE";
+export const CLEAR_CREATE_TODO_LIST_ERRORS = "CLEAR_CREATE_TODO_LIST_ERRORS";
 // RETRIEVE
 export const GET_TODO_LIST_REQUEST = "GET_TODO_LIST_REQUEST";
 export const GET_TODO_LIST_SUCCESS = "GET_TODO_LIST_SUCCESS";
@@ -20,24 +26,19 @@ export const GET_TODO_LIST_FAILURE = "GET_TODO_LIST_FAILURE";
 export const EDIT_TODO_LIST_TITLE_REQUEST = "EDIT_TODO_LIST_TITLE_REQUEST";
 export const EDIT_TODO_LIST_TITLE_SUCCESS = "EDIT_TODO_LIST_TITLE_SUCCESS";
 export const EDIT_TODO_LIST_TITLE_FAILURE = "EDIT_TODO_LIST_TITLE_FAILURE";
-// DESTROY
-export const DELETE_TODO_LIST_REQUEST = "DELETE_TODO_LIST_REQUEST";
-export const DELETE_TODO_LIST_SUCCESS = "DELETE_TODO_LIST_SUCCESS";
-export const DELETE_TODO_LIST_FAILURE = "DELETE_TODO_LIST_FAILURE";
-// MESSAGING
-export const CLEAR_CREATE_TODO_LIST_ERRORS = "CLEAR_CREATE_TODO_LIST_ERRORS";
-export const CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE =
-  "CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE";
 export const CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE =
   "CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE";
 export const CLEAR_EDIT_TODO_LIST_TITLE_ERRORS =
   "CLEAR_EDIT_TODO_LIST_TITLE_ERRORS";
+// DESTROY
+export const DELETE_TODO_LIST_REQUEST = "DELETE_TODO_LIST_REQUEST";
+export const DELETE_TODO_LIST_SUCCESS = "DELETE_TODO_LIST_SUCCESS";
+export const DELETE_TODO_LIST_FAILURE = "DELETE_TODO_LIST_FAILURE";
 export const CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE =
   "CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE";
 
-/*
-  Todos
-*/
+// TODO
+//
 // LIST
 export const GET_TODOS_REQUEST = "GET_TODOS_REQUEST";
 export const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS";
@@ -46,15 +47,16 @@ export const GET_TODOS_FAILURE = "GET_TODOS_FAILURE";
 export const CREATE_TODO_REQUEST = "CREATE_TODO_REQUEST";
 export const CREATE_TODO_SUCCESS = "CREATE_TODO_SUCCESS";
 export const CREATE_TODO_FAILURE = "CREATE_TODO_FAILURE";
-// MESSAGING
 export const CLEAR_CREATE_TODO_SUCCESS_MESSAGE =
   "CLEAR_CREATE_TODO_SUCCESS_MESSAGE";
 export const CLEAR_CREATE_TODO_ERRORS = "CLEAR_CREATE_TODO_ERRORS";
-/***/
 
-/*
-  TodoList
-*/
+// ----
+// ACTIONS
+// ----
+
+// TODOLIST
+//
 // LIST
 export const getTodoLists = () => {
   const requestData = {
@@ -92,6 +94,14 @@ export const createTodoList = todoListTitle => {
     apiCallFunction: () => fetchFromApi("/api/todo-lists/", requestData)
   };
 };
+
+export const clearCreateTodoListSuccessMessage = () => ({
+  type: CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE
+});
+
+export const clearCreateTodoListErrors = () => ({
+  type: CLEAR_CREATE_TODO_LIST_ERRORS
+});
 
 // RETRIEVE
 export const getTodoList = todoListId => {
@@ -133,6 +143,13 @@ export const editTodoListTitle = (todoListId, newTitle) => {
   };
 };
 
+export const clearEditTodoListTitleSuccessMessage = () => ({
+  type: CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE
+});
+
+export const clearEditTodoListTitleErrors = () => ({
+  type: CLEAR_EDIT_TODO_LIST_TITLE_ERRORS
+});
 // DESTROY
 export const deleteTodoList = todoListId => {
   const requestData = {
@@ -155,30 +172,12 @@ export const deleteTodoList = todoListId => {
   };
 };
 
-// MESSAGING
-export const clearCreateTodoListSuccessMessage = () => ({
-  type: CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE
-});
-
-export const clearCreateTodoListErrors = () => ({
-  type: CLEAR_CREATE_TODO_LIST_ERRORS
-});
-
-export const clearEditTodoListTitleSuccessMessage = () => ({
-  type: CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE
-});
-
-export const clearEditTodoListTitleErrors = () => ({
-  type: CLEAR_EDIT_TODO_LIST_TITLE_ERRORS
-});
-
 export const clearDeleteTodoListSuccessMessage = () => ({
   type: CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE
 });
 
-/*
-  Todo
-*/
+// TODO
+//
 // LIST
 export const getTodos = todoListId => {
   const requestData = {
