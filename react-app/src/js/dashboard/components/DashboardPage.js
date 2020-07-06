@@ -6,8 +6,6 @@ import { Alert, Container, Row, Col } from "react-bootstrap";
 import ActionBar from "./ActionBar";
 
 import {
-  clearCreateTodoListSuccessMessage,
-  clearEditTodoListTitleSuccessMessage,
   clearDeleteTodoListSuccessMessage,
   clearSuccessMessage
 } from "../actions";
@@ -17,8 +15,6 @@ export class DashboardPage extends React.Component {
     getTodoListsFailureMessage: PropTypes.string,
     getTodoListFailureMessage: PropTypes.string,
     clearCreateTodoListSuccessMessage: PropTypes.func.isRequired,
-    editTodoListTitleSuccessMessage: PropTypes.string,
-    clearEditTodoListTitleSuccessMessage: PropTypes.func.isRequired,
     deleteTodoListSuccessMessage: PropTypes.string,
     clearDeleteTodoListSuccessMessage: PropTypes.func.isRequired,
     deleteTodoListFailureMessage: PropTypes.string,
@@ -30,7 +26,6 @@ export class DashboardPage extends React.Component {
   static defaultProps = {
     getTodoListsFailureMessage: "",
     getTodoListFailureMessage: "",
-    editTodoListTitleSuccessMessage: "",
     deleteTodoListSuccessMessage: "",
     deleteTodoListFailureMessage: "",
     children: undefined,
@@ -47,11 +42,6 @@ export class DashboardPage extends React.Component {
     clearSuccessMessage();
   };
 
-  handleCloseEditTodoListTitleSuccessMessage = () => {
-    const { clearEditTodoListTitleSuccessMessage } = this.props;
-    clearEditTodoListTitleSuccessMessage();
-  };
-
   handleCloseDeleteTodoListSuccessMessage = () => {
     const { clearDeleteTodoListSuccessMessage } = this.props;
     clearDeleteTodoListSuccessMessage();
@@ -62,7 +52,6 @@ export class DashboardPage extends React.Component {
       getTodoListsFailureMessage,
       getTodoListFailureMessage,
       successMessage,
-      editTodoListTitleSuccessMessage,
       deleteTodoListSuccessMessage,
       deleteTodoListFailureMessage,
       children
@@ -94,15 +83,6 @@ export class DashboardPage extends React.Component {
                   successMessage: {successMessage}
                 </Alert>
               ) : null}
-              {editTodoListTitleSuccessMessage ? (
-                <Alert
-                  variant="success"
-                  onClose={this.handleCloseEditTodoListTitleSuccessMessage}
-                  dismissible
-                >
-                  {editTodoListTitleSuccessMessage}
-                </Alert>
-              ) : null}
               {deleteTodoListSuccessMessage ? (
                 <Alert
                   variant="success"
@@ -126,17 +106,13 @@ export class DashboardPage extends React.Component {
 const mapStateToProps = state => ({
   getTodoListsFailureMessage: state.todo.getTodoListsFailureMessage,
   getTodoListFailureMessage: state.todo.getTodoListFailureMessage,
-  editTodoListTitleSuccessMessage: state.todo.editTodoListTitleSuccessMessage,
+  editTodoListSuccessMessage: state.todo.editTodoListSuccessMessage,
   deleteTodoListSuccessMessage: state.todo.deleteTodoListSuccessMessage,
   deleteTodoListFailureMessage: state.todo.deleteTodoListFailureMessage,
   successMessage: state.todo.successMessage
 });
 
 const mapDispatchToProps = dispatch => ({
-  clearCreateTodoListSuccessMessage: () =>
-    dispatch(clearCreateTodoListSuccessMessage()),
-  clearEditTodoListTitleSuccessMessage: () =>
-    dispatch(clearEditTodoListTitleSuccessMessage()),
   clearDeleteTodoListSuccessMessage: () =>
     dispatch(clearDeleteTodoListSuccessMessage()),
   clearSuccessMessage: () => dispatch(clearSuccessMessage())

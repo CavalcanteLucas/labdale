@@ -7,7 +7,7 @@ import pencilBtn from "../../../img/pencil-btn.png";
 import garbageBtn from "../../../img/garbage-btn.png";
 import plusBtn from "../../../img/plus-btn.png";
 
-import { getTodoList } from "../actions";
+import { getTodoList, clearSuccessMessage } from "../actions";
 
 import EditTodoListModal from "./EditTodoListModal";
 import DeleteTodoListModal from "./DeleteTodoListModal";
@@ -29,7 +29,8 @@ export class TodoListDetail extends React.Component {
     }),
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    clearSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -65,8 +66,11 @@ export class TodoListDetail extends React.Component {
   closeDeleteTodoListModal = () =>
     this.setState({ deleteTodoListModalIsOpen: false });
 
-  openEditTodoListModal = () =>
+  openEditTodoListModal = () => {
+    const { clearSuccessMessage } = this.props;
+    clearSuccessMessage();
     this.setState({ editTodoListModalIsOpen: true });
+  };
 
   openDeleteTodoListModal = () =>
     this.setState({ deleteTodoListModalIsOpen: true });
@@ -144,9 +148,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getTodoList: todoListId => {
-    dispatch(getTodoList(todoListId));
-  }
+  getTodoList: todoListId => dispatch(getTodoList(todoListId)),
+  clearSuccessMessage: () => dispatch(clearSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoListDetail);

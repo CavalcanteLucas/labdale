@@ -9,12 +9,11 @@ import {
   CREATE_TODO_LIST_REQUEST,
   CREATE_TODO_LIST_SUCCESS,
   CREATE_TODO_LIST_FAILURE,
-  EDIT_TODO_LIST_TITLE_REQUEST,
-  EDIT_TODO_LIST_TITLE_SUCCESS,
-  EDIT_TODO_LIST_TITLE_FAILURE,
+  EDIT_TODO_LIST_REQUEST,
+  EDIT_TODO_LIST_SUCCESS,
+  EDIT_TODO_LIST_FAILURE,
   CLEAR_CREATE_TODO_LIST_ERRORS,
-  CLEAR_EDIT_TODO_LIST_TITLE_ERRORS,
-  CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE,
+  CLEAR_EDIT_TODO_LIST_ERRORS,
   DELETE_TODO_LIST_REQUEST,
   DELETE_TODO_LIST_SUCCESS,
   DELETE_TODO_LIST_FAILURE,
@@ -131,7 +130,7 @@ export function todoReducers(state = initialState, action) {
       };
 
     // EDIT_TODO_LIST_TITLE
-    case EDIT_TODO_LIST_TITLE_REQUEST:
+    case EDIT_TODO_LIST_REQUEST:
       return {
         ...state,
         editTodoListTitleIsLoading: true,
@@ -139,7 +138,7 @@ export function todoReducers(state = initialState, action) {
           initialState.editTodoListTitleSuccessMessage,
         editTodoListTitleErrors: initialState.editTodoListTitleErrors
       };
-    case EDIT_TODO_LIST_TITLE_SUCCESS:
+    case EDIT_TODO_LIST_SUCCESS:
       const todoListDetail = action.response.data;
       const todoListsAfterEdit = state.todoLists.map(item => {
         if (item.id !== todoListDetail.id) return item;
@@ -149,15 +148,14 @@ export function todoReducers(state = initialState, action) {
         ...state,
         todoListDetail,
         todoLists: todoListsAfterEdit,
-        editTodoListTitleIsLoading: initialState.editTodoListTitleIsLoading,
-        editTodoListTitleSuccessMessage:
-          "Todo List's title changed successfully."
+        editTodoListIsLoading: initialState.editTodoListIsLoading,
+        successMessage: "Todo List changed successfully."
       };
-    case EDIT_TODO_LIST_TITLE_FAILURE:
+    case EDIT_TODO_LIST_FAILURE:
       return {
         ...state,
-        editTodoListTitleIsLoading: initialState.editTodoListTitleIsLoading,
-        editTodoListTitleErrors: action.response.data
+        editTodoListIsLoading: initialState.editTodoListIsLoading,
+        editTodoListErrors: action.response.data
       };
 
     // DELETE_TODO_LIST:
@@ -194,13 +192,7 @@ export function todoReducers(state = initialState, action) {
         ...state,
         createTodoListErrors: initialState.createTodoListErrors
       };
-    case CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        editTodoListTitleSuccessMessage:
-          initialState.editTodoListTitleSuccessMessage
-      };
-    case CLEAR_EDIT_TODO_LIST_TITLE_ERRORS:
+    case CLEAR_EDIT_TODO_LIST_ERRORS:
       return {
         ...state,
         editTodoListTitleErrors: initialState.editTodoListTitleErrors

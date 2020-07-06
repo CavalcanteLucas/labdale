@@ -22,13 +22,10 @@ export const GET_TODO_LIST_REQUEST = "GET_TODO_LIST_REQUEST";
 export const GET_TODO_LIST_SUCCESS = "GET_TODO_LIST_SUCCESS";
 export const GET_TODO_LIST_FAILURE = "GET_TODO_LIST_FAILURE";
 // UPDATE
-export const EDIT_TODO_LIST_TITLE_REQUEST = "EDIT_TODO_LIST_TITLE_REQUEST";
-export const EDIT_TODO_LIST_TITLE_SUCCESS = "EDIT_TODO_LIST_TITLE_SUCCESS";
-export const EDIT_TODO_LIST_TITLE_FAILURE = "EDIT_TODO_LIST_TITLE_FAILURE";
-export const CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE =
-  "CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE";
-export const CLEAR_EDIT_TODO_LIST_TITLE_ERRORS =
-  "CLEAR_EDIT_TODO_LIST_TITLE_ERRORS";
+export const EDIT_TODO_LIST_REQUEST = "EDIT_TODO_LIST_REQUEST";
+export const EDIT_TODO_LIST_SUCCESS = "EDIT_TODO_LIST_SUCCESS";
+export const EDIT_TODO_LIST_FAILURE = "EDIT_TODO_LIST_FAILURE";
+export const CLEAR_EDIT_TODO_LIST_ERRORS = "CLEAR_EDIT_TODO_LIST_ERRORS";
 // DESTROY
 export const DELETE_TODO_LIST_REQUEST = "DELETE_TODO_LIST_REQUEST";
 export const DELETE_TODO_LIST_SUCCESS = "DELETE_TODO_LIST_SUCCESS";
@@ -121,7 +118,7 @@ export const getTodoList = todoListId => {
 };
 
 // UDPDATE
-export const editTodoListTitle = (todoListId, newTitle) => {
+export const editTodoList = (todoListId, newTitle) => {
   const requestData = {
     method: "PUT",
     headers: {
@@ -133,21 +130,17 @@ export const editTodoListTitle = (todoListId, newTitle) => {
   };
   return {
     types: {
-      request: EDIT_TODO_LIST_TITLE_REQUEST,
-      success: EDIT_TODO_LIST_TITLE_SUCCESS,
-      failure: EDIT_TODO_LIST_TITLE_FAILURE
+      request: EDIT_TODO_LIST_REQUEST,
+      success: EDIT_TODO_LIST_SUCCESS,
+      failure: EDIT_TODO_LIST_FAILURE
     },
     apiCallFunction: () =>
       fetchFromApi(`/api/todo-lists/${todoListId}/`, requestData)
   };
 };
 
-export const clearEditTodoListTitleSuccessMessage = () => ({
-  type: CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE
-});
-
-export const clearEditTodoListTitleErrors = () => ({
-  type: CLEAR_EDIT_TODO_LIST_TITLE_ERRORS
+export const clearEditTodoListErrors = () => ({
+  type: CLEAR_EDIT_TODO_LIST_ERRORS
 });
 // DESTROY
 export const deleteTodoList = todoListId => {
