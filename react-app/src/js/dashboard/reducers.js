@@ -34,12 +34,10 @@ const initialState = {
   // TODOLIST
   todoLists: null,
   getTodoListsIsLoading: false,
-  getTodoListsFailureMessage: null,
   createTodoListIsLoading: false,
   createTodoListErrors: null,
   todoListDetail: null,
   getTodoListIsLoading: false,
-  getTodoListFailureMessage: null,
   editTodoListTitleIsLoading: false,
   editTodoListTitleSuccessMessage: null,
   editTodoListTitleErrors: null,
@@ -47,6 +45,7 @@ const initialState = {
   deleteTodoListSuccessMessage: null,
   deleteTodoListErrors: null,
   successMessage: null,
+  failureMessage: null,
   // TODO
   todos: null,
   getTodosIsLoading: false,
@@ -66,7 +65,7 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodoListsIsLoading: true,
-        getTodoListsFailureMessage: initialState.getTodoListsFailureMessage,
+        failureMessage: initialState.failureMessage,
         todoLists: initialState.todoLists
       };
     case GET_TODO_LISTS_SUCCESS:
@@ -79,7 +78,7 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodoListsIsLoading: initialState.getTodoListsIsLoading,
-        getTodoListsFailureMessage:
+        failureMessage:
           "Opsy.. Something went wrong. We couldn't retrieve your To-Do lists from the database!"
       };
 
@@ -205,7 +204,7 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodosIsLoading: true,
-        getTodoListsFailureMessage: initialState.getTodoListsFailureMessage,
+        getTodosFailureMessage: initialState.getTodosFailureMessage,
         todos: initialState.todoLists
       };
     case GET_TODOS_SUCCESS:

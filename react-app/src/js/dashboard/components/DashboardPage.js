@@ -9,20 +9,20 @@ import { clearSuccessMessage } from "../actions";
 
 export class DashboardPage extends React.Component {
   static propTypes = {
-    getTodoListsFailureMessage: PropTypes.string,
     getTodoListFailureMessage: PropTypes.string,
     deleteTodoListFailureMessage: PropTypes.string,
     children: PropTypes.object,
     successMessage: PropTypes.string,
+    failureMessage: PropTypes.string,
     clearSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    getTodoListsFailureMessage: "",
     getTodoListFailureMessage: "",
     deleteTodoListFailureMessage: "",
     children: undefined,
-    successMessage: ""
+    successMessage: "",
+    failureMessage: ""
   };
 
   handleCloseSuccessMessage = () => {
@@ -32,9 +32,9 @@ export class DashboardPage extends React.Component {
 
   render() {
     const {
-      getTodoListsFailureMessage,
       getTodoListFailureMessage,
       successMessage,
+      failureMessage,
       deleteTodoListFailureMessage,
       children
     } = this.props;
@@ -47,8 +47,8 @@ export class DashboardPage extends React.Component {
             </Col>
 
             <Col xs={{ offset: 1, span: 7 }}>
-              {getTodoListsFailureMessage ? (
-                <Alert variant="danger">{getTodoListsFailureMessage}</Alert>
+              {failureMessage ? (
+                <Alert variant="danger">{failureMessage}</Alert>
               ) : null}
               {getTodoListFailureMessage ? (
                 <Alert variant="danger">{getTodoListFailureMessage}</Alert>
@@ -62,7 +62,7 @@ export class DashboardPage extends React.Component {
                   onClose={this.handleCloseSuccessMessage}
                   dismissible
                 >
-                  successMessage: {successMessage}
+                  {successMessage}
                 </Alert>
               ) : null}
               {/**/}
@@ -77,10 +77,10 @@ export class DashboardPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  getTodoListsFailureMessage: state.todo.getTodoListsFailureMessage,
   getTodoListFailureMessage: state.todo.getTodoListFailureMessage,
   deleteTodoListFailureMessage: state.todo.deleteTodoListFailureMessage,
-  successMessage: state.todo.successMessage
+  successMessage: state.todo.successMessage,
+  failureMessage: state.todo.failureMessage
 });
 
 const mapDispatchToProps = dispatch => ({
