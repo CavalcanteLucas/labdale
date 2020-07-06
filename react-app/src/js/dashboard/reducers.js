@@ -17,7 +17,6 @@ import {
   DELETE_TODO_LIST_REQUEST,
   DELETE_TODO_LIST_SUCCESS,
   DELETE_TODO_LIST_FAILURE,
-  CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE,
   CLEAR_SUCCESS_MESSAGE,
   // TODO
   GET_TODOS_REQUEST,
@@ -129,7 +128,7 @@ export function todoReducers(state = initialState, action) {
         createTodoListErrors: action.response.data || [["Server Error"]]
       };
 
-    // EDIT_TODO_LIST_TITLE
+    // EDIT_TODO_LIST
     case EDIT_TODO_LIST_REQUEST:
       return {
         ...state,
@@ -171,7 +170,7 @@ export function todoReducers(state = initialState, action) {
         ...state,
         todoListDetail: initialState.todoListDetail,
         deleteTodoListIsLoading: initialState.deleteTodoListIsLoading,
-        deleteTodoListSuccessMessage: "Todo List deleted successfully."
+        successMessage: "Todo List deleted successfully."
       };
     case DELETE_TODO_LIST_FAILURE:
       return {
@@ -196,11 +195,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         editTodoListTitleErrors: initialState.editTodoListTitleErrors
-      };
-    case CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        deleteTodoListSuccessMessage: initialState.deleteTodoListSuccessMessage
       };
 
     //
