@@ -17,13 +17,15 @@ export class AddTodoListModal extends React.Component {
     createTodoListSuccessMessage: PropTypes.string,
     history: PropTypes.shape({
       push: PropTypes.func
-    })
+    }),
+    successMessage: PropTypes.string
   };
 
   static defaultProps = {
     history: undefined,
     createTodoListErrors: null,
-    createTodoListSuccessMessage: ""
+    createTodoListSuccessMessage: "",
+    successMessage: ""
   };
 
   constructor(props) {
@@ -35,11 +37,8 @@ export class AddTodoListModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { history, createTodoListSuccessMessage } = this.props;
-    if (
-      createTodoListSuccessMessage &&
-      !prevProps.createTodoListSuccessMessage
-    ) {
+    const { history, successMessage } = this.props;
+    if (successMessage && !prevProps.successMessage) {
       this.handleCloseModal();
       history.push("/dashboard");
     }
@@ -108,7 +107,8 @@ export class AddTodoListModal extends React.Component {
 
 const mapStateToProps = state => ({
   createTodoListErrors: state.todo.createTodoListErrors,
-  createTodoListSuccessMessage: state.todo.createTodoListSuccessMessage
+  createTodoListSuccessMessage: state.todo.createTodoListSuccessMessage,
+  successMessage: state.todo.successMessage
 });
 
 const mapDispatchToProps = dispatch => ({
