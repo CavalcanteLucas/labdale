@@ -13,7 +13,6 @@ from labdale.todo_lists.serializers import TodoListSerializer
 class TodoListTests(TestCase):
     def test_todo_list__str__(self):
         todo_list = baker.make("TodoList")
-        self.assertEqual(todo_list.__str__(), todo_list.title)
         self.assertEqual(str(todo_list), todo_list.title)
 
     ##
