@@ -20,6 +20,7 @@ import {
   DELETE_TODO_LIST_SUCCESS,
   DELETE_TODO_LIST_FAILURE,
   CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE,
+  CLEAR_SUCCESS_MESSAGE,
   // TODO
   GET_TODOS_REQUEST,
   GET_TODOS_SUCCESS,
@@ -49,6 +50,7 @@ const initialState = {
   deleteTodoListIsLoading: false,
   deleteTodoListSuccessMessage: null,
   deleteTodoListErrors: null,
+  successMessage: null,
   // TODO
   todos: null,
   getTodosIsLoading: false,
@@ -121,7 +123,8 @@ export function todoReducers(state = initialState, action) {
         todoLists: [action.response.data, ...state.todoLists],
         todoListDetail: action.response.data,
         createTodoListIsLoading: initialState.createTodoListIsLoading,
-        createTodoListSuccessMessage: "Todo List created successfully."
+        createTodoListSuccessMessage: "Todo List created successfully.",
+        successMessage: "Todo List created successfully."
       };
     case CREATE_TODO_LIST_FAILURE:
       return {
@@ -183,6 +186,11 @@ export function todoReducers(state = initialState, action) {
       };
 
     // CLEAR ERRORS/SUCCESS MESSAGES
+    case CLEAR_SUCCESS_MESSAGE:
+      return {
+        ...state,
+        successMessage: initialState.successMessage
+      };
     case CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE:
       return {
         ...state,
