@@ -80,7 +80,11 @@ export class TodoListDetail extends React.Component {
 
   closeAddTodoModal = () => this.setState({ addTodoModalIsOpen: false });
 
-  openAddTodoModal = () => this.setState({ addTodoModalIsOpen: true });
+  openAddTodoModal = () => {
+    const { clearSuccessMessage } = this.props;
+    clearSuccessMessage();
+    this.setState({ addTodoModalIsOpen: true });
+  };
 
   render() {
     const {

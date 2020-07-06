@@ -49,7 +49,6 @@ const initialState = {
   todos: null,
   getTodosIsLoading: false,
   createTodoIsLoading: false,
-  createTodoSuccessMessage: null,
   createTodoErrors: null
 };
 
@@ -222,7 +221,7 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         createTodoIsLoading: true,
-        createTodoSuccessMessage: initialState.createTodoSuccessMessage,
+        successMessage: initialState.successMessage,
         createTodoErrors: initialState.createTodoErrors
       };
     case CREATE_TODO_SUCCESS:
@@ -231,7 +230,7 @@ export function todoReducers(state = initialState, action) {
         todos: [state.todos, action.response.data],
         todoDetail: action.response.data,
         createTodoIsLoading: initialState.createTodoIsLoading,
-        createTodoSuccessMessage: "Todo created successfully."
+        successMessage: "Todo created successfully."
       };
     case CREATE_TODO_FAILURE:
       return {
@@ -243,7 +242,7 @@ export function todoReducers(state = initialState, action) {
     case CLEAR_CREATE_TODO_SUCCESS_MESSAGE:
       return {
         ...state,
-        createTodoSuccessMessage: initialState.createTodoSuccessMessage
+        successMessage: initialState.successMessage
       };
     case CLEAR_CREATE_TODO_ERRORS:
       return {

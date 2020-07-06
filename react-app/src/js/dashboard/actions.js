@@ -207,11 +207,6 @@ export const createTodo = (todoListId, todoTitle, todoDeadline) => {
   };
 };
 
-// MESSAGING
-export const clearCreateTodoSuccessMessage = () => ({
-  type: CLEAR_CREATE_TODO_SUCCESS_MESSAGE
-});
-
 export const clearCreateTodoErrors = () => ({
   type: CLEAR_CREATE_TODO_ERRORS
 });
