@@ -59,16 +59,11 @@ export class DeleteTodoListModal extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  editTodoListTitleErrors: state.todo.editTodoListTitleErrors,
-  editTodoListTitleSuccessMessage: state.todo.editTodoListTitleSuccessMessage
-});
-
 const mapDispatchToProps = dispatch => ({
   deleteTodoList: todoListId => dispatch(deleteTodoList(todoListId))
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(withRouter(DeleteTodoListModal));

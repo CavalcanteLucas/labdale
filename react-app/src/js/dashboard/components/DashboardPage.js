@@ -9,8 +9,6 @@ import { clearSuccessMessage } from "../actions";
 
 export class DashboardPage extends React.Component {
   static propTypes = {
-    getTodoListFailureMessage: PropTypes.string,
-    deleteTodoListFailureMessage: PropTypes.string,
     children: PropTypes.object,
     successMessage: PropTypes.string,
     failureMessage: PropTypes.string,
@@ -18,8 +16,6 @@ export class DashboardPage extends React.Component {
   };
 
   static defaultProps = {
-    getTodoListFailureMessage: "",
-    deleteTodoListFailureMessage: "",
     children: undefined,
     successMessage: "",
     failureMessage: ""
@@ -31,13 +27,7 @@ export class DashboardPage extends React.Component {
   };
 
   render() {
-    const {
-      getTodoListFailureMessage,
-      successMessage,
-      failureMessage,
-      deleteTodoListFailureMessage,
-      children
-    } = this.props;
+    const { successMessage, failureMessage, children } = this.props;
     return (
       <div className="dashboard">
         <Container fluid>
@@ -50,12 +40,6 @@ export class DashboardPage extends React.Component {
               {failureMessage ? (
                 <Alert variant="danger">{failureMessage}</Alert>
               ) : null}
-              {getTodoListFailureMessage ? (
-                <Alert variant="danger">{getTodoListFailureMessage}</Alert>
-              ) : null}
-              {deleteTodoListFailureMessage ? (
-                <Alert variant="danger">{deleteTodoListFailureMessage}</Alert>
-              ) : null}
               {successMessage ? (
                 <Alert
                   variant="success"
@@ -65,9 +49,7 @@ export class DashboardPage extends React.Component {
                   {successMessage}
                 </Alert>
               ) : null}
-              {/**/}
               <div className="dashboard__content">{children}</div>
-              {/**/}
             </Col>
           </Row>
         </Container>
@@ -77,8 +59,6 @@ export class DashboardPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  getTodoListFailureMessage: state.todo.getTodoListFailureMessage,
-  deleteTodoListFailureMessage: state.todo.deleteTodoListFailureMessage,
   successMessage: state.todo.successMessage,
   failureMessage: state.todo.failureMessage
 });

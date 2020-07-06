@@ -162,10 +162,6 @@ export const deleteTodoList = todoListId => {
   };
 };
 
-export const clearDeleteTodoListSuccessMessage = () => ({
-  type: CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE
-});
-
 // TODO
 //
 // LIST
