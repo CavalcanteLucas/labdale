@@ -48,7 +48,6 @@ const initialState = {
   // TODO
   todos: null,
   getTodosIsLoading: false,
-  getTodosFailureMessage: null,
   createTodoIsLoading: false,
   createTodoSuccessMessage: null,
   createTodoErrors: null
@@ -202,7 +201,7 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodosIsLoading: true,
-        getTodosFailureMessage: initialState.getTodosFailureMessage,
+        failureMessage: initialState.failureMessage,
         todos: initialState.todoLists
       };
     case GET_TODOS_SUCCESS:
@@ -215,7 +214,7 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodosIsLoading: initialState.getTodosIsLoading,
-        getTodosFailureMessage:
+        failureMessage:
           "Opsy.. Something went wrong. We couldn't retrieve your To-Dos from the database!"
       };
     // CREATE_TODO
