@@ -16,7 +16,6 @@ export class DashboardPage extends React.Component {
   static propTypes = {
     getTodoListsFailureMessage: PropTypes.string,
     getTodoListFailureMessage: PropTypes.string,
-    createTodoListSuccessMessage: PropTypes.string,
     clearCreateTodoListSuccessMessage: PropTypes.func.isRequired,
     editTodoListTitleSuccessMessage: PropTypes.string,
     clearEditTodoListTitleSuccessMessage: PropTypes.func.isRequired,
@@ -31,7 +30,6 @@ export class DashboardPage extends React.Component {
   static defaultProps = {
     getTodoListsFailureMessage: "",
     getTodoListFailureMessage: "",
-    createTodoListSuccessMessage: "",
     editTodoListTitleSuccessMessage: "",
     deleteTodoListSuccessMessage: "",
     deleteTodoListFailureMessage: "",
@@ -64,7 +62,6 @@ export class DashboardPage extends React.Component {
       getTodoListsFailureMessage,
       getTodoListFailureMessage,
       successMessage,
-      createTodoListSuccessMessage,
       editTodoListTitleSuccessMessage,
       deleteTodoListSuccessMessage,
       deleteTodoListFailureMessage,
@@ -95,15 +92,6 @@ export class DashboardPage extends React.Component {
                   dismissible
                 >
                   successMessage: {successMessage}
-                </Alert>
-              ) : null}
-              {createTodoListSuccessMessage ? (
-                <Alert
-                  variant="success"
-                  onClose={this.handleCloseCreateTodoListSuccessMessage}
-                  dismissible
-                >
-                  {createTodoListSuccessMessage}
                 </Alert>
               ) : null}
               {editTodoListTitleSuccessMessage ? (
@@ -138,7 +126,6 @@ export class DashboardPage extends React.Component {
 const mapStateToProps = state => ({
   getTodoListsFailureMessage: state.todo.getTodoListsFailureMessage,
   getTodoListFailureMessage: state.todo.getTodoListFailureMessage,
-  createTodoListSuccessMessage: state.todo.createTodoListSuccessMessage,
   editTodoListTitleSuccessMessage: state.todo.editTodoListTitleSuccessMessage,
   deleteTodoListSuccessMessage: state.todo.deleteTodoListSuccessMessage,
   deleteTodoListFailureMessage: state.todo.deleteTodoListFailureMessage,

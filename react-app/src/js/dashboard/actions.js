@@ -16,8 +16,6 @@ export const CREATE_TODO_LIST_REQUEST = "CREATE_TODO_LIST_REQUEST";
 export const CREATE_TODO_LIST_SUCCESS = "CREATE_TODO_LIST_SUCCESS";
 export const CREATE_TODO_LIST_FAILURE = "CREATE_TODO_LIST_FAILURE";
 export const CLEAR_SUCCESS_MESSAGE = "CLEAR_SUCCESS_MESSAGE";
-export const CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE =
-  "CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE";
 export const CLEAR_CREATE_TODO_LIST_ERRORS = "CLEAR_CREATE_TODO_LIST_ERRORS";
 // RETRIEVE
 export const GET_TODO_LIST_REQUEST = "GET_TODO_LIST_REQUEST";
@@ -98,10 +96,6 @@ export const createTodoList = todoListTitle => {
 
 export const clearSuccessMessage = () => ({
   type: CLEAR_SUCCESS_MESSAGE
-});
-
-export const clearCreateTodoListSuccessMessage = () => ({
-  type: CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE
 });
 
 export const clearCreateTodoListErrors = () => ({

@@ -14,7 +14,6 @@ export class AddTodoListModal extends React.Component {
     clearCreateTodoListErrors: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,
-    createTodoListSuccessMessage: PropTypes.string,
     history: PropTypes.shape({
       push: PropTypes.func
     }),
@@ -24,7 +23,6 @@ export class AddTodoListModal extends React.Component {
   static defaultProps = {
     history: undefined,
     createTodoListErrors: null,
-    createTodoListSuccessMessage: "",
     successMessage: ""
   };
 
@@ -107,7 +105,6 @@ export class AddTodoListModal extends React.Component {
 
 const mapStateToProps = state => ({
   createTodoListErrors: state.todo.createTodoListErrors,
-  createTodoListSuccessMessage: state.todo.createTodoListSuccessMessage,
   successMessage: state.todo.successMessage
 });
 
