@@ -20,3 +20,12 @@ install_dependencies:
 setup_node_environment:
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 	export NVM_DIR=$$HOME/.nvm; . ~/.nvm/nvm.sh ; nvm install
+
+test:
+	coverage run --source="." --omit="venv/*,manage.py,project/*,*/migrations/*" manage.py test
+	coverage report
+
+coverage_report:
+	make test
+	coverage html
+	google-chrome htmlcov/index.html

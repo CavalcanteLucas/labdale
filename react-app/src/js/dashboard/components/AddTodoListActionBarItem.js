@@ -2,7 +2,6 @@ import React from "react";
 import { Nav } from "react-bootstrap";
 
 import plusBtn from "../../../img/plus-btn.png";
-
 import AddTodoListModal from "./AddTodoListModal";
 
 export default class AddTodoListActionBarItem extends React.Component {

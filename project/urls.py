@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.urls import re_path, path, include
 
-from todo_list import urls as todo_list_enpoints
+from labdale.todo_lists import urls as todo_lists_enpoints
 
 frontend_urls = [
     path("", include("pwa.urls")),
@@ -33,6 +33,6 @@ urlpatterns = [
     ),
     path("api/rest-auth/registration/", include("rest_auth.registration.urls")),
     path("api/rest-auth/", include("rest_auth.urls")),
-    path("api/todo-list/", include(todo_list_enpoints)),
+    path("api/todo-lists/", include(todo_lists_enpoints)),
     path("admin/", admin.site.urls),
 ] + frontend_urls

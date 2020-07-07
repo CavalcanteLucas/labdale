@@ -2,16 +2,18 @@ import React, { Fragment } from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import moment from "moment";
 
 import pencilBtn from "../../../img/pencil-btn.png";
 import garbageBtn from "../../../img/garbage-btn.png";
+import plusBtn from "../../../img/plus-btn.png";
+
+import { getTodoList } from "../actions";
 
 import EditTodoListModal from "./EditTodoListModal";
 import DeleteTodoListModal from "./DeleteTodoListModal";
-import { getTodoList } from "../actions";
-
 import DashboardPage from "./DashboardPage";
+import Todos from "./Todos";
+import AddTodoModal from "./AddTodoModal";
 
 export class TodoListDetail extends React.Component {
   static propTypes = {
@@ -39,8 +41,9 @@ export class TodoListDetail extends React.Component {
     super(props);
 
     this.state = {
-      editModalIsOpen: false,
-      deleteModalIsOpen: false
+      editTodoListModalIsOpen: false,
+      deleteTodoListModalIsOpen: false,
+      addTodoModalIsOpen: false
     };
   }
 
@@ -56,16 +59,28 @@ export class TodoListDetail extends React.Component {
     }
   }
 
-  closeEditModal = () => this.setState({ editModalIsOpen: false });
+  closeEditTodoListModal = () =>
+    this.setState({ editTodoListModalIsOpen: false });
 
-  closeDeleteModal = () => this.setState({ deleteModalIsOpen: false });
+  closeDeleteTodoListModal = () =>
+    this.setState({ deleteTodoListModalIsOpen: false });
 
-  openEditModal = () => this.setState({ editModalIsOpen: true });
+  openEditTodoListModal = () =>
+    this.setState({ editTodoListModalIsOpen: true });
 
-  openDeleteModal = () => this.setState({ deleteModalIsOpen: true });
+  openDeleteTodoListModal = () =>
+    this.setState({ deleteTodoListModalIsOpen: true });
+
+  closeAddTodoModal = () => this.setState({ addTodoModalIsOpen: false });
+
+  openAddTodoModal = () => this.setState({ addTodoModalIsOpen: true });
 
   render() {
-    const { editModalIsOpen, deleteModalIsOpen } = this.state;
+    const {
+      editTodoListModalIsOpen,
+      deleteTodoListModalIsOpen,
+      addTodoModalIsOpen
+    } = this.state;
     const { todoListDetail } = this.props;
     return (
       <DashboardPage>
@@ -74,37 +89,48 @@ export class TodoListDetail extends React.Component {
             <Fragment>
               <h1>
                 <strong>{todoListDetail.title}</strong>
-                <Button variant="no-style" onClick={this.openEditModal}>
+                <Button variant="no-style" onClick={this.openEditTodoListModal}>
                   <img
                     src={pencilBtn}
                     alt="Edit Todo List"
                     className="todo-list-detail__edit-btn"
                   />
                 </Button>
-                <Button variant="no-style" onClick={this.openDeleteModal}>
+                <EditTodoListModal
+                  show={editTodoListModalIsOpen}
+                  onHide={this.closeEditTodoListModal}
+                  todoList={todoListDetail}
+                />
+                <Button
+                  variant="no-style"
+                  onClick={this.openDeleteTodoListModal}
+                >
                   <img
                     src={garbageBtn}
                     alt="Delete Todo List"
                     className="todo-list-detail__delete-btn"
                   />
                 </Button>
-                <EditTodoListModal
-                  show={editModalIsOpen}
-                  onHide={this.closeEditModal}
-                  todoList={todoListDetail}
-                />
                 <DeleteTodoListModal
-                  show={deleteModalIsOpen}
-                  onHide={this.closeDeleteModal}
+                  show={deleteTodoListModalIsOpen}
+                  onHide={this.closeDeleteTodoListModal}
                   todoList={todoListDetail}
                 />
               </h1>
               <p>
-                <strong>Created: </strong>
-                {moment(todoListDetail.created_at).format("dddd, DD/MM/Y")}
-                <br />(<strong>id</strong>:{todoListDetail.id}) (
+                (<strong>id</strong>:{todoListDetail.id}) (
                 <strong>owner</strong>: {todoListDetail.owner})
               </p>
+              <Todos todoListId={todoListDetail.id} />
+              <br />
+              <Button variant="dark" onClick={this.openAddTodoModal}>
+                <img src={plusBtn} alt="Add Todo" className="todos__add-btn" />
+              </Button>
+              <AddTodoModal
+                show={addTodoModalIsOpen}
+                onHide={this.closeAddTodoModal}
+                todoListId={todoListDetail.id}
+              />
             </Fragment>
           ) : null}
         </div>
