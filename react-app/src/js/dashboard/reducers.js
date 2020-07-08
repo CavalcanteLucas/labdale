@@ -17,7 +17,6 @@ import {
   DELETE_TODO_LIST_REQUEST,
   DELETE_TODO_LIST_SUCCESS,
   DELETE_TODO_LIST_FAILURE,
-  CLEAR_SUCCESS_MESSAGE,
   // TODO
   GET_TODOS_REQUEST,
   GET_TODOS_SUCCESS,
@@ -25,7 +24,6 @@ import {
   CREATE_TODO_REQUEST,
   CREATE_TODO_SUCCESS,
   CREATE_TODO_FAILURE,
-  CLEAR_CREATE_TODO_SUCCESS_MESSAGE,
   CLEAR_CREATE_TODO_ERRORS
 } from "./actions";
 import { LOGOUT_SUCCESS } from "../auth/actions";
@@ -41,7 +39,6 @@ const initialState = {
   editTodoListIsLoading: false,
   editTodoListErrors: null,
   deleteTodoListIsLoading: false,
-  deleteTodoListSuccessMessage: null,
   deleteTodoListErrors: null,
   successMessage: null,
   failureMessage: null,
@@ -106,7 +103,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         createTodoListIsLoading: true,
-        successMessage: initialState.successMessage,
         createTodoListErrors: initialState.createTodoListErrors
       };
     case CREATE_TODO_LIST_SUCCESS:
@@ -129,7 +125,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         editTodoListIsLoading: true,
-        successMessage: initialState.successMessage,
         editTodoListErrors: initialState.editTodoListErrors
       };
     case EDIT_TODO_LIST_SUCCESS:
@@ -157,7 +152,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         deleteTodoListIsLoading: true,
-        deleteTodoListSuccessMessage: initialState.deleteTodoListSuccessMessage,
         deleteTodoListErrors: initialState.deleteTodoListErrors
       };
     case DELETE_TODO_LIST_SUCCESS:
@@ -174,13 +168,7 @@ export function todoReducers(state = initialState, action) {
         failureMessage: "Opsy.. Something went wrong. Try again!"
       };
 
-    // CLEAR ERRORS/SUCCESS MESSAGES
-    case CLEAR_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        successMessage: initialState.successMessage
-      };
-
+    // CLEAR ERRORS
     case CLEAR_CREATE_TODO_LIST_ERRORS:
       return {
         ...state,
@@ -239,11 +227,6 @@ export function todoReducers(state = initialState, action) {
         createTodoErrors: action.response.data || [["Server Error"]]
       };
     // CLEAR ERRORS/SUCCESS MESSAGES
-    case CLEAR_CREATE_TODO_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        successMessage: initialState.successMessage
-      };
     case CLEAR_CREATE_TODO_ERRORS:
       return {
         ...state,

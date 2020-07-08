@@ -7,7 +7,8 @@ import pencilBtn from "../../../img/pencil-btn.png";
 import garbageBtn from "../../../img/garbage-btn.png";
 import plusBtn from "../../../img/plus-btn.png";
 
-import { getTodoList, clearSuccessMessage } from "../actions";
+import { getTodoList } from "../actions";
+import { clearSuccessMessage } from "../../welcome/actions";
 
 import EditTodoListModal from "./EditTodoListModal";
 import DeleteTodoListModal from "./DeleteTodoListModal";

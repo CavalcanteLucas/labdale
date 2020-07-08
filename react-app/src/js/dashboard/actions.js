@@ -30,8 +30,6 @@ export const DELETE_TODO_LIST_REQUEST = "DELETE_TODO_LIST_REQUEST";
 export const DELETE_TODO_LIST_SUCCESS = "DELETE_TODO_LIST_SUCCESS";
 export const DELETE_TODO_LIST_FAILURE = "DELETE_TODO_LIST_FAILURE";
 
-export const CLEAR_SUCCESS_MESSAGE = "CLEAR_SUCCESS_MESSAGE";
-
 // TODO
 //
 // LIST
@@ -42,8 +40,6 @@ export const GET_TODOS_FAILURE = "GET_TODOS_FAILURE";
 export const CREATE_TODO_REQUEST = "CREATE_TODO_REQUEST";
 export const CREATE_TODO_SUCCESS = "CREATE_TODO_SUCCESS";
 export const CREATE_TODO_FAILURE = "CREATE_TODO_FAILURE";
-export const CLEAR_CREATE_TODO_SUCCESS_MESSAGE =
-  "CLEAR_CREATE_TODO_SUCCESS_MESSAGE";
 export const CLEAR_CREATE_TODO_ERRORS = "CLEAR_CREATE_TODO_ERRORS";
 
 // ----
@@ -137,6 +133,7 @@ export const editTodoList = (todoListId, newTitle) => {
 export const clearEditTodoListErrors = () => ({
   type: CLEAR_EDIT_TODO_LIST_ERRORS
 });
+
 // DESTROY
 export const deleteTodoList = todoListId => {
   const requestData = {
@@ -158,10 +155,6 @@ export const deleteTodoList = todoListId => {
       fetchFromApi(`/api/todo-lists/${todoListId}/`, requestData)
   };
 };
-
-export const clearSuccessMessage = () => ({
-  type: CLEAR_SUCCESS_MESSAGE
-});
 
 // TODO
 //

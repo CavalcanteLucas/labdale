@@ -5,7 +5,7 @@ import { Alert, Container, Row, Col } from "react-bootstrap";
 
 import ActionBar from "./ActionBar";
 
-import { clearSuccessMessage } from "../actions";
+import { clearSuccessMessage } from "../../welcome/actions";
 
 export class DashboardPage extends React.Component {
   static propTypes = {
