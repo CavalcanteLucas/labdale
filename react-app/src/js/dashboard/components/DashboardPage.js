@@ -59,7 +59,7 @@ export class DashboardPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.todo.successMessage,
+  successMessage: state.messager.successMessage,
   failureMessage: state.todo.failureMessage
 });
 

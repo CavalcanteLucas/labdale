@@ -41,7 +41,7 @@ export class Welcome extends React.Component {
             onClose={this.handleCloseSuccessMessage}
             dismissible
           >
-            {successMessage}
+            welcome.successMessage: {successMessage}
           </Alert>
         ) : null}
         <div className="welcome__content">
@@ -77,7 +77,7 @@ export class Welcome extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.welcome.successMessage
+  successMessage: state.messager.successMessage
 });
 
 const mapDispatchToProps = dispatch => ({

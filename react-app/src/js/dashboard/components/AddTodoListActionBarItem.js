@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import plusBtn from "../../../img/plus-btn.png";
 import AddTodoListModal from "./AddTodoListModal";
-import { clearSuccessMessage } from "../actions";
+import { clearSuccessMessage } from "../../welcome/actions";
 
 export class AddTodoListActionBarItem extends React.Component {
   static propTypes = {

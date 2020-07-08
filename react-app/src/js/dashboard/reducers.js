@@ -106,7 +106,7 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         createTodoListIsLoading: true,
-        createTodoListSuccessMessage: initialState.createTodoListSuccessMessage,
+        successMessage: initialState.successMessage,
         createTodoListErrors: initialState.createTodoListErrors
       };
     case CREATE_TODO_LIST_SUCCESS:

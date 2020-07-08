@@ -5,8 +5,7 @@ const initialState = {
   successMessage: null
 };
 
-export default function successMessageReducers(state = initialState, action) {
-  // console.log(action)
+export default function messagerReducers(state = initialState, action) {
   switch (action.type) {
     case SET_SUCCESS_MESSAGE:
       return {

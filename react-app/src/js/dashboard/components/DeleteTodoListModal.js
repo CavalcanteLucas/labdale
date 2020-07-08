@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
 
 import { deleteTodoList } from "../actions";
+import { setSuccessMessage } from "../../welcome/actions";
 
 export class DeleteTodoListModal extends React.Component {
   static propTypes = {
@@ -15,7 +16,8 @@ export class DeleteTodoListModal extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func
     }),
-    successMessage: PropTypes.string
+    successMessage: PropTypes.string,
+    setSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -24,8 +26,9 @@ export class DeleteTodoListModal extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { history, successMessage } = this.props;
+    const { history, successMessage, setSuccessMessage } = this.props;
     if (successMessage && !prevProps.successMessage) {
+      setSuccessMessage(successMessage);
       this.handleCloseModal();
       history.push("/dashboard");
     }
@@ -73,7 +76,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteTodoList: todoListId => dispatch(deleteTodoList(todoListId))
+  deleteTodoList: todoListId => dispatch(deleteTodoList(todoListId)),
+  setSuccessMessage: successMessage =>
+    dispatch(setSuccessMessage(successMessage))
 });
 
 export default connect(

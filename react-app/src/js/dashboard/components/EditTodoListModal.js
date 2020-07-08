@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
 
 import { editTodoList, clearEditTodoListErrors } from "../actions";
+import { setSuccessMessage } from "../../welcome/actions";
 import FormErrors from "../../FormErrors";
 
 export class EditTodoListModal extends React.Component {
@@ -14,7 +15,8 @@ export class EditTodoListModal extends React.Component {
     clearEditTodoListErrors: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,
-    successMessage: PropTypes.string
+    successMessage: PropTypes.string,
+    setSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -31,8 +33,9 @@ export class EditTodoListModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { successMessage } = this.props;
+    const { successMessage, setSuccessMessage } = this.props;
     if (successMessage && !prevProps.successMessage) {
+      setSuccessMessage(successMessage);
       this.handleCloseModal();
     }
   }
@@ -106,7 +109,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   editTodoList: (todoListId, newTitle) =>
     dispatch(editTodoList(todoListId, newTitle)),
-  clearEditTodoListErrors: () => dispatch(clearEditTodoListErrors())
+  clearEditTodoListErrors: () => dispatch(clearEditTodoListErrors()),
+  setSuccessMessage: successMessage =>
+    dispatch(setSuccessMessage(successMessage))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditTodoListModal);
