@@ -3,7 +3,6 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-  CLEAR_REGISTER_SUCCESS_MESSAGE,
   CLEAR_REGISTER_FAILURE_MESSAGE,
   // LOGIN
   LOGIN_REQUEST,
@@ -79,11 +78,6 @@ export default function loginReducers(state = initialState, action) {
         ...state,
         registerIsLoading: initialState.registerIsLoading,
         registerErrors: action.response.data
-      };
-    case CLEAR_REGISTER_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        registerSuccessMessage: initialState.registerSuccessMessage
       };
     case CLEAR_REGISTER_FAILURE_MESSAGE:
       return {

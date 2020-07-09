@@ -41,7 +41,7 @@ export class Welcome extends React.Component {
             onClose={this.handleCloseSuccessMessage}
             dismissible
           >
-            welcome.successMessage: {successMessage}
+            {successMessage}
           </Alert>
         ) : null}
         <div className="welcome__content">

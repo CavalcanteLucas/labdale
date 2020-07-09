@@ -3,12 +3,8 @@ import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import {
-  register,
-  clearRegisterFailureMessage,
-  clearRegisterSuccessMessage
-} from "../actions";
-import { setSuccessMessage } from "../../welcome/actions";
+import { register, clearRegisterFailureMessage } from "../actions";
+import { setSuccessMessage, clearSuccessMessage } from "../../welcome/actions";
 import FormErrors from "../../FormErrors";
 
 export class RegisterForm extends React.Component {
@@ -25,7 +21,7 @@ export class RegisterForm extends React.Component {
     successMessage: PropTypes.string,
     registerErrors: PropTypes.object,
     clearRegisterFailureMessage: PropTypes.func.isRequired,
-    clearRegisterSuccessMessage: PropTypes.func.isRequired,
+    clearSuccessMessage: PropTypes.func.isRequired,
     setSuccessMessage: PropTypes.func.isRequired
   };
 
@@ -36,13 +32,13 @@ export class RegisterForm extends React.Component {
   };
 
   componentDidMount() {
-    const { clearRegisterSuccessMessage } = this.props;
-    clearRegisterSuccessMessage();
+    const { clearSuccessMessage } = this.props;
+    clearSuccessMessage();
   }
 
-  componentDidUpdate() {
-    const { successMessage, setSuccessMessage, history } = this.props;
-    if (successMessage) {
+  componentDidUpdate(prevProps) {
+    const { history, successMessage, setSuccessMessage } = this.props;
+    if (successMessage && !prevProps.successMessage) {
       setSuccessMessage(successMessage);
       history.push("/");
     }
@@ -149,7 +145,7 @@ const mapDispatchToProps = dispatch => ({
   register: (username, email, password1, password2) =>
     dispatch(register(username, email, password1, password2)),
   clearRegisterFailureMessage: () => dispatch(clearRegisterFailureMessage()),
-  clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage()),
+  clearSuccessMessage: () => dispatch(clearSuccessMessage()),
   setSuccessMessage: successMessage =>
     dispatch(setSuccessMessage(successMessage))
 });

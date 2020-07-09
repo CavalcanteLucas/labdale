@@ -152,7 +152,8 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         deleteTodoListIsLoading: true,
-        deleteTodoListErrors: initialState.deleteTodoListErrors
+        deleteTodoListErrors: initialState.deleteTodoListErrors,
+        failureMessage: initialState.failureMessage
       };
     case DELETE_TODO_LIST_SUCCESS:
       return {
@@ -209,7 +210,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         createTodoIsLoading: true,
-        successMessage: initialState.successMessage,
         createTodoErrors: initialState.createTodoErrors
       };
     case CREATE_TODO_SUCCESS:
