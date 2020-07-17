@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { register, clearRegisterFailureMessage } from "../actions";
-import { setSuccessMessage, clearSuccessMessage } from "../../welcome/actions";
+import { clearRegisterSuccessMessage } from "../../welcome/actions";
 import FormErrors from "../../FormErrors";
 
 export class RegisterForm extends React.Component {
@@ -18,17 +18,16 @@ export class RegisterForm extends React.Component {
   static propTypes = {
     register: PropTypes.func.isRequired,
     history: PropTypes.object,
-    successMessage: PropTypes.string,
     registerErrors: PropTypes.object,
     clearRegisterFailureMessage: PropTypes.func.isRequired,
-    clearSuccessMessage: PropTypes.func.isRequired,
-    setSuccessMessage: PropTypes.func.isRequired
+    clearRegisterSuccessMessage: PropTypes.func.isRequired,
+    registerOK: PropTypes.bool
   };
 
   static defaultProps = {
     history: null,
-    successMessage: null,
-    registerErrors: null
+    registerErrors: null,
+    registerOK: false
   };
 
   componentDidMount() {
@@ -37,9 +36,8 @@ export class RegisterForm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { history, successMessage, setSuccessMessage } = this.props;
-    if (successMessage && !prevProps.successMessage) {
-      setSuccessMessage(successMessage);
+    const { registerOK, history } = this.props;
+    if (registerOK && !prevProps.registerOK) {
       history.push("/");
     }
   }
@@ -137,7 +135,7 @@ export class RegisterForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.auth.registerSuccessMessage,
+  registerOK: state.auth.registerOK,
   registerErrors: state.auth.registerErrors
 });
 

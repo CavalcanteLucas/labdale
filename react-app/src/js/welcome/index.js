@@ -5,30 +5,29 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import LoginForm from "../auth/components/LoginForm";
-import { clearSuccessMessage } from "./actions";
+import { clearSuccessMessage, clearRegisterSuccessMessage } from "./actions";
 
 export class Welcome extends React.Component {
   static propTypes = {
     successMessage: PropTypes.string,
-    clearSuccessMessage: PropTypes.func.isRequired
+    clearSuccessMessage: PropTypes.func.isRequired,
+    registerSuccessMessage: PropTypes.string,
+    clearRegisterSuccessMessage: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    successMessage: null
+    successMessage: null,
+    registerSuccessMessage: null
   };
 
-  componentWillUnmount() {
-    const { clearSuccessMessage } = this.props;
-    clearSuccessMessage();
-  }
-
   handleCloseSuccessMessage = () => {
-    const { clearSuccessMessage } = this.props;
+    const { clearSuccessMessage, clearRegisterSuccessMessage } = this.props;
     clearSuccessMessage();
+    clearRegisterSuccessMessage();
   };
 
   render() {
-    const { successMessage } = this.props;
+    const { successMessage, registerSuccessMessage } = this.props;
 
     return (
       <div className="welcome">
@@ -41,7 +40,16 @@ export class Welcome extends React.Component {
             onClose={this.handleCloseSuccessMessage}
             dismissible
           >
-            {successMessage}
+            successMessage: {successMessage}
+          </Alert>
+        ) : null}
+        {registerSuccessMessage ? (
+          <Alert
+            variant="success"
+            onClose={this.handleCloseSuccessMessage}
+            dismissible
+          >
+            registerSuccessMessage: {registerSuccessMessage}
           </Alert>
         ) : null}
         <div className="welcome__content">
@@ -77,11 +85,13 @@ export class Welcome extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.messager.successMessage
+  successMessage: state.messager.successMessage,
+  registerSuccessMessage: state.messager.registerSuccessMessage
 });
 
 const mapDispatchToProps = dispatch => ({
-  clearSuccessMessage: () => dispatch(clearSuccessMessage())
+  clearSuccessMessage: () => dispatch(clearSuccessMessage()),
+  clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome);

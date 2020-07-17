@@ -35,8 +35,8 @@ const initialState = {
   isAuthenticated: localStorage.getItem("token") ? true : false,
   // REGISTER
   registerIsLoading: false,
-  registerSuccessMessage: null,
   registerErrors: null,
+  registerOK: null,
   // LOGIN
   loginIsLoading: false,
   loginSuccessMessage: null,
@@ -64,21 +64,23 @@ export default function loginReducers(state = initialState, action) {
       return {
         ...state,
         registerIsLoading: true,
-        registerSuccessMessage: initialState.registerSuccessMessage,
-        registerErrors: initialState.registerErrors
+        registerErrors: initialState.registerErrors,
+        registerOK: initialState.registerOK
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
         registerIsLoading: initialState.registerIsLoading,
-        registerSuccessMessage: "User successfully created!"
+        registerOK: action.response.ok
       };
     case REGISTER_FAILURE:
       return {
         ...state,
         registerIsLoading: initialState.registerIsLoading,
-        registerErrors: action.response.data
+        registerErrors: action.response.data,
+        registerOK: action.response.ok
       };
+
     case CLEAR_REGISTER_FAILURE_MESSAGE:
       return {
         ...state,
