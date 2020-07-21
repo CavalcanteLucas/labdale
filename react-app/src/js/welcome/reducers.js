@@ -1,7 +1,8 @@
 import {
   CLEAR_SUCCESS_MESSAGE,
   SET_SUCCESS_MESSAGE,
-  CLEAR_REGISTER_SUCCESS_MESSAGE
+  CLEAR_REGISTER_SUCCESS_MESSAGE,
+  CLEAR_SUCCESS_MESSAGE_TEMP
 } from "./actions";
 import {
   LOGOUT_SUCCESS,
@@ -11,7 +12,8 @@ import {
 
 const initialState = {
   successMessage: null,
-  registerSuccessMessage: null
+  registerSuccessMessage: null,
+  messageList: []
 };
 
 export default function messagerReducers(state = initialState, action) {
@@ -31,18 +33,25 @@ export default function messagerReducers(state = initialState, action) {
 
     case REGISTER_REQUEST:
       return {
-        ...state,
-        registerSuccessMessage: initialState.registerSuccessMessage
+        ...state
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
-        registerSuccessMessage: "User successfully created!"
+        messageList: [...state.messageList, "User successfully created!"]
       };
     case CLEAR_REGISTER_SUCCESS_MESSAGE:
       return {
         ...state,
         registerSuccessMessage: initialState.registerSuccessMessage
+      };
+
+    case CLEAR_SUCCESS_MESSAGE_TEMP:
+      const newMessageList = [...state.messageList];
+      newMessageList.splice(state.index, 1);
+      return {
+        ...state,
+        messageList: newMessageList
       };
 
     default:

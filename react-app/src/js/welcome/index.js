@@ -4,45 +4,44 @@ import Helmet from "react-helmet";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import {
+  clearSuccessMessage,
+  clearRegisterSuccessMessage,
+  clearSuccessMessage_temp
+} from "./actions";
 import LoginForm from "../auth/components/LoginForm";
-import { clearSuccessMessage, clearRegisterSuccessMessage } from "./actions";
 
 export class Welcome extends React.Component {
   static propTypes = {
-    successMessage: PropTypes.string,
     clearSuccessMessage: PropTypes.func.isRequired,
     registerSuccessMessage: PropTypes.string,
-    clearRegisterSuccessMessage: PropTypes.func.isRequired
+    clearRegisterSuccessMessage: PropTypes.func.isRequired,
+    messageList: PropTypes.array
   };
 
   static defaultProps = {
-    successMessage: null,
-    registerSuccessMessage: null
+    registerSuccessMessage: null,
+    messageList: []
   };
 
   handleCloseSuccessMessage = () => {
     const { clearSuccessMessage, clearRegisterSuccessMessage } = this.props;
-    clearSuccessMessage();
     clearRegisterSuccessMessage();
   };
 
-  render() {
-    const { successMessage, registerSuccessMessage } = this.props;
+  handleCloseMessage_temp = index => {
+    const { clearSuccessMessage_temp } = this.props;
+    clearSuccessMessage_temp(index);
+  };
 
+  render() {
+    const { registerSuccessMessage, messageList } = this.props;
     return (
       <div className="welcome">
         <Helmet>
           <title>- LABDALE -</title>
         </Helmet>
-        {successMessage ? (
-          <Alert
-            variant="success"
-            onClose={this.handleCloseSuccessMessage}
-            dismissible
-          >
-            successMessage: {successMessage}
-          </Alert>
-        ) : null}
+
         {registerSuccessMessage ? (
           <Alert
             variant="success"
@@ -52,6 +51,18 @@ export class Welcome extends React.Component {
             registerSuccessMessage: {registerSuccessMessage}
           </Alert>
         ) : null}
+
+        {messageList.map((message, index) => (
+          <Alert
+            variant="success"
+            onClose={() => this.handleCloseMessage_temp(index)}
+            dismissible
+            key={index}
+          >
+            messageList({index}): {message}
+          </Alert>
+        ))}
+
         <div className="welcome__content">
           <Container>
             <Row>
@@ -86,12 +97,14 @@ export class Welcome extends React.Component {
 
 const mapStateToProps = state => ({
   successMessage: state.messager.successMessage,
-  registerSuccessMessage: state.messager.registerSuccessMessage
+  registerSuccessMessage: state.messager.registerSuccessMessage,
+  messageList: state.messager.messageList
 });
 
 const mapDispatchToProps = dispatch => ({
   clearSuccessMessage: () => dispatch(clearSuccessMessage()),
-  clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage())
+  clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage()),
+  clearSuccessMessage_temp: index => dispatch(clearSuccessMessage_temp(index))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
