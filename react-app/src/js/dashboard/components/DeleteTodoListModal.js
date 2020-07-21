@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
 
 import { deleteTodoList } from "../actions";
-import { setSuccessMessage } from "../../welcome/actions";
+import { setSuccessMessage } from "../../messager/actions";
 
 export class DeleteTodoListModal extends React.Component {
   static propTypes = {

@@ -1,8 +1,4 @@
-import {
-  SET_SUCCESS_MESSAGE,
-  CLEAR_SUCCESS_MESSAGE_TEMP,
-  CLEAR_SUCCESS_MESSAGE
-} from "./actions";
+import { SET_SUCCESS_MESSAGE, CLEAR_SUCCESS_MESSAGE } from "./actions";
 import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
@@ -23,13 +19,8 @@ export default function messagerReducers(state = initialState, action) {
         ...state,
         successMessage: action.successMessage
       };
-    case CLEAR_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        successMessage: initialState.successMessage
-      };
 
-    case CLEAR_SUCCESS_MESSAGE_TEMP:
+    case CLEAR_SUCCESS_MESSAGE:
       const newMessageList = [...state.messageList];
       newMessageList.splice(action.extraData.index, 1);
       return {

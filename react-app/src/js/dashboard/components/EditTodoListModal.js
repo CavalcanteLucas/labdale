@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
 
 import { editTodoList, clearEditTodoListErrors } from "../actions";
-import { setSuccessMessage } from "../../welcome/actions";
+import { setSuccessMessage } from "../../messager/actions";
 import FormErrors from "../../FormErrors";
 
 export class EditTodoListModal extends React.Component {

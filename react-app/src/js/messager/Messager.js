@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Alert } from "react-bootstrap";
 
-import { clearSuccessMessage_temp } from "../welcome/actions";
+import { clearSuccessMessage } from "./actions";
 
 export class Messager extends React.Component {
   static propTypes = {
@@ -44,7 +44,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  clearSuccessMessage: index => dispatch(clearSuccessMessage_temp(index))
+  clearSuccessMessage: index => dispatch(clearSuccessMessage(index))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Messager);

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 import authReducers from "./auth/reducers";
-import messagerReducers from "./welcome/reducers";
+import messagerReducers from "./messager/reducers";
 import { todoReducers } from "./dashboard/reducers";
 
 export default combineReducers({
