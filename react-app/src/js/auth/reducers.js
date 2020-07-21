@@ -3,7 +3,7 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-  CLEAR_REGISTER_FAILURE_MESSAGE,
+  CLEAR_REGISTER_ERRORS,
   // LOGIN
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -37,7 +37,6 @@ const initialState = {
   registerIsSuccessfull: null,
   // LOGIN
   loginIsLoading: false,
-  loginSuccessMessage: null,
   loginErrors: null,
   // LOGOUT
   logoutIsLoading: false,
@@ -48,6 +47,7 @@ const initialState = {
   // PASSWORD_RESET_CONFIRM
   passwordResetConfirmIsLoading: false,
   passwordResetConfirmErrors: null,
+  passwordResetConfirmIsSuccessFull: null,
   // USER_INFO
   getUserInfo: null,
   getUserInfoIsLoading: false,
@@ -75,13 +75,13 @@ export default function loginReducers(state = initialState, action) {
         ...state,
         registerIsLoading: initialState.registerIsLoading,
         registerErrors: action.response.data,
-        registerIsSuccessfull: action.response.ok,
+        registerIsSuccessfull: action.response.ok
       };
 
-    case CLEAR_REGISTER_FAILURE_MESSAGE:
+    case CLEAR_REGISTER_ERRORS:
       return {
         ...state,
-        registerErrors: initialState.registerErrors,
+        registerErrors: initialState.registerErrors
       };
 
     // LOGIN
@@ -89,7 +89,6 @@ export default function loginReducers(state = initialState, action) {
       return {
         ...state,
         loginIsLoading: true,
-        loginSuccessMessage: initialState.loginSuccessMessage,
         loginErrors: initialState.loginErrors
       };
     case LOGIN_SUCCESS:
@@ -98,8 +97,7 @@ export default function loginReducers(state = initialState, action) {
         ...state,
         token: action.response.data.key,
         loginIsLoading: initialState.loginIsLoading,
-        loginSuccessMessage: "Logged in successfully.",
-        isAuthenticated: true
+        isAuthenticated: action.response.ok
       };
     case LOGIN_FAILURE:
       return {

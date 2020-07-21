@@ -3,7 +3,7 @@ import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { register } from "../actions";
+import { register, clearRegisterErrors } from "../actions";
 import FormErrors from "../../FormErrors";
 
 export class RegisterForm extends React.Component {
@@ -16,6 +16,7 @@ export class RegisterForm extends React.Component {
 
   static propTypes = {
     register: PropTypes.func.isRequired,
+    clearRegisterErrors: PropTypes.func.isRequired,
     history: PropTypes.object,
     registerErrors: PropTypes.object,
     registerIsSuccessfull: PropTypes.bool
@@ -32,6 +33,11 @@ export class RegisterForm extends React.Component {
     if (registerIsSuccessfull && !prevProps.registerIsSuccessfull) {
       history.push("/");
     }
+  }
+
+  componentWillUnmount() {
+    const { clearRegisterErrors } = this.props;
+    clearRegisterErrors();
   }
 
   onSubmit = e => {
@@ -123,12 +129,13 @@ export class RegisterForm extends React.Component {
 
 const mapStateToProps = state => ({
   registerIsSuccessfull: state.auth.registerIsSuccessfull,
-  registerErrors: state.auth.registerErrors,
+  registerErrors: state.auth.registerErrors
 });
 
 const mapDispatchToProps = dispatch => ({
   register: (username, email, password1, password2) =>
-    dispatch(register(username, email, password1, password2))
+    dispatch(register(username, email, password1, password2)),
+  clearRegisterErrors: () => dispatch(clearRegisterErrors())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

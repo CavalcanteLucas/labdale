@@ -21,7 +21,7 @@ export class PasswordResetConfirmForm extends React.Component {
     passwordResetConfirmIsSuccessfull: PropTypes.bool,
     passwordResetConfirmErrors: PropTypes.object,
     match: PropTypes.object.isRequired,
-    clearPasswordResetConfirmErrors: PropTypes.func.isRequired,
+    clearPasswordResetConfirmErrors: PropTypes.func.isRequired
   };
 
   static defaultProps = {
