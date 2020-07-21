@@ -6,7 +6,6 @@ import { Button, Modal, Form } from "react-bootstrap";
 
 import { createTodoList, clearCreateTodoListErrors } from "../actions";
 import FormErrors from "../../FormErrors";
-import { setSuccessMessage } from "../../welcome/actions";
 
 export class AddTodoListModal extends React.Component {
   static propTypes = {
@@ -18,14 +17,13 @@ export class AddTodoListModal extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func
     }),
-    successMessage: PropTypes.string,
-    setSuccessMessage: PropTypes.func.isRequired
+    createTodoListIsSuccessfull: PropTypes.bool
   };
 
   static defaultProps = {
     history: undefined,
     createTodoListErrors: null,
-    successMessage: ""
+    createTodoListIsSuccessfull: null
   };
 
   constructor(props) {
@@ -37,9 +35,8 @@ export class AddTodoListModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { history, successMessage, setSuccessMessage } = this.props;
-    if (successMessage && !prevProps.successMessage) {
-      setSuccessMessage(successMessage);
+    const { history, createTodoListIsSuccessfull } = this.props;
+    if (createTodoListIsSuccessfull && !prevProps.createTodoListIsSuccessfull) {
       this.handleCloseModal();
       history.push("/dashboard");
     }
@@ -108,14 +105,12 @@ export class AddTodoListModal extends React.Component {
 
 const mapStateToProps = state => ({
   createTodoListErrors: state.todo.createTodoListErrors,
-  successMessage: state.todo.successMessage
+  createTodoListIsSuccessfull: state.todo.createTodoListIsSuccessfull
 });
 
 const mapDispatchToProps = dispatch => ({
   createTodoList: todoListTitle => dispatch(createTodoList(todoListTitle)),
-  clearCreateTodoListErrors: () => dispatch(clearCreateTodoListErrors()),
-  setSuccessMessage: successMessage =>
-    dispatch(setSuccessMessage(successMessage))
+  clearCreateTodoListErrors: () => dispatch(clearCreateTodoListErrors())
 });
 
 export default connect(

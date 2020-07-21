@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Alert, Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 import ActionBar from "./ActionBar";
+import Messager from "../../messager/Messager";
 
 import { clearSuccessMessage } from "../../welcome/actions";
 
@@ -37,7 +38,7 @@ export class DashboardPage extends React.Component {
             </Col>
 
             <Col xs={{ offset: 1, span: 7 }}>
-              {failureMessage ? (
+              {/* {failureMessage ? (
                 <Alert variant="danger">{failureMessage}</Alert>
               ) : null}
               {successMessage ? (
@@ -48,7 +49,8 @@ export class DashboardPage extends React.Component {
                 >
                   {successMessage}
                 </Alert>
-              ) : null}
+              ) : null} */}
+              <Messager />
               <div className="dashboard__content">{children}</div>
             </Col>
           </Row>

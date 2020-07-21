@@ -34,6 +34,7 @@ const initialState = {
   getTodoListsIsLoading: false,
   createTodoListIsLoading: false,
   createTodoListErrors: null,
+  createTodoListIsSuccessfull: null,
   todoListDetail: null,
   getTodoListIsLoading: false,
   editTodoListIsLoading: false,
@@ -103,7 +104,9 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         createTodoListIsLoading: true,
-        createTodoListErrors: initialState.createTodoListErrors
+        // successMessage: initialState.successMessage,
+        createTodoListErrors: initialState.createTodoListErrors,
+        createTodoListIsSuccessfull: initialState.createTodoListIsSuccessfull
       };
     case CREATE_TODO_LIST_SUCCESS:
       return {
@@ -111,13 +114,15 @@ export function todoReducers(state = initialState, action) {
         todoLists: [action.response.data, ...state.todoLists],
         todoListDetail: action.response.data,
         createTodoListIsLoading: initialState.createTodoListIsLoading,
-        successMessage: "Todo List created successfully."
+        createTodoListIsSuccessfull: action.response.ok
+        // successMessage: "Todo List created successfully."
       };
     case CREATE_TODO_LIST_FAILURE:
       return {
         ...state,
         createTodoListIsLoading: initialState.createTodoListIsLoading,
-        createTodoListErrors: action.response.data || [["Server Error"]]
+        createTodoListErrors: action.response.data || [["Server Error"]],
+        createTodoListIsSuccessfull: action.response.ok
       };
 
     // EDIT_TODO_LIST
