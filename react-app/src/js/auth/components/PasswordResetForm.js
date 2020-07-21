@@ -18,7 +18,7 @@ export class PasswordResetForm extends React.Component {
   static propTypes = {
     passwordReset: PropTypes.func.isRequired,
     history: PropTypes.object,
-    passwordResetSuccessMessage: PropTypes.string,
+    passwordResetIsSuccessfull: PropTypes.bool,
     passwordResetErrors: PropTypes.object,
     clearPasswordResetErrors: PropTypes.func.isRequired,
     clearPasswordResetSuccessMessage: PropTypes.func.isRequired
@@ -26,7 +26,7 @@ export class PasswordResetForm extends React.Component {
 
   static defaultProps = {
     history: null,
-    passwordResetSuccessMessage: null,
+    passwordResetIsSuccessfull: false,
     passwordResetErrors: null
   };
 
@@ -35,9 +35,9 @@ export class PasswordResetForm extends React.Component {
     clearPasswordResetSuccessMessage();
   }
 
-  componentDidUpdate() {
-    const { passwordResetSuccessMessage, history } = this.props;
-    if (passwordResetSuccessMessage) {
+  componentDidUpdate(prevProps) {
+    const { passwordResetIsSuccessfull, history } = this.props;
+    if (passwordResetIsSuccessfull && !prevProps.passwordResetIsSuccessfull) {
       history.push("/password_reset/confirm");
     }
   }
@@ -107,7 +107,7 @@ export class PasswordResetForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  passwordResetSuccessMessage: state.auth.passwordResetSuccessMessage,
+  passwordResetIsSuccessfull: state.auth.passwordResetIsSuccessfull,
   passwordResetErrors: state.auth.passwordResetErrors
 });
 

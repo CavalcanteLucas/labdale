@@ -47,6 +47,7 @@ const initialState = {
   passwordResetIsLoading: false,
   passwordResetSuccessMessage: null,
   passwordResetErrors: null,
+  passwordResetIsSuccessfull: null,
   // PASSWORD_RESET_CONFIRM
   passwordResetConfirmIsLoading: false,
   passwordResetConfirmSuccessMessage: null,
@@ -133,13 +134,14 @@ export default function loginReducers(state = initialState, action) {
       return {
         ...state,
         passwordResetIsLoading: true,
-        passwordResetSuccessMessage: initialState.passwordResetSuccessMessage,
-        passwordResetErrors: initialState.passwordResetErrors
+        passwordResetErrors: initialState.passwordResetErrors,
+        passwordResetIsSuccessfull: initialState.passwordResetIsSuccessfull
       };
     case PASSWORD_RESET_SUCCESS:
       return {
         ...state,
         passwordResetIsLoading: initialState.passwordResetIsLoading,
+        passwordResetIsSuccessfull: action.response.ok,
         passwordResetSuccessMessage:
           "Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder."
       };
@@ -147,7 +149,8 @@ export default function loginReducers(state = initialState, action) {
       return {
         ...state,
         passwordResetIsLoading: initialState.passwordResetIsLoading,
-        passwordResetErrors: action.response.data
+        passwordResetErrors: action.response.data,
+        passwordResetIsSuccessfull: action.response.ok
       };
     case CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE:
       return {
