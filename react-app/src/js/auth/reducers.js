@@ -21,7 +21,6 @@ import {
   PASSWORD_RESET_CONFIRM_REQUEST,
   PASSWORD_RESET_CONFIRM_SUCCESS,
   PASSWORD_RESET_CONFIRM_FAILURE,
-  CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE,
   CLEAR_PASSWORD_RESET_CONFIRM_ERRORS,
   // GET_USER_INFO
   GET_USER_INFO_REQUEST,
@@ -48,7 +47,6 @@ const initialState = {
   passwordResetIsSuccessfull: null,
   // PASSWORD_RESET_CONFIRM
   passwordResetConfirmIsLoading: false,
-  passwordResetConfirmSuccessMessage: null,
   passwordResetConfirmErrors: null,
   // USER_INFO
   getUserInfo: null,
@@ -159,30 +157,24 @@ export default function loginReducers(state = initialState, action) {
       return {
         ...state,
         passwordResetConfirmIsLoading: true,
-        passwordResetConfirmSuccessMessage:
-          initialState.passwordResetConfirmSuccessMessage,
-        passwordResetConfirmErrors: initialState.passwordResetConfirmErrors
+        passwordResetConfirmErrors: initialState.passwordResetConfirmErrors,
+        passwordResetConfirmIsSuccessFull:
+          initialState.passwordResetConfirmIsSuccessFull
       };
     case PASSWORD_RESET_CONFIRM_SUCCESS:
       return {
         ...state,
         passwordResetConfirmIsLoading:
           initialState.passwordResetConfirmIsLoading,
-        passwordResetConfirmSuccessMessage:
-          "Your password has been successfully changed. Use your new credentials to login."
+        passwordResetConfirmIsSuccessfull: action.response.ok
       };
     case PASSWORD_RESET_CONFIRM_FAILURE:
       return {
         ...state,
         passwordResetConfirmIsLoading:
           initialState.passwordResetConfirmIsLoading,
-        passwordResetConfirmErrors: action.response.data
-      };
-    case CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        passwordResetConfirmSuccessMessage:
-          initialState.passwordResetConfirmSuccessMessage
+        passwordResetConfirmErrors: action.response.data,
+        passwordResetConfirmIsSuccessfull: action.response.ok
       };
     case CLEAR_PASSWORD_RESET_CONFIRM_ERRORS:
       return {

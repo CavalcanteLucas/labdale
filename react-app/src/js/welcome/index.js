@@ -37,7 +37,7 @@ export class Welcome extends React.Component {
             dismissible
             key={index}
           >
-            messageList({index}): {message}
+            {message}
           </Alert>
         ))}
 

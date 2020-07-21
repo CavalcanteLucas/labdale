@@ -6,7 +6,8 @@ import {
 import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_REQUEST
+  REGISTER_REQUEST,
+  PASSWORD_RESET_CONFIRM_SUCCESS
 } from "../auth/actions";
 
 const initialState = {
@@ -40,10 +41,17 @@ export default function messagerReducers(state = initialState, action) {
         ...state,
         messageList: [...state.messageList, "User successfully created!"]
       };
-
+    case PASSWORD_RESET_CONFIRM_SUCCESS:
+      return {
+        ...state,
+        messageList: [
+          ...state.messageList,
+          "Your password has been successfully changed. Use your new credentials to login."
+        ]
+      };
     case CLEAR_SUCCESS_MESSAGE_TEMP:
       const newMessageList = [...state.messageList];
-      newMessageList.splice(state.index, 1);
+      newMessageList.splice(action.extraData.index, 1);
       return {
         ...state,
         messageList: newMessageList

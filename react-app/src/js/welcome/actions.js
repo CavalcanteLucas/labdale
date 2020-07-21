@@ -14,5 +14,7 @@ export const clearSuccessMessage = () => ({
 
 export const clearSuccessMessage_temp = index => ({
   type: CLEAR_SUCCESS_MESSAGE_TEMP,
-  index
+  extraData: {
+    index
+  }
 });

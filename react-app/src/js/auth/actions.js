@@ -31,8 +31,6 @@ export const CLEAR_PASSWORD_RESET_ERRORS = "CLEAR_PASSWORD_RESET_ERRORS";
 export const PASSWORD_RESET_CONFIRM_REQUEST = "PASSWORD_RESET_CONFIRM_REQUEST";
 export const PASSWORD_RESET_CONFIRM_SUCCESS = "PASSWORD_RESET_CONFIRM_SUCCESS";
 export const PASSWORD_RESET_CONFIRM_FAILURE = "PASSWORD_RESET_CONFIRM_FAILURE";
-export const CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE =
-  "CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE";
 export const CLEAR_PASSWORD_RESET_CONFIRM_ERRORS =
   "CLEAR_PASSWORD_RESET_CONFIRM_ERRORS";
 
@@ -143,10 +141,6 @@ export const passwordResetConfirm = (uid, token, password1, password2) => {
       fetchFromApi("/api/rest-auth/password/reset/confirm/", requestData)
   };
 };
-
-export const clearPasswordResetConfirmSuccessMessage = () => ({
-  type: CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE
-});
 
 export const clearPasswordResetConfirmErrors = () => ({
   type: CLEAR_PASSWORD_RESET_CONFIRM_ERRORS
