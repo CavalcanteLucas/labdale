@@ -1,28 +1,22 @@
-import { SET_SUCCESS_MESSAGE, CLEAR_SUCCESS_MESSAGE } from "./actions";
+import { CLEAR_SUCCESS_MESSAGE } from "./actions";
 import {
+  LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   PASSWORD_RESET_CONFIRM_SUCCESS
 } from "../auth/actions";
 import {
   CREATE_TODO_LIST_SUCCESS,
-  EDIT_TODO_LIST_SUCCESS
+  EDIT_TODO_LIST_SUCCESS,
+  DELETE_TODO_LIST_SUCCESS
 } from "../dashboard/actions";
 
 const initialState = {
-  successMessage: null,
-  registerSuccessMessage: null,
   messageList: []
 };
 
 export default function messagerReducers(state = initialState, action) {
   switch (action.type) {
-    case SET_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        successMessage: action.successMessage
-      };
-
     case CLEAR_SUCCESS_MESSAGE:
       const newMessageList = [...state.messageList];
       newMessageList.splice(action.extraData.index, 1);
@@ -30,6 +24,8 @@ export default function messagerReducers(state = initialState, action) {
         ...state,
         messageList: newMessageList
       };
+
+    case LOGIN_SUCCESS:
     case LOGOUT_SUCCESS:
       return initialState;
 
@@ -56,6 +52,11 @@ export default function messagerReducers(state = initialState, action) {
     case EDIT_TODO_LIST_SUCCESS:
       return {
         messageList: [...state.messageList, "Todo List changed successfully."]
+      };
+
+    case DELETE_TODO_LIST_SUCCESS:
+      return {
+        messageList: [...state.messageList, "Todo List removed successfully."]
       };
 
     default:

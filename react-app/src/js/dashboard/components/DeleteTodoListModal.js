@@ -16,19 +16,17 @@ export class DeleteTodoListModal extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func
     }),
-    successMessage: PropTypes.string,
-    setSuccessMessage: PropTypes.func.isRequired
+    deleteTodoListIsSuccessfull: PropTypes.bool
   };
 
   static defaultProps = {
     history: undefined,
-    successMessage: ""
+    deleteTodoListIsSuccessfull: null
   };
 
   componentDidUpdate(prevProps) {
-    const { history, successMessage, setSuccessMessage } = this.props;
-    if (successMessage && !prevProps.successMessage) {
-      setSuccessMessage(successMessage);
+    const { history, deleteTodoListIsSuccessfull } = this.props;
+    if (deleteTodoListIsSuccessfull && !prevProps.deleteTodoListIsSuccessfull) {
       this.handleCloseModal();
       history.push("/dashboard");
     }
@@ -72,7 +70,8 @@ export class DeleteTodoListModal extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.todo.successMessage
+  successMessage: state.todo.successMessage,
+  deleteTodoListIsSuccessfull: state.todo.deleteTodoListIsSuccessfull
 });
 
 const mapDispatchToProps = dispatch => ({

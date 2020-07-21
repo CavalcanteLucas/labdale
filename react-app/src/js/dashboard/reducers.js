@@ -42,6 +42,7 @@ const initialState = {
   editTodoListIsSuccessfull: null,
   deleteTodoListIsLoading: false,
   deleteTodoListErrors: null,
+  deleteTodoListIsSuccessfull: null,
   successMessage: null,
   failureMessage: null,
   // TODO
@@ -105,7 +106,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         createTodoListIsLoading: true,
-        // successMessage: initialState.successMessage,
         createTodoListErrors: initialState.createTodoListErrors,
         createTodoListIsSuccessfull: initialState.createTodoListIsSuccessfull
       };
@@ -116,7 +116,6 @@ export function todoReducers(state = initialState, action) {
         todoListDetail: action.response.data,
         createTodoListIsLoading: initialState.createTodoListIsLoading,
         createTodoListIsSuccessfull: action.response.ok
-        // successMessage: "Todo List created successfully."
       };
     case CREATE_TODO_LIST_FAILURE:
       return {
@@ -131,7 +130,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         editTodoListIsLoading: true,
-        // successMessage: initialState.successMessage,
         editTodoListErrors: initialState.editTodoListErrors,
         editTodoListIsSuccessfull: initialState.editTodoListIsSuccessfull
       };
@@ -146,7 +144,6 @@ export function todoReducers(state = initialState, action) {
         todoListDetail,
         todoLists: todoListsAfterEdit,
         editTodoListIsLoading: initialState.editTodoListIsLoading,
-        // successMessage: "Todo List changed successfully."
         editTodoListIsSuccessfull: action.response.ok
       };
     case EDIT_TODO_LIST_FAILURE:
@@ -163,23 +160,23 @@ export function todoReducers(state = initialState, action) {
         ...state,
         deleteTodoListIsLoading: true,
         deleteTodoListErrors: initialState.deleteTodoListErrors,
-        failureMessage: initialState.failureMessage
+        deleteTodoListIsSuccessfull: initialState.deleteTodoListIsSuccessfull
       };
     case DELETE_TODO_LIST_SUCCESS:
+      const todoListsAfterDelete = [...state.todoLists];
+      todoListsAfterDelete.splice(action.extraData.todoListId, 1);
       return {
         ...state,
-        todoListDetail: initialState.todoListDetail,
+        todoLists: todoListsAfterDelete,
         deleteTodoListIsLoading: initialState.deleteTodoListIsLoading,
-        successMessage: "Todo List deleted successfully."
+        deleteTodoListIsSuccessfull: action.response.ok
       };
     case DELETE_TODO_LIST_FAILURE:
       return {
         ...state,
-        deleteTodoListIsLoading: initialState.deleteTodoListIsLoading,
-        failureMessage: "Opsy.. Something went wrong. Try again!"
+        deleteTodoListIsLoading: action.response.ok
       };
 
-    // CLEAR ERRORS
     case CLEAR_CREATE_TODO_LIST_ERRORS:
       return {
         ...state,

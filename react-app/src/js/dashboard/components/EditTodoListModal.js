@@ -15,14 +15,11 @@ export class EditTodoListModal extends React.Component {
     clearEditTodoListErrors: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,
-    successMessage: PropTypes.string,
-    setSuccessMessage: PropTypes.func.isRequired,
     editTodoListIsSuccessfull: PropTypes.bool
   };
 
   static defaultProps = {
     editTodoListErrors: null,
-    successMessage: "",
     editTodoListIsSuccessfull: null
   };
 

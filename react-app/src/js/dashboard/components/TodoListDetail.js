@@ -8,7 +8,6 @@ import garbageBtn from "../../../img/garbage-btn.png";
 import plusBtn from "../../../img/plus-btn.png";
 
 import { getTodoList } from "../actions";
-import { clearSuccessMessage } from "../../welcome/actions";
 
 import EditTodoListModal from "./EditTodoListModal";
 import DeleteTodoListModal from "./DeleteTodoListModal";
@@ -30,8 +29,7 @@ export class TodoListDetail extends React.Component {
     }),
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired
-    }).isRequired,
-    clearSuccessMessage: PropTypes.func.isRequired
+    }).isRequired
   };
 
   static defaultProps = {
@@ -61,31 +59,21 @@ export class TodoListDetail extends React.Component {
     }
   }
 
+  openEditTodoListModal = () =>
+    this.setState({ editTodoListModalIsOpen: true });
+
+  openDeleteTodoListModal = () =>
+    this.setState({ deleteTodoListModalIsOpen: true });
+
   closeEditTodoListModal = () =>
     this.setState({ editTodoListModalIsOpen: false });
 
   closeDeleteTodoListModal = () =>
     this.setState({ deleteTodoListModalIsOpen: false });
 
-  openEditTodoListModal = () => {
-    const { clearSuccessMessage } = this.props;
-    // clearSuccessMessage();
-    this.setState({ editTodoListModalIsOpen: true });
-  };
-
-  openDeleteTodoListModal = () => {
-    const { clearSuccessMessage } = this.props;
-    // clearSuccessMessage();
-    this.setState({ deleteTodoListModalIsOpen: true });
-  };
+  openAddTodoModal = () => this.setState({ addTodoModalIsOpen: true });
 
   closeAddTodoModal = () => this.setState({ addTodoModalIsOpen: false });
-
-  openAddTodoModal = () => {
-    const { clearSuccessMessage } = this.props;
-    clearSuccessMessage();
-    this.setState({ addTodoModalIsOpen: true });
-  };
 
   render() {
     const {
@@ -156,8 +144,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getTodoList: todoListId => dispatch(getTodoList(todoListId)),
-  clearSuccessMessage: () => dispatch(clearSuccessMessage())
+  getTodoList: todoListId => dispatch(getTodoList(todoListId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoListDetail);
