@@ -36,7 +36,7 @@ const initialState = {
   // REGISTER
   registerIsLoading: false,
   registerErrors: null,
-  registerOK: null,
+  registerIsSuccessfull: null,
   // LOGIN
   loginIsLoading: false,
   loginSuccessMessage: null,
@@ -65,20 +65,20 @@ export default function loginReducers(state = initialState, action) {
         ...state,
         registerIsLoading: true,
         registerErrors: initialState.registerErrors,
-        registerOK: initialState.registerOK
+        registerIsSuccessfull: initialState.registerIsSuccessfull
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
         registerIsLoading: initialState.registerIsLoading,
-        registerOK: action.response.ok
+        registerIsSuccessfull: action.response.ok
       };
     case REGISTER_FAILURE:
       return {
         ...state,
         registerIsLoading: initialState.registerIsLoading,
         registerErrors: action.response.data,
-        registerOK: action.response.ok
+        registerIsSuccessfull: action.response.ok
       };
 
     case CLEAR_REGISTER_FAILURE_MESSAGE:

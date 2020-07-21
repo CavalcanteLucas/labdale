@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { register, clearRegisterFailureMessage } from "../actions";
-import { clearRegisterSuccessMessage } from "../../welcome/actions";
 import FormErrors from "../../FormErrors";
 
 export class RegisterForm extends React.Component {
@@ -20,24 +19,18 @@ export class RegisterForm extends React.Component {
     history: PropTypes.object,
     registerErrors: PropTypes.object,
     clearRegisterFailureMessage: PropTypes.func.isRequired,
-    clearRegisterSuccessMessage: PropTypes.func.isRequired,
-    registerOK: PropTypes.bool
+    registerIsSuccessfull: PropTypes.bool
   };
 
   static defaultProps = {
     history: null,
     registerErrors: null,
-    registerOK: false
+    registerIsSuccessfull: false
   };
 
-  componentDidMount() {
-    const { clearSuccessMessage } = this.props;
-    clearSuccessMessage();
-  }
-
   componentDidUpdate(prevProps) {
-    const { registerOK, history } = this.props;
-    if (registerOK && !prevProps.registerOK) {
+    const { registerIsSuccessfull, history } = this.props;
+    if (registerIsSuccessfull && !prevProps.registerIsSuccessfull) {
       history.push("/");
     }
   }
@@ -135,7 +128,7 @@ export class RegisterForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  registerOK: state.auth.registerOK,
+  registerIsSuccessfull: state.auth.registerIsSuccessfull,
   registerErrors: state.auth.registerErrors
 });
 
@@ -143,9 +136,6 @@ const mapDispatchToProps = dispatch => ({
   register: (username, email, password1, password2) =>
     dispatch(register(username, email, password1, password2)),
   clearRegisterFailureMessage: () => dispatch(clearRegisterFailureMessage()),
-  clearSuccessMessage: () => dispatch(clearSuccessMessage()),
-  setSuccessMessage: successMessage =>
-    dispatch(setSuccessMessage(successMessage))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
