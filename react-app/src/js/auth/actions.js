@@ -25,8 +25,6 @@ export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 export const PASSWORD_RESET_REQUEST = "PASSWORD_RESET_REQUEST";
 export const PASSWORD_RESET_SUCCESS = "PASSWORD_RESET_SUCCESS";
 export const PASSWORD_RESET_FAILURE = "PASSWORD_RESET_FAILURE";
-export const CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE =
-  "CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE";
 export const CLEAR_PASSWORD_RESET_ERRORS = "CLEAR_PASSWORD_RESET_ERRORS";
 
 // PASSWORD_RESET_CONFIRM
@@ -119,10 +117,6 @@ export const passwordReset = email => {
       fetchFromApi("/api/rest-auth/password/reset/", requestData)
   };
 };
-
-export const clearPasswordResetSuccessMessage = () => ({
-  type: CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE
-});
 
 export const clearPasswordResetErrors = () => ({
   type: CLEAR_PASSWORD_RESET_ERRORS

@@ -3,11 +3,7 @@ import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import {
-  passwordReset,
-  clearPasswordResetErrors,
-  clearPasswordResetSuccessMessage
-} from "../actions";
+import { passwordReset, clearPasswordResetErrors } from "../actions";
 import FormErrors from "../../FormErrors";
 
 export class PasswordResetForm extends React.Component {
@@ -20,8 +16,7 @@ export class PasswordResetForm extends React.Component {
     history: PropTypes.object,
     passwordResetIsSuccessfull: PropTypes.bool,
     passwordResetErrors: PropTypes.object,
-    clearPasswordResetErrors: PropTypes.func.isRequired,
-    clearPasswordResetSuccessMessage: PropTypes.func.isRequired
+    clearPasswordResetErrors: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -29,11 +24,6 @@ export class PasswordResetForm extends React.Component {
     passwordResetIsSuccessfull: false,
     passwordResetErrors: null
   };
-
-  componentDidMount() {
-    const { clearPasswordResetSuccessMessage } = this.props;
-    clearPasswordResetSuccessMessage();
-  }
 
   componentDidUpdate(prevProps) {
     const { passwordResetIsSuccessfull, history } = this.props;
@@ -114,8 +104,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   passwordReset: email => dispatch(passwordReset(email)),
   clearPasswordResetErrors: () => dispatch(clearPasswordResetErrors()),
-  clearPasswordResetSuccessMessage: () =>
-    dispatch(clearPasswordResetSuccessMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PasswordResetForm);
