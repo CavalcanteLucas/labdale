@@ -39,6 +39,7 @@ const initialState = {
   getTodoListIsLoading: false,
   editTodoListIsLoading: false,
   editTodoListErrors: null,
+  editTodoListIsSuccessfull: null,
   deleteTodoListIsLoading: false,
   deleteTodoListErrors: null,
   successMessage: null,
@@ -130,7 +131,9 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         editTodoListIsLoading: true,
-        editTodoListErrors: initialState.editTodoListErrors
+        // successMessage: initialState.successMessage,
+        editTodoListErrors: initialState.editTodoListErrors,
+        editTodoListIsSuccessfull: initialState.editTodoListIsSuccessfull
       };
     case EDIT_TODO_LIST_SUCCESS:
       const todoListDetail = action.response.data;
@@ -143,13 +146,15 @@ export function todoReducers(state = initialState, action) {
         todoListDetail,
         todoLists: todoListsAfterEdit,
         editTodoListIsLoading: initialState.editTodoListIsLoading,
-        successMessage: "Todo List changed successfully."
+        // successMessage: "Todo List changed successfully."
+        editTodoListIsSuccessfull: action.response.ok
       };
     case EDIT_TODO_LIST_FAILURE:
       return {
         ...state,
         editTodoListIsLoading: initialState.editTodoListIsLoading,
-        editTodoListErrors: action.response.data
+        editTodoListErrors: action.response.data,
+        editTodoListIsSuccessfull: action.response.ok
       };
 
     // DELETE_TODO_LIST:

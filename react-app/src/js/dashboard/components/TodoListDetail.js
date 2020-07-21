@@ -69,13 +69,13 @@ export class TodoListDetail extends React.Component {
 
   openEditTodoListModal = () => {
     const { clearSuccessMessage } = this.props;
-    clearSuccessMessage();
+    // clearSuccessMessage();
     this.setState({ editTodoListModalIsOpen: true });
   };
 
   openDeleteTodoListModal = () => {
     const { clearSuccessMessage } = this.props;
-    clearSuccessMessage();
+    // clearSuccessMessage();
     this.setState({ deleteTodoListModalIsOpen: true });
   };
 

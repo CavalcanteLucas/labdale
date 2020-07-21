@@ -4,7 +4,10 @@ import {
   REGISTER_SUCCESS,
   PASSWORD_RESET_CONFIRM_SUCCESS
 } from "../auth/actions";
-import { CREATE_TODO_LIST_SUCCESS } from "../dashboard/actions";
+import {
+  CREATE_TODO_LIST_SUCCESS,
+  EDIT_TODO_LIST_SUCCESS
+} from "../dashboard/actions";
 
 const initialState = {
   successMessage: null,
@@ -48,6 +51,11 @@ export default function messagerReducers(state = initialState, action) {
     case CREATE_TODO_LIST_SUCCESS:
       return {
         messageList: [...state.messageList, "Todo List created successfully."]
+      };
+
+    case EDIT_TODO_LIST_SUCCESS:
+      return {
+        messageList: [...state.messageList, "Todo List changed successfully."]
       };
 
     default:

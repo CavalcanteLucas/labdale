@@ -16,12 +16,14 @@ export class EditTodoListModal extends React.Component {
     onHide: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,
     successMessage: PropTypes.string,
-    setSuccessMessage: PropTypes.func.isRequired
+    setSuccessMessage: PropTypes.func.isRequired,
+    editTodoListIsSuccessfull: PropTypes.bool
   };
 
   static defaultProps = {
     editTodoListErrors: null,
-    successMessage: ""
+    successMessage: "",
+    editTodoListIsSuccessfull: null
   };
 
   constructor(props) {
@@ -33,9 +35,8 @@ export class EditTodoListModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { successMessage, setSuccessMessage } = this.props;
-    if (successMessage && !prevProps.successMessage) {
-      setSuccessMessage(successMessage);
+    const { editTodoListIsSuccessfull } = this.props;
+    if (editTodoListIsSuccessfull && !prevProps.editTodoListIsSuccessfull) {
       this.handleCloseModal();
     }
   }
@@ -103,7 +104,8 @@ export class EditTodoListModal extends React.Component {
 
 const mapStateToProps = state => ({
   editTodoListErrors: state.todo.editTodoListErrors,
-  successMessage: state.todo.successMessage
+  successMessage: state.todo.successMessage,
+  editTodoListIsSuccessfull: state.todo.editTodoListIsSuccessfull
 });
 
 const mapDispatchToProps = dispatch => ({
