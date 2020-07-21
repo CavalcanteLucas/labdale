@@ -1,45 +1,19 @@
 import React from "react";
-import { Alert, Container, Col, Row } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import Helmet from "react-helmet";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
-import { clearSuccessMessage_temp } from "./actions";
 import LoginForm from "../auth/components/LoginForm";
+import Messager from "../messager/Messager";
 
-export class Welcome extends React.Component {
-  static propTypes = {
-    clearSuccessMessage_temp: PropTypes.func.isRequired,
-    messageList: PropTypes.array
-  };
-
-  static defaultProps = {
-    messageList: []
-  };
-
-  handleCloseMessage_temp = index => {
-    const { clearSuccessMessage_temp } = this.props;
-    clearSuccessMessage_temp(index);
-  };
-
+export default class Welcome extends React.Component {
   render() {
-    const { messageList } = this.props;
     return (
       <div className="welcome">
         <Helmet>
           <title>- LABDALE -</title>
         </Helmet>
 
-        {messageList.map((message, index) => (
-          <Alert
-            variant="success"
-            onClose={() => this.handleCloseMessage_temp(index)}
-            dismissible
-            key={index}
-          >
-            {message}
-          </Alert>
-        ))}
+        <Messager />
 
         <div className="welcome__content">
           <Container>
@@ -72,15 +46,3 @@ export class Welcome extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  successMessage: state.messager.successMessage,
-  registerSuccessMessage: state.messager.registerSuccessMessage,
-  messageList: state.messager.messageList
-});
-
-const mapDispatchToProps = dispatch => ({
-  clearSuccessMessage_temp: index => dispatch(clearSuccessMessage_temp(index))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
