@@ -4,29 +4,17 @@ import Helmet from "react-helmet";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import {
-  clearSuccessMessage,
-  clearRegisterSuccessMessage,
-  clearSuccessMessage_temp
-} from "./actions";
+import { clearSuccessMessage_temp } from "./actions";
 import LoginForm from "../auth/components/LoginForm";
 
 export class Welcome extends React.Component {
   static propTypes = {
-    clearSuccessMessage: PropTypes.func.isRequired,
-    registerSuccessMessage: PropTypes.string,
-    clearRegisterSuccessMessage: PropTypes.func.isRequired,
+    clearSuccessMessage_temp: PropTypes.func.isRequired,
     messageList: PropTypes.array
   };
 
   static defaultProps = {
-    registerSuccessMessage: null,
     messageList: []
-  };
-
-  handleCloseSuccessMessage = () => {
-    const { clearSuccessMessage, clearRegisterSuccessMessage } = this.props;
-    clearRegisterSuccessMessage();
   };
 
   handleCloseMessage_temp = index => {
@@ -35,22 +23,12 @@ export class Welcome extends React.Component {
   };
 
   render() {
-    const { registerSuccessMessage, messageList } = this.props;
+    const { messageList } = this.props;
     return (
       <div className="welcome">
         <Helmet>
           <title>- LABDALE -</title>
         </Helmet>
-
-        {registerSuccessMessage ? (
-          <Alert
-            variant="success"
-            onClose={this.handleCloseSuccessMessage}
-            dismissible
-          >
-            registerSuccessMessage: {registerSuccessMessage}
-          </Alert>
-        ) : null}
 
         {messageList.map((message, index) => (
           <Alert
@@ -102,8 +80,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  clearSuccessMessage: () => dispatch(clearSuccessMessage()),
-  clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage()),
   clearSuccessMessage_temp: index => dispatch(clearSuccessMessage_temp(index))
 });
 

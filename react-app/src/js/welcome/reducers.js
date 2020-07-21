@@ -1,8 +1,7 @@
 import {
-  CLEAR_SUCCESS_MESSAGE,
   SET_SUCCESS_MESSAGE,
-  CLEAR_REGISTER_SUCCESS_MESSAGE,
-  CLEAR_SUCCESS_MESSAGE_TEMP
+  CLEAR_SUCCESS_MESSAGE_TEMP,
+  CLEAR_SUCCESS_MESSAGE
 } from "./actions";
 import {
   LOGOUT_SUCCESS,
@@ -28,6 +27,7 @@ export default function messagerReducers(state = initialState, action) {
         ...state,
         successMessage: initialState.successMessage
       };
+
     case LOGOUT_SUCCESS:
       return initialState;
 
@@ -39,11 +39,6 @@ export default function messagerReducers(state = initialState, action) {
       return {
         ...state,
         messageList: [...state.messageList, "User successfully created!"]
-      };
-    case CLEAR_REGISTER_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        registerSuccessMessage: initialState.registerSuccessMessage
       };
 
     case CLEAR_SUCCESS_MESSAGE_TEMP:
