@@ -62,7 +62,8 @@ export default function loginReducers(state = initialState, action) {
         ...state,
         registerIsLoading: true,
         registerErrors: initialState.registerErrors,
-        registerIsSuccessfull: initialState.registerIsSuccessfull
+        registerIsSuccessfull: initialState.registerIsSuccessfull,
+        registerFailureMessage: initialState.registerFailureMessage
       };
     case REGISTER_SUCCESS:
       return {
@@ -75,13 +76,15 @@ export default function loginReducers(state = initialState, action) {
         ...state,
         registerIsLoading: initialState.registerIsLoading,
         registerErrors: action.response.data,
-        registerIsSuccessfull: action.response.ok
+        registerIsSuccessfull: action.response.ok,
+        registerFailureMessage: "Opsy.. Something went wrong!"
       };
 
     case CLEAR_REGISTER_FAILURE_MESSAGE:
       return {
         ...state,
-        registerErrors: initialState.registerErrors
+        registerErrors: initialState.registerErrors,
+        registerFailureMessage: initialState.registerFailureMessage
       };
 
     // LOGIN

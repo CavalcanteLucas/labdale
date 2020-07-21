@@ -32,15 +32,12 @@ export default function messagerReducers(state = initialState, action) {
     case LOGOUT_SUCCESS:
       return initialState;
 
-    case REGISTER_REQUEST:
-      return {
-        ...state
-      };
     case REGISTER_SUCCESS:
       return {
         ...state,
         messageList: [...state.messageList, "User successfully created!"]
       };
+
     case PASSWORD_RESET_CONFIRM_SUCCESS:
       return {
         ...state,
