@@ -6,7 +6,6 @@ import {
 import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_REQUEST,
   PASSWORD_RESET_CONFIRM_SUCCESS
 } from "../auth/actions";
 
