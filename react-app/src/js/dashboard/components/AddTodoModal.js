@@ -21,13 +21,13 @@ export class AddTodoModal extends React.Component {
     getTodos: PropTypes.func.isRequired,
     createTodoErrors: PropTypes.object,
     clearCreateTodoErrors: PropTypes.func.isRequired,
-    successMessage: PropTypes.string
+    createTodoIsSuccessfull: PropTypes.bool
   };
 
   static defaultProps = {
     history: undefined,
     createTodoErrors: null,
-    successMessage: ""
+    createTodoIsSuccessfull: null
   };
 
   constructor(props) {
@@ -40,9 +40,14 @@ export class AddTodoModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { history, todoListId, getTodos, successMessage } = this.props;
+    const {
+      history,
+      todoListId,
+      getTodos,
+      createTodoIsSuccessfull
+    } = this.props;
 
-    if (successMessage && !prevProps.successMessage) {
+    if (createTodoIsSuccessfull && !prevProps.createTodoIsSuccessfull) {
       getTodos(todoListId);
       this.handleCloseModal();
       history.push(`/todo-list/${todoListId}`);
@@ -129,8 +134,8 @@ export class AddTodoModal extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.todo.successMessage,
-  createTodoErrors: state.todo.createTodoErrors
+  createTodoErrors: state.todo.createTodoErrors,
+  createTodoIsSuccessfull: state.todo.createTodoIsSuccessfull
 });
 
 const mapDispatchToProps = dispatch => ({
