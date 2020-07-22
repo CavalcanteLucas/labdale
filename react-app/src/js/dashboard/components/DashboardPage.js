@@ -1,34 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 
 import ActionBar from "./ActionBar";
 import Messager from "../../messager/Messager";
 
-import { clearSuccessMessage } from "../../welcome/actions";
-
-export class DashboardPage extends React.Component {
+export default class DashboardPage extends React.Component {
   static propTypes = {
-    children: PropTypes.object,
-    successMessage: PropTypes.string,
-    failureMessage: PropTypes.string,
-    clearSuccessMessage: PropTypes.func.isRequired
+    children: PropTypes.object
   };
 
   static defaultProps = {
-    children: undefined,
-    successMessage: "",
-    failureMessage: ""
-  };
-
-  handleCloseSuccessMessage = () => {
-    const { clearSuccessMessage } = this.props;
-    clearSuccessMessage();
+    children: undefined
   };
 
   render() {
-    const { successMessage, failureMessage, children } = this.props;
+    const { children } = this.props;
     return (
       <div className="dashboard">
         <Container fluid>
@@ -38,18 +25,6 @@ export class DashboardPage extends React.Component {
             </Col>
 
             <Col xs={{ offset: 1, span: 7 }}>
-              {/* {failureMessage ? (
-                <Alert variant="danger">{failureMessage}</Alert>
-              ) : null}
-              {successMessage ? (
-                <Alert
-                  variant="success"
-                  onClose={this.handleCloseSuccessMessage}
-                  dismissible
-                >
-                  {successMessage}
-                </Alert>
-              ) : null} */}
               <Messager />
               <div className="dashboard__content">{children}</div>
             </Col>
@@ -59,14 +34,3 @@ export class DashboardPage extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  successMessage: state.messager.successMessage,
-  failureMessage: state.todo.failureMessage
-});
-
-const mapDispatchToProps = dispatch => ({
-  clearSuccessMessage: () => dispatch(clearSuccessMessage())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

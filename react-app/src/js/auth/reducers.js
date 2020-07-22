@@ -62,7 +62,7 @@ export default function loginReducers(state = initialState, action) {
         ...state,
         registerIsLoading: true,
         registerErrors: initialState.registerErrors,
-        registerIsSuccessfull: initialState.registerIsSuccessfull,
+        registerIsSuccessfull: initialState.registerIsSuccessfull
       };
     case REGISTER_SUCCESS:
       return {

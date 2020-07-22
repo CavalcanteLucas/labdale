@@ -103,7 +103,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   passwordReset: email => dispatch(passwordReset(email)),
-  clearPasswordResetErrors: () => dispatch(clearPasswordResetErrors()),
+  clearPasswordResetErrors: () => dispatch(clearPasswordResetErrors())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PasswordResetForm);

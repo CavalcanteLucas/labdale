@@ -1,17 +1,10 @@
 import React from "react";
 import { Nav } from "react-bootstrap";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
 
 import plusBtn from "../../../img/plus-btn.png";
 import AddTodoListModal from "./AddTodoListModal";
-import { clearSuccessMessage } from "../../messager/actions";
 
-export class AddTodoListActionBarItem extends React.Component {
-  static propTypes = {
-    clearSuccessMessage: PropTypes.func.isRequired
-  };
-
+export default class AddTodoListActionBarItem extends React.Component {
   constructor(props) {
     super(props);
 
@@ -23,8 +16,6 @@ export class AddTodoListActionBarItem extends React.Component {
   closeModal = () => this.setState({ modalIsOpen: false });
 
   openModal = () => {
-    const { clearSuccessMessage } = this.props;
-    clearSuccessMessage();
     this.setState({ modalIsOpen: true });
   };
 
@@ -45,9 +36,3 @@ export class AddTodoListActionBarItem extends React.Component {
     );
   }
 }
-
-const mapDispatchToProps = dispatch => ({
-  clearSuccessMessage: () => dispatch(clearSuccessMessage())
-});
-
-export default connect(null, mapDispatchToProps)(AddTodoListActionBarItem);

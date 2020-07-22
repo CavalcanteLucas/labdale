@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
 
 import { editTodoList, clearEditTodoListErrors } from "../actions";
-import { setSuccessMessage } from "../../messager/actions";
 import FormErrors from "../../FormErrors";
 
 export class EditTodoListModal extends React.Component {
@@ -101,16 +100,13 @@ export class EditTodoListModal extends React.Component {
 
 const mapStateToProps = state => ({
   editTodoListErrors: state.todo.editTodoListErrors,
-  successMessage: state.todo.successMessage,
   editTodoListIsSuccessfull: state.todo.editTodoListIsSuccessfull
 });
 
 const mapDispatchToProps = dispatch => ({
   editTodoList: (todoListId, newTitle) =>
     dispatch(editTodoList(todoListId, newTitle)),
-  clearEditTodoListErrors: () => dispatch(clearEditTodoListErrors()),
-  setSuccessMessage: successMessage =>
-    dispatch(setSuccessMessage(successMessage))
+  clearEditTodoListErrors: () => dispatch(clearEditTodoListErrors())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditTodoListModal);

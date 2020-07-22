@@ -5,32 +5,14 @@ import { connect } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
 
 import { deleteTodoList } from "../actions";
-import { setSuccessMessage } from "../../messager/actions";
 
 export class DeleteTodoListModal extends React.Component {
   static propTypes = {
     todoList: PropTypes.object.isRequired,
     deleteTodoList: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
-    show: PropTypes.bool.isRequired,
-    history: PropTypes.shape({
-      push: PropTypes.func
-    }),
-    deleteTodoListIsSuccessfull: PropTypes.bool
+    show: PropTypes.bool.isRequired
   };
-
-  static defaultProps = {
-    history: undefined,
-    deleteTodoListIsSuccessfull: null
-  };
-
-  componentDidUpdate(prevProps) {
-    const { history, deleteTodoListIsSuccessfull } = this.props;
-    if (deleteTodoListIsSuccessfull && !prevProps.deleteTodoListIsSuccessfull) {
-      this.handleCloseModal();
-      history.push("/dashboard");
-    }
-  }
 
   handleCloseModal = () => {
     const { onHide } = this.props;
@@ -69,18 +51,11 @@ export class DeleteTodoListModal extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  successMessage: state.todo.successMessage,
-  deleteTodoListIsSuccessfull: state.todo.deleteTodoListIsSuccessfull
-});
-
 const mapDispatchToProps = dispatch => ({
-  deleteTodoList: todoListId => dispatch(deleteTodoList(todoListId)),
-  setSuccessMessage: successMessage =>
-    dispatch(setSuccessMessage(successMessage))
+  deleteTodoList: todoListId => dispatch(deleteTodoList(todoListId))
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(withRouter(DeleteTodoListModal));

@@ -43,8 +43,6 @@ const initialState = {
   deleteTodoListIsLoading: false,
   deleteTodoListErrors: null,
   deleteTodoListIsSuccessfull: null,
-  successMessage: null,
-  failureMessage: null,
   // TODO
   todos: null,
   getTodosIsLoading: false,
@@ -63,7 +61,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodoListsIsLoading: true,
-        failureMessage: initialState.failureMessage,
         todoLists: initialState.todoLists
       };
     case GET_TODO_LISTS_SUCCESS:
@@ -75,9 +72,7 @@ export function todoReducers(state = initialState, action) {
     case GET_TODO_LISTS_FAILURE:
       return {
         ...state,
-        getTodoListsIsLoading: initialState.getTodoListsIsLoading,
-        failureMessage:
-          "Opsy.. Something went wrong. We couldn't retrieve your To-Do lists from the database!"
+        getTodoListsIsLoading: initialState.getTodoListsIsLoading
       };
 
     // GET_TODO_LIST
@@ -85,7 +80,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodoListIsLoading: true,
-        failureMessage: initialState.failureMessage,
         todoListDetail: initialState.todoListDetail
       };
     case GET_TODO_LIST_SUCCESS:
@@ -97,9 +91,7 @@ export function todoReducers(state = initialState, action) {
     case GET_TODO_LIST_FAILURE:
       return {
         ...state,
-        getTodoListIsLoading: initialState.getTodoListIsLoading,
-        failureMessage:
-          "Opsy.. Something went wrong. We couldn't retrieve the selected To-Do List from the database!"
+        getTodoListIsLoading: initialState.getTodoListIsLoading
       };
 
     // CREATE_TODO_LIST
@@ -169,6 +161,7 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         todoLists: todoListsAfterDelete,
+        todoListDetail: initialState.todoListDetail,
         deleteTodoListIsLoading: initialState.deleteTodoListIsLoading,
         deleteTodoListIsSuccessfull: action.response.ok
       };
@@ -197,7 +190,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodosIsLoading: true,
-        failureMessage: initialState.failureMessage,
         todos: initialState.todoLists
       };
     case GET_TODOS_SUCCESS:
@@ -209,9 +201,7 @@ export function todoReducers(state = initialState, action) {
     case GET_TODOS_FAILURE:
       return {
         ...state,
-        getTodosIsLoading: initialState.getTodosIsLoading,
-        failureMessage:
-          "Opsy.. Something went wrong. We couldn't retrieve your To-Dos from the database!"
+        getTodosIsLoading: initialState.getTodosIsLoading
       };
     // CREATE_TODO
     case CREATE_TODO_REQUEST:
