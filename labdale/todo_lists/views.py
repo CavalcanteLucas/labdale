@@ -13,7 +13,7 @@ class IsTodoListOwner(permissions.BasePermission):
 
 class IsTodoOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        return obj["todo_list"].owner == request.user
+        return obj.todo_list.owner == request.user
 
 
 class TodoListAPIView(generics.ListCreateAPIView):
@@ -54,8 +54,13 @@ class TodoAPIView(generics.ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.check_object_permissions(request, serializer.validated_data)
+        assert serializer.is_valid(raise_exception=True)
+        new_todo = Todo(
+            title=serializer.validated_data["title"],
+            deadline=serializer.validated_data["deadline"],
+            todo_list=serializer.validated_data["todo_list"]
+        )
+        self.check_object_permissions(request, new_todo)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.validated_data)
         return Response(
