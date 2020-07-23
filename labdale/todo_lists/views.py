@@ -58,3 +58,11 @@ class TodoAPIView(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         request.data["todo_list"] = self.get_todo_list().id
         return self.create(request, *args, **kwargs)
+
+class TodoDetailAPIView(generics.RetrieveUpdateAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+    permission_classes = [permissions.IsAuthenticated & IsTodoOwner]
+
+    def put(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
