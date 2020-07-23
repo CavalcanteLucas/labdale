@@ -158,10 +158,9 @@ class TodoTests(TestCase):
             path=url, content_type="application/json", **headers
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-        self.assertEqual(3, len(response.data))
+        self.assertEqual(2, len(response.data))
         self.assertEqual("required", response.data["title"][0].code)
         self.assertEqual("required", response.data["deadline"][0].code)
-        self.assertEqual("required", response.data["todo_list"][0].code)
 
     def test_create_todo_for_a_todo_list(self):
         # Create user

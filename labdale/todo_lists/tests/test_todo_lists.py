@@ -225,26 +225,6 @@ class TodoListTests(TestCase):
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
         self.assertEqual(todo_list_title, TodoList.objects.get().title)
 
-    def test_edit_todo_list_requires_data(self):
-        # Create user
-        user = baker.make("User")
-        self.assertEqual(1, User.objects.count())
-
-        # Create todo list
-        baker.make("TodoList", owner=user)
-        self.assertEqual(1, TodoList.objects.count())
-
-        # Authenticate user
-        token, created = Token.objects.get_or_create(user=user)
-        self.assertTrue(created)
-        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
-
-        # Attempt to edit todo list title, should fail with 400
-        url = reverse("todo_lists:todo_list_detail", kwargs={"pk": 1})
-        response = self.client.put(path=url, content_type="application/json", **headers)
-        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-        self.assertEqual("required", response.data["title"][0].code)
-
     def test_edit_todo_list_title(self):
         # Create user
         user = baker.make("User")
