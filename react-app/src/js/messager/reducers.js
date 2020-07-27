@@ -9,7 +9,8 @@ import {
   CREATE_TODO_LIST_SUCCESS,
   EDIT_TODO_LIST_SUCCESS,
   DELETE_TODO_LIST_SUCCESS,
-  CREATE_TODO_SUCCESS
+  CREATE_TODO_SUCCESS,
+  EDIT_TODO_SUCCESS
 } from "../dashboard/actions";
 
 const initialState = {
@@ -63,6 +64,11 @@ export default function messagerReducers(state = initialState, action) {
     case CREATE_TODO_SUCCESS:
       return {
         messageList: [...state.messageList, "Todo created successfully."]
+      };
+
+    case EDIT_TODO_SUCCESS:
+      return {
+        messageList: [...state.messageList, "Todo changed successfully."]
       };
 
     default:

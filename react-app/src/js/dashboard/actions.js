@@ -41,6 +41,11 @@ export const CREATE_TODO_REQUEST = "CREATE_TODO_REQUEST";
 export const CREATE_TODO_SUCCESS = "CREATE_TODO_SUCCESS";
 export const CREATE_TODO_FAILURE = "CREATE_TODO_FAILURE";
 export const CLEAR_CREATE_TODO_ERRORS = "CLEAR_CREATE_TODO_ERRORS";
+// UPDATE
+export const EDIT_TODO_REQUEST = "EDIT_TODO_REQUEST";
+export const EDIT_TODO_SUCCESS = "EDIT_TODO_SUCCESS";
+export const EDIT_TODO_FAILURE = "EDIT_TODO_FAILURE";
+export const CLEAR_EDIT_TODO_ERRORS = "CLEAR_EDIT_TODO_ERRORS";
 
 // ----
 // ACTIONS
@@ -201,4 +206,34 @@ export const createTodo = (todoListId, todoTitle, todoDeadline) => {
 
 export const clearCreateTodoErrors = () => ({
   type: CLEAR_CREATE_TODO_ERRORS
+});
+
+// UPDATE
+export const editTodo = (todoListId, todoId, newTitle, newDeadline) => {
+  const requestData = {
+    method: "PUT",
+    headers: {
+      authorization: `Token ${localStorage.token}`
+    },
+    body: JSON.stringify({
+      title: newTitle,
+      deadline: moment(newDeadline).format()
+    })
+  };
+  return {
+    types: {
+      request: EDIT_TODO_REQUEST,
+      success: EDIT_TODO_SUCCESS,
+      failure: EDIT_TODO_FAILURE
+    },
+    apiCallFunction: () =>
+      fetchFromApi(
+        `/api/todo-lists/${todoListId}/todos/${todoId}/`,
+        requestData
+      )
+  };
+};
+
+export const clearEditTodoErrors = () => ({
+  type: CLEAR_EDIT_TODO_ERRORS
 });

@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { ListGroup } from "react-bootstrap";
-import { isEmpty as _isEmpty } from "lodash";
 
 import { getTodos } from "../actions";
+
+import TodoItem from "./TodoItem";
 
 export class Todos extends React.Component {
   static propTypes = {
@@ -25,18 +26,13 @@ export class Todos extends React.Component {
   render() {
     const { todos } = this.props;
 
-    return !_isEmpty(todos) ? (
+    return (
       <ListGroup variant="flush">
         {todos.map(todo => (
-          <ListGroup.Item key={`a${todo.id}`} action>
-            <p>
-              <strong>{todo.title} - </strong>
-              <strong>{todo.id}</strong>
-            </p>
-          </ListGroup.Item>
+          <TodoItem todo={todo} key={`Todo: ${todo.id}`} />
         ))}
       </ListGroup>
-    ) : null;
+    );
   }
 }
 
