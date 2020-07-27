@@ -185,8 +185,7 @@ export const createTodo = (todoListId, todoTitle, todoDeadline) => {
     },
     body: JSON.stringify({
       title: todoTitle,
-      deadline: moment(todoDeadline).format(),
-      todo_list: todoListId
+      deadline: moment(todoDeadline).format()
     })
   };
   return {

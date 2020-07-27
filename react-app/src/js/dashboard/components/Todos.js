@@ -14,7 +14,7 @@ export class Todos extends React.Component {
   };
 
   static defaultProps = {
-    todos: null
+    todos: []
   };
 
   componentDidMount() {
