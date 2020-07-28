@@ -196,7 +196,7 @@ class TodoListTests(TestCase):
         sample = {"title": "This is a new title for the To-Do List"}
         url = reverse("todo_lists:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(
-            path=url, content_type="application/json", data=sample,
+            path=url, content_type="application/json", data=sample
         )
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
@@ -225,7 +225,7 @@ class TodoListTests(TestCase):
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
         self.assertEqual(todo_list_title, TodoList.objects.get().title)
 
-    def test_edit_todo_list_title(self):
+    def test_edit_todo_list(self):
         # Create user
         user = baker.make("User")
         self.assertEqual(1, User.objects.count())
@@ -239,7 +239,7 @@ class TodoListTests(TestCase):
         self.assertTrue(created)
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
-        # Edit todo list title successfully
+        # Edit todo list successfully
         sample = TodoListSerializer(baker.prepare("TodoList"))
         url = reverse("todo_lists:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(
