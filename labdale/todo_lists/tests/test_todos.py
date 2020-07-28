@@ -160,10 +160,9 @@ class TodoTests(TestCase):
             path=url, content_type="application/json", **headers
         )
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-        self.assertEqual(3, len(response.data))
+        self.assertEqual(2, len(response.data))
         self.assertEqual("required", response.data["title"][0].code)
         self.assertEqual("required", response.data["deadline"][0].code)
-        self.assertEqual("required", response.data["todo_list"][0].code)
 
     def test_create_todo_for_a_todo_list(self):
         # Create user
@@ -248,19 +247,36 @@ class TodoTests(TestCase):
 
         # Test privacy among todo lists
         ##
+        # Authenticate 'user_1'
+        token, created = Token.objects.get_or_create(user=user_1)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Attempt to edit todo as 'user_1', should fail with 404
         sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list_1))
         url = reverse("todo_lists:todo_detail", kwargs={"todo_list": todo_list_2.id, "pk": todo.id})
         response = self.client.put(
             path=url, content_type="application/json", data=sample.data, **headers
         )
-        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+        self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
-        sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list_2))
+        # Attempt to edit todo's todo_list, should return unchanged todo
+        sample = {"todo_list": 2}
         url = reverse("todo_lists:todo_detail", kwargs={"todo_list": todo_list_1.id, "pk": todo.id})
         response = self.client.put(
-            path=url, content_type="application/json", data=sample.data, **headers
+            path=url, content_type="application/json", data=sample, **headers
         )
-        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(todo_list_1.id, response.data["todo_list"])
+
+        # Attempt to edit todo from unexistent todo_list, should return unchanged todo
+        sample = {"todo_list": 2}
+        sample_todo_list_id = 123
+        url = reverse("todo_lists:todo_detail", kwargs={"todo_list": sample_todo_list_id, "pk": todo.id})
+        response = self.client.put(
+            path=url, content_type="application/json", data=sample, **headers
+        )
+        self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
     def test_edit_todo(self):
         # Create user

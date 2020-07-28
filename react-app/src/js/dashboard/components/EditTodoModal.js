@@ -42,7 +42,6 @@ export class EditTodoModal extends React.Component {
 
   handleCloseModal = () => {
     const { clearEditTodoErrors, onHide } = this.props;
-    this.setState({ newTitle: "" });
     clearEditTodoErrors();
     onHide();
   };
@@ -61,7 +60,7 @@ export class EditTodoModal extends React.Component {
 
   render() {
     const { newTitle, newDeadline } = this.state;
-    const { show, editTodoErrors, todo } = this.props;
+    const { show, editTodoErrors } = this.props;
 
     return (
       <Modal show={show} onHide={this.handleCloseModal}>

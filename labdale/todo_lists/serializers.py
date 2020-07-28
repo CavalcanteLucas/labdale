@@ -33,6 +33,5 @@ class TodoSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         instance.title = validated_data.get("title", instance.title)
         instance.deadline = validated_data.get("deadline", instance.deadline)
-        instance.todo_list = validated_data.get("todo_list", instance.todo_list)
         instance.save()
         return instance
