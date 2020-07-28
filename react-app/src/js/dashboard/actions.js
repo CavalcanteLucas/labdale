@@ -46,6 +46,10 @@ export const EDIT_TODO_REQUEST = "EDIT_TODO_REQUEST";
 export const EDIT_TODO_SUCCESS = "EDIT_TODO_SUCCESS";
 export const EDIT_TODO_FAILURE = "EDIT_TODO_FAILURE";
 export const CLEAR_EDIT_TODO_ERRORS = "CLEAR_EDIT_TODO_ERRORS";
+// DESTROY
+export const DELETE_TODO_REQUEST = "DELETE_TODO_REQUEST";
+export const DELETE_TODO_SUCCESS = "DELETE_TODO_SUCCESS";
+export const DELETE_TODO_FAILURE = "DELETE_TODO_FAILURE";
 
 // ----
 // ACTIONS
@@ -237,3 +241,28 @@ export const editTodo = (todoListId, todoId, newTitle, newDeadline) => {
 export const clearEditTodoErrors = () => ({
   type: CLEAR_EDIT_TODO_ERRORS
 });
+
+// DESTROY
+export const deleteTodo = (todoListId, todoId) => {
+  const requestData = {
+    method: "DELETE",
+    headers: {
+      authorization: `Token ${localStorage.token}`
+    }
+  };
+  return {
+    types: {
+      request: DELETE_TODO_REQUEST,
+      success: DELETE_TODO_SUCCESS,
+      failure: DELETE_TODO_FAILURE
+    },
+    extraData: {
+      todoId
+    },
+    apiCallFunction: () =>
+      fetchFromApi(
+        `/api/todo-lists/${todoListId}/todos/${todoId}/`,
+        requestData
+      )
+  };
+};
