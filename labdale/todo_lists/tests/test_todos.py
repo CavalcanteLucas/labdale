@@ -209,7 +209,9 @@ class TodoTests(TestCase):
 
         # Edit todo successfully
         sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list))
-        url = reverse("todo_lists:todo_detail", kwargs={"todo_list": todo_list.id, "pk": todo.id})
+        url = reverse(
+            "todo_lists:todo_detail", kwargs={"todo_list": todo_list.id, "pk": todo.id}
+        )
         response = self.client.put(
             path=url, content_type="application/json", data=sample.data
         )
@@ -239,7 +241,10 @@ class TodoTests(TestCase):
 
         # Attempt to edit todo as 'user_1', should fail with 403
         sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list_1))
-        url = reverse("todo_lists:todo_detail", kwargs={"todo_list": todo_list_1.id, "pk": todo.id})
+        url = reverse(
+            "todo_lists:todo_detail",
+            kwargs={"todo_list": todo_list_1.id, "pk": todo.id},
+        )
         response = self.client.put(
             path=url, content_type="application/json", data=sample.data, **headers
         )
@@ -254,7 +259,10 @@ class TodoTests(TestCase):
 
         # Attempt to edit todo as 'user_1', should fail with 404
         sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list_1))
-        url = reverse("todo_lists:todo_detail", kwargs={"todo_list": todo_list_2.id, "pk": todo.id})
+        url = reverse(
+            "todo_lists:todo_detail",
+            kwargs={"todo_list": todo_list_2.id, "pk": todo.id},
+        )
         response = self.client.put(
             path=url, content_type="application/json", data=sample.data, **headers
         )
@@ -262,7 +270,10 @@ class TodoTests(TestCase):
 
         # Attempt to edit todo's todo_list, should return unchanged todo
         sample = {"todo_list": 2}
-        url = reverse("todo_lists:todo_detail", kwargs={"todo_list": todo_list_1.id, "pk": todo.id})
+        url = reverse(
+            "todo_lists:todo_detail",
+            kwargs={"todo_list": todo_list_1.id, "pk": todo.id},
+        )
         response = self.client.put(
             path=url, content_type="application/json", data=sample, **headers
         )
@@ -272,7 +283,10 @@ class TodoTests(TestCase):
         # Attempt to edit todo from unexistent todo_list, should return unchanged todo
         sample = {"todo_list": 2}
         sample_todo_list_id = 123
-        url = reverse("todo_lists:todo_detail", kwargs={"todo_list": sample_todo_list_id, "pk": todo.id})
+        url = reverse(
+            "todo_lists:todo_detail",
+            kwargs={"todo_list": sample_todo_list_id, "pk": todo.id},
+        )
         response = self.client.put(
             path=url, content_type="application/json", data=sample, **headers
         )
@@ -298,7 +312,9 @@ class TodoTests(TestCase):
 
         # Edit todo successfully
         sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list))
-        url = reverse("todo_lists:todo_detail", kwargs={"todo_list": todo_list.id, "pk": todo.id})
+        url = reverse(
+            "todo_lists:todo_detail", kwargs={"todo_list": todo_list.id, "pk": todo.id}
+        )
         response = self.client.put(
             path=url, content_type="application/json", data=sample.data, **headers
         )
@@ -308,4 +324,6 @@ class TodoTests(TestCase):
         self.assertEqual(sample.data["todo_list"], response.data["todo_list"])
         self.assertEqual(sample.data["title"], Todo.objects.get().title)
         self.assertEqual(sample.data["todo_list"], Todo.objects.get().todo_list.id)
-        self.assertEqual(parser.isoparse(sample.data["deadline"]), Todo.objects.get().deadline)
+        self.assertEqual(
+            parser.isoparse(sample.data["deadline"]), Todo.objects.get().deadline
+        )

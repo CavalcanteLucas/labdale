@@ -10,9 +10,11 @@ class IsTodoListOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.owner == request.user
 
+
 class IsTodoOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.todo_list.owner == request.user
+
 
 class TodoListAPIView(generics.ListCreateAPIView):
     serializer_class = TodoListSerializer
@@ -54,6 +56,7 @@ class TodoAPIView(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         request.data["todo_list"] = self.get_todo_list().id
         return self.create(request, *args, **kwargs)
+
 
 class TodoDetailAPIView(generics.UpdateAPIView):
     serializer_class = TodoSerializer
