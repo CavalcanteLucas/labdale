@@ -5,12 +5,7 @@ import { connect } from "react-redux";
 import { Button, Modal, Form } from "react-bootstrap";
 import moment from "moment";
 
-import {
-  createTodo,
-  getTodos,
-  clearCreateTodoSuccessMessage,
-  clearCreateTodoErrors
-} from "../actions";
+import { createTodo, getTodos, clearCreateTodoErrors } from "../actions";
 
 import FormErrors from "../../FormErrors";
 
@@ -20,20 +15,19 @@ export class AddTodoModal extends React.Component {
     todoListId: PropTypes.number.isRequired,
     onHide: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,
-    createTodoSuccessMessage: PropTypes.string,
     history: PropTypes.shape({
       push: PropTypes.func
     }),
     getTodos: PropTypes.func.isRequired,
-    clearCreateTodoSuccessMessage: PropTypes.func.isRequired,
     createTodoErrors: PropTypes.object,
-    clearCreateTodoErrors: PropTypes.func.isRequired
+    clearCreateTodoErrors: PropTypes.func.isRequired,
+    createTodoIsSuccessfull: PropTypes.bool
   };
 
   static defaultProps = {
     history: undefined,
-    createTodoSuccessMessage: "",
-    createTodoErrors: null
+    createTodoErrors: null,
+    createTodoIsSuccessfull: null
   };
 
   constructor(props) {
@@ -48,16 +42,14 @@ export class AddTodoModal extends React.Component {
   componentDidUpdate(prevProps) {
     const {
       history,
-      createTodoSuccessMessage,
       todoListId,
       getTodos,
-      clearCreateTodoSuccessMessage
+      createTodoIsSuccessfull
     } = this.props;
 
-    if (createTodoSuccessMessage && !prevProps.createTodoSuccessMessage) {
+    if (createTodoIsSuccessfull && !prevProps.createTodoIsSuccessfull) {
       getTodos(todoListId);
       this.handleCloseModal();
-      clearCreateTodoSuccessMessage();
       history.push(`/todo-list/${todoListId}`);
     }
   }
@@ -142,16 +134,14 @@ export class AddTodoModal extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  createTodoSuccessMessage: state.todo.createTodoSuccessMessage,
-  createTodoErrors: state.todo.createTodoErrors
+  createTodoErrors: state.todo.createTodoErrors,
+  createTodoIsSuccessfull: state.todo.createTodoIsSuccessfull
 });
 
 const mapDispatchToProps = dispatch => ({
   createTodo: (todoListId, todoTitle, todoDeadline) =>
     dispatch(createTodo(todoListId, todoTitle, todoDeadline)),
   getTodos: todoListId => dispatch(getTodos(todoListId)),
-  clearCreateTodoSuccessMessage: () =>
-    dispatch(clearCreateTodoSuccessMessage()),
   clearCreateTodoErrors: () => dispatch(clearCreateTodoErrors())
 });
 

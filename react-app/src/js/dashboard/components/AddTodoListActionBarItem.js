@@ -15,7 +15,9 @@ export default class AddTodoListActionBarItem extends React.Component {
 
   closeModal = () => this.setState({ modalIsOpen: false });
 
-  openModal = () => this.setState({ modalIsOpen: true });
+  openModal = () => {
+    this.setState({ modalIsOpen: true });
+  };
 
   render() {
     const { modalIsOpen } = this.state;

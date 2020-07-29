@@ -5,11 +5,9 @@ import { connect } from "react-redux";
 
 import {
   passwordResetConfirm,
-  clearPasswordResetConfirmErrors,
-  clearPasswordResetConfirmSuccessMessage
+  clearPasswordResetConfirmErrors
 } from "../actions";
 import FormErrors from "../../FormErrors";
-import { setSuccessMessage } from "../../welcome/actions";
 
 export class PasswordResetConfirmForm extends React.Component {
   state = {
@@ -20,34 +18,25 @@ export class PasswordResetConfirmForm extends React.Component {
   static propTypes = {
     passwordResetConfirm: PropTypes.func.isRequired,
     history: PropTypes.object,
-    passwordResetConfirmSuccessMessage: PropTypes.string,
+    passwordResetConfirmIsSuccessfull: PropTypes.bool,
     passwordResetConfirmErrors: PropTypes.object,
     match: PropTypes.object.isRequired,
-    clearPasswordResetConfirmErrors: PropTypes.func.isRequired,
-    clearPasswordResetConfirmSuccessMessage: PropTypes.func.isRequired,
-    setSuccessMessage: PropTypes.func.isRequired
+    clearPasswordResetConfirmErrors: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     history: null,
-    passwordResetConfirmSuccessMessage: null,
+    passwordResetConfirmIsSuccessfull: null,
     passwordResetConfirmErrors: null
   };
 
-  componentDidMount() {
-    const { clearPasswordResetConfirmSuccessMessage } = this.props;
-    clearPasswordResetConfirmSuccessMessage();
-  }
+  componentDidUpdate(prevProps) {
+    const { passwordResetConfirmIsSuccessfull, history } = this.props;
 
-  componentDidUpdate() {
-    const {
-      passwordResetConfirmSuccessMessage,
-      setSuccessMessage,
-      history
-    } = this.props;
-
-    if (passwordResetConfirmSuccessMessage) {
-      setSuccessMessage(passwordResetConfirmSuccessMessage);
+    if (
+      passwordResetConfirmIsSuccessfull &&
+      !prevProps.passwordResetConfirmIsSuccessfull
+    ) {
       history.push("/");
     }
   }
@@ -130,8 +119,8 @@ export class PasswordResetConfirmForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  passwordResetConfirmSuccessMessage:
-    state.auth.passwordResetConfirmSuccessMessage,
+  passwordResetConfirmIsSuccessfull:
+    state.auth.passwordResetConfirmIsSuccessfull,
   passwordResetConfirmErrors: state.auth.passwordResetConfirmErrors
 });
 
@@ -139,11 +128,7 @@ const mapDispatchToProps = dispatch => ({
   passwordResetConfirm: (uid, token, password1, password2) =>
     dispatch(passwordResetConfirm(uid, token, password1, password2)),
   clearPasswordResetConfirmErrors: () =>
-    dispatch(clearPasswordResetConfirmErrors()),
-  clearPasswordResetConfirmSuccessMessage: () =>
-    dispatch(clearPasswordResetConfirmSuccessMessage()),
-  setSuccessMessage: successMessage =>
-    dispatch(setSuccessMessage(successMessage))
+    dispatch(clearPasswordResetConfirmErrors())
 });
 
 export default connect(

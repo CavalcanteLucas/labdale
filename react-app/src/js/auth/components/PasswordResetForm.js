@@ -3,11 +3,7 @@ import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import {
-  passwordReset,
-  clearPasswordResetErrors,
-  clearPasswordResetSuccessMessage
-} from "../actions";
+import { passwordReset, clearPasswordResetErrors } from "../actions";
 import FormErrors from "../../FormErrors";
 
 export class PasswordResetForm extends React.Component {
@@ -18,26 +14,20 @@ export class PasswordResetForm extends React.Component {
   static propTypes = {
     passwordReset: PropTypes.func.isRequired,
     history: PropTypes.object,
-    passwordResetSuccessMessage: PropTypes.string,
+    passwordResetIsSuccessfull: PropTypes.bool,
     passwordResetErrors: PropTypes.object,
-    clearPasswordResetErrors: PropTypes.func.isRequired,
-    clearPasswordResetSuccessMessage: PropTypes.func.isRequired
+    clearPasswordResetErrors: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     history: null,
-    passwordResetSuccessMessage: null,
+    passwordResetIsSuccessfull: false,
     passwordResetErrors: null
   };
 
-  componentDidMount() {
-    const { clearPasswordResetSuccessMessage } = this.props;
-    clearPasswordResetSuccessMessage();
-  }
-
-  componentDidUpdate() {
-    const { passwordResetSuccessMessage, history } = this.props;
-    if (passwordResetSuccessMessage) {
+  componentDidUpdate(prevProps) {
+    const { passwordResetIsSuccessfull, history } = this.props;
+    if (passwordResetIsSuccessfull && !prevProps.passwordResetIsSuccessfull) {
       history.push("/password_reset/confirm");
     }
   }
@@ -107,15 +97,13 @@ export class PasswordResetForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  passwordResetSuccessMessage: state.auth.passwordResetSuccessMessage,
+  passwordResetIsSuccessfull: state.auth.passwordResetIsSuccessfull,
   passwordResetErrors: state.auth.passwordResetErrors
 });
 
 const mapDispatchToProps = dispatch => ({
   passwordReset: email => dispatch(passwordReset(email)),
-  clearPasswordResetErrors: () => dispatch(clearPasswordResetErrors()),
-  clearPasswordResetSuccessMessage: () =>
-    dispatch(clearPasswordResetSuccessMessage())
+  clearPasswordResetErrors: () => dispatch(clearPasswordResetErrors())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PasswordResetForm);

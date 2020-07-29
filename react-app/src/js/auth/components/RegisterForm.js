@@ -3,12 +3,7 @@ import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import {
-  register,
-  clearRegisterFailureMessage,
-  clearRegisterSuccessMessage
-} from "../actions";
-import { setSuccessMessage } from "../../welcome/actions";
+import { register, clearRegisterErrors } from "../actions";
 import FormErrors from "../../FormErrors";
 
 export class RegisterForm extends React.Component {
@@ -21,36 +16,28 @@ export class RegisterForm extends React.Component {
 
   static propTypes = {
     register: PropTypes.func.isRequired,
+    clearRegisterErrors: PropTypes.func.isRequired,
     history: PropTypes.object,
-    successMessage: PropTypes.string,
     registerErrors: PropTypes.object,
-    clearRegisterFailureMessage: PropTypes.func.isRequired,
-    clearRegisterSuccessMessage: PropTypes.func.isRequired,
-    setSuccessMessage: PropTypes.func.isRequired
+    registerIsSuccessfull: PropTypes.bool
   };
 
   static defaultProps = {
     history: null,
-    successMessage: null,
-    registerErrors: null
+    registerErrors: null,
+    registerIsSuccessfull: false
   };
 
-  componentDidMount() {
-    const { clearRegisterSuccessMessage } = this.props;
-    clearRegisterSuccessMessage();
-  }
-
-  componentDidUpdate() {
-    const { successMessage, setSuccessMessage, history } = this.props;
-    if (successMessage) {
-      setSuccessMessage(successMessage);
+  componentDidUpdate(prevProps) {
+    const { registerIsSuccessfull, history } = this.props;
+    if (registerIsSuccessfull && !prevProps.registerIsSuccessfull) {
       history.push("/");
     }
   }
 
   componentWillUnmount() {
-    const { clearRegisterFailureMessage } = this.props;
-    clearRegisterFailureMessage();
+    const { clearRegisterErrors } = this.props;
+    clearRegisterErrors();
   }
 
   onSubmit = e => {
@@ -141,17 +128,14 @@ export class RegisterForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  successMessage: state.auth.registerSuccessMessage,
+  registerIsSuccessfull: state.auth.registerIsSuccessfull,
   registerErrors: state.auth.registerErrors
 });
 
 const mapDispatchToProps = dispatch => ({
   register: (username, email, password1, password2) =>
     dispatch(register(username, email, password1, password2)),
-  clearRegisterFailureMessage: () => dispatch(clearRegisterFailureMessage()),
-  clearRegisterSuccessMessage: () => dispatch(clearRegisterSuccessMessage()),
-  setSuccessMessage: successMessage =>
-    dispatch(setSuccessMessage(successMessage))
+  clearRegisterErrors: () => dispatch(clearRegisterErrors())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

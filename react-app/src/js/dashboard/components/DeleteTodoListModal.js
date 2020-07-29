@@ -11,14 +11,7 @@ export class DeleteTodoListModal extends React.Component {
     todoList: PropTypes.object.isRequired,
     deleteTodoList: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
-    show: PropTypes.bool.isRequired,
-    history: PropTypes.shape({
-      push: PropTypes.func
-    })
-  };
-
-  static defaultProps = {
-    history: undefined
+    show: PropTypes.bool.isRequired
   };
 
   handleCloseModal = () => {
@@ -28,9 +21,8 @@ export class DeleteTodoListModal extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { history, todoList, deleteTodoList } = this.props;
+    const { todoList, deleteTodoList } = this.props;
     deleteTodoList(todoList.id);
-    history.push("/dashboard");
   };
 
   render() {
@@ -59,16 +51,11 @@ export class DeleteTodoListModal extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  editTodoListTitleErrors: state.todo.editTodoListTitleErrors,
-  editTodoListTitleSuccessMessage: state.todo.editTodoListTitleSuccessMessage
-});
-
 const mapDispatchToProps = dispatch => ({
   deleteTodoList: todoListId => dispatch(deleteTodoList(todoListId))
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(withRouter(DeleteTodoListModal));

@@ -3,8 +3,7 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-  CLEAR_REGISTER_SUCCESS_MESSAGE,
-  CLEAR_REGISTER_FAILURE_MESSAGE,
+  CLEAR_REGISTER_ERRORS,
   // LOGIN
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -17,13 +16,11 @@ import {
   PASSWORD_RESET_REQUEST,
   PASSWORD_RESET_SUCCESS,
   PASSWORD_RESET_FAILURE,
-  CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE,
   CLEAR_PASSWORD_RESET_ERRORS,
   // PASSWORD_RESET_CONFIRM
   PASSWORD_RESET_CONFIRM_REQUEST,
   PASSWORD_RESET_CONFIRM_SUCCESS,
   PASSWORD_RESET_CONFIRM_FAILURE,
-  CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE,
   CLEAR_PASSWORD_RESET_CONFIRM_ERRORS,
   // GET_USER_INFO
   GET_USER_INFO_REQUEST,
@@ -36,22 +33,21 @@ const initialState = {
   isAuthenticated: localStorage.getItem("token") ? true : false,
   // REGISTER
   registerIsLoading: false,
-  registerSuccessMessage: null,
   registerErrors: null,
+  registerIsSuccessfull: null,
   // LOGIN
   loginIsLoading: false,
-  loginSuccessMessage: null,
   loginErrors: null,
   // LOGOUT
   logoutIsLoading: false,
   // PASSWORD_RESET
   passwordResetIsLoading: false,
-  passwordResetSuccessMessage: null,
   passwordResetErrors: null,
+  passwordResetIsSuccessfull: null,
   // PASSWORD_RESET_CONFIRM
   passwordResetConfirmIsLoading: false,
-  passwordResetConfirmSuccessMessage: null,
   passwordResetConfirmErrors: null,
+  passwordResetConfirmIsSuccessFull: null,
   // USER_INFO
   getUserInfo: null,
   getUserInfoIsLoading: false,
@@ -65,27 +61,24 @@ export default function loginReducers(state = initialState, action) {
       return {
         ...state,
         registerIsLoading: true,
-        registerSuccessMessage: initialState.registerSuccessMessage,
-        registerErrors: initialState.registerErrors
+        registerErrors: initialState.registerErrors,
+        registerIsSuccessfull: initialState.registerIsSuccessfull
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
         registerIsLoading: initialState.registerIsLoading,
-        registerSuccessMessage: "User successfully created!"
+        registerIsSuccessfull: action.response.ok
       };
     case REGISTER_FAILURE:
       return {
         ...state,
         registerIsLoading: initialState.registerIsLoading,
-        registerErrors: action.response.data
+        registerErrors: action.response.data,
+        registerIsSuccessfull: action.response.ok
       };
-    case CLEAR_REGISTER_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        registerSuccessMessage: initialState.registerSuccessMessage
-      };
-    case CLEAR_REGISTER_FAILURE_MESSAGE:
+
+    case CLEAR_REGISTER_ERRORS:
       return {
         ...state,
         registerErrors: initialState.registerErrors
@@ -96,7 +89,6 @@ export default function loginReducers(state = initialState, action) {
       return {
         ...state,
         loginIsLoading: true,
-        loginSuccessMessage: initialState.loginSuccessMessage,
         loginErrors: initialState.loginErrors
       };
     case LOGIN_SUCCESS:
@@ -105,8 +97,7 @@ export default function loginReducers(state = initialState, action) {
         ...state,
         token: action.response.data.key,
         loginIsLoading: initialState.loginIsLoading,
-        loginSuccessMessage: "Logged in successfully.",
-        isAuthenticated: true
+        isAuthenticated: action.response.ok
       };
     case LOGIN_FAILURE:
       return {
@@ -137,26 +128,21 @@ export default function loginReducers(state = initialState, action) {
       return {
         ...state,
         passwordResetIsLoading: true,
-        passwordResetSuccessMessage: initialState.passwordResetSuccessMessage,
-        passwordResetErrors: initialState.passwordResetErrors
+        passwordResetErrors: initialState.passwordResetErrors,
+        passwordResetIsSuccessfull: initialState.passwordResetIsSuccessfull
       };
     case PASSWORD_RESET_SUCCESS:
       return {
         ...state,
         passwordResetIsLoading: initialState.passwordResetIsLoading,
-        passwordResetSuccessMessage:
-          "Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder."
+        passwordResetIsSuccessfull: action.response.ok
       };
     case PASSWORD_RESET_FAILURE:
       return {
         ...state,
         passwordResetIsLoading: initialState.passwordResetIsLoading,
-        passwordResetErrors: action.response.data
-      };
-    case CLEAR_PASSWORD_RESET_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        passwordResetSuccessMessage: initialState.passwordResetSuccessMessage
+        passwordResetErrors: action.response.data,
+        passwordResetIsSuccessfull: action.response.ok
       };
     case CLEAR_PASSWORD_RESET_ERRORS:
       return {
@@ -169,30 +155,24 @@ export default function loginReducers(state = initialState, action) {
       return {
         ...state,
         passwordResetConfirmIsLoading: true,
-        passwordResetConfirmSuccessMessage:
-          initialState.passwordResetConfirmSuccessMessage,
-        passwordResetConfirmErrors: initialState.passwordResetConfirmErrors
+        passwordResetConfirmErrors: initialState.passwordResetConfirmErrors,
+        passwordResetConfirmIsSuccessFull:
+          initialState.passwordResetConfirmIsSuccessFull
       };
     case PASSWORD_RESET_CONFIRM_SUCCESS:
       return {
         ...state,
         passwordResetConfirmIsLoading:
           initialState.passwordResetConfirmIsLoading,
-        passwordResetConfirmSuccessMessage:
-          "Your password has been successfully changed. Use your new credentials to login."
+        passwordResetConfirmIsSuccessfull: action.response.ok
       };
     case PASSWORD_RESET_CONFIRM_FAILURE:
       return {
         ...state,
         passwordResetConfirmIsLoading:
           initialState.passwordResetConfirmIsLoading,
-        passwordResetConfirmErrors: action.response.data
-      };
-    case CLEAR_PASSWORD_RESET_CONFIRM_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        passwordResetConfirmSuccessMessage:
-          initialState.passwordResetConfirmSuccessMessage
+        passwordResetConfirmErrors: action.response.data,
+        passwordResetConfirmIsSuccessfull: action.response.ok
       };
     case CLEAR_PASSWORD_RESET_CONFIRM_ERRORS:
       return {

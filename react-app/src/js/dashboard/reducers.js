@@ -9,17 +9,14 @@ import {
   CREATE_TODO_LIST_REQUEST,
   CREATE_TODO_LIST_SUCCESS,
   CREATE_TODO_LIST_FAILURE,
-  EDIT_TODO_LIST_TITLE_REQUEST,
-  EDIT_TODO_LIST_TITLE_SUCCESS,
-  EDIT_TODO_LIST_TITLE_FAILURE,
   CLEAR_CREATE_TODO_LIST_ERRORS,
-  CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE,
-  CLEAR_EDIT_TODO_LIST_TITLE_ERRORS,
-  CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE,
+  EDIT_TODO_LIST_REQUEST,
+  EDIT_TODO_LIST_SUCCESS,
+  EDIT_TODO_LIST_FAILURE,
+  CLEAR_EDIT_TODO_LIST_ERRORS,
   DELETE_TODO_LIST_REQUEST,
   DELETE_TODO_LIST_SUCCESS,
   DELETE_TODO_LIST_FAILURE,
-  CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE,
   // TODO
   GET_TODOS_REQUEST,
   GET_TODOS_SUCCESS,
@@ -27,7 +24,6 @@ import {
   CREATE_TODO_REQUEST,
   CREATE_TODO_SUCCESS,
   CREATE_TODO_FAILURE,
-  CLEAR_CREATE_TODO_SUCCESS_MESSAGE,
   CLEAR_CREATE_TODO_ERRORS
 } from "./actions";
 import { LOGOUT_SUCCESS } from "../auth/actions";
@@ -36,26 +32,23 @@ const initialState = {
   // TODOLIST
   todoLists: null,
   getTodoListsIsLoading: false,
-  getTodoListsFailureMessage: null,
   createTodoListIsLoading: false,
-  createTodoListSuccessMessage: null,
   createTodoListErrors: null,
+  createTodoListIsSuccessfull: null,
   todoListDetail: null,
   getTodoListIsLoading: false,
-  getTodoListFailureMessage: null,
-  editTodoListTitleIsLoading: false,
-  editTodoListTitleSuccessMessage: null,
-  editTodoListTitleErrors: null,
+  editTodoListIsLoading: false,
+  editTodoListErrors: null,
+  editTodoListIsSuccessfull: null,
   deleteTodoListIsLoading: false,
-  deleteTodoListSuccessMessage: null,
   deleteTodoListErrors: null,
+  deleteTodoListIsSuccessfull: null,
   // TODO
   todos: null,
   getTodosIsLoading: false,
-  getTodosFailureMessage: null,
   createTodoIsLoading: false,
-  createTodoSuccessMessage: null,
-  createTodoErrors: null
+  createTodoErrors: null,
+  createTodoIsSuccessfull: null
 };
 
 export function todoReducers(state = initialState, action) {
@@ -68,7 +61,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodoListsIsLoading: true,
-        getTodoListsFailureMessage: initialState.getTodoListsFailureMessage,
         todoLists: initialState.todoLists
       };
     case GET_TODO_LISTS_SUCCESS:
@@ -80,9 +72,7 @@ export function todoReducers(state = initialState, action) {
     case GET_TODO_LISTS_FAILURE:
       return {
         ...state,
-        getTodoListsIsLoading: initialState.getTodoListsIsLoading,
-        getTodoListsFailureMessage:
-          "Opsy.. Something went wrong. We couldn't retrieve your To-Do lists from the database!"
+        getTodoListsIsLoading: initialState.getTodoListsIsLoading
       };
 
     // GET_TODO_LIST
@@ -90,7 +80,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodoListIsLoading: true,
-        getTodoListFailureMessage: initialState.getTodoListFailureMessage,
         todoListDetail: initialState.todoListDetail
       };
     case GET_TODO_LIST_SUCCESS:
@@ -102,9 +91,7 @@ export function todoReducers(state = initialState, action) {
     case GET_TODO_LIST_FAILURE:
       return {
         ...state,
-        getTodoListIsLoading: initialState.getTodoListIsLoading,
-        getTodoListFailureMessage:
-          "Opsy.. Something went wrong. We couldn't retrieve the selected To-Do List from the database!"
+        getTodoListIsLoading: initialState.getTodoListIsLoading
       };
 
     // CREATE_TODO_LIST
@@ -112,8 +99,8 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         createTodoListIsLoading: true,
-        createTodoListSuccessMessage: initialState.createTodoListSuccessMessage,
-        createTodoListErrors: initialState.createTodoListErrors
+        createTodoListErrors: initialState.createTodoListErrors,
+        createTodoListIsSuccessfull: initialState.createTodoListIsSuccessfull
       };
     case CREATE_TODO_LIST_SUCCESS:
       return {
@@ -121,25 +108,25 @@ export function todoReducers(state = initialState, action) {
         todoLists: [action.response.data, ...state.todoLists],
         todoListDetail: action.response.data,
         createTodoListIsLoading: initialState.createTodoListIsLoading,
-        createTodoListSuccessMessage: "Todo List created successfully."
+        createTodoListIsSuccessfull: action.response.ok
       };
     case CREATE_TODO_LIST_FAILURE:
       return {
         ...state,
         createTodoListIsLoading: initialState.createTodoListIsLoading,
-        createTodoListErrors: action.response.data || [["Server Error"]]
+        createTodoListErrors: action.response.data || [["Server Error"]],
+        createTodoListIsSuccessfull: action.response.ok
       };
 
-    // EDIT_TODO_LIST_TITLE
-    case EDIT_TODO_LIST_TITLE_REQUEST:
+    // EDIT_TODO_LIST
+    case EDIT_TODO_LIST_REQUEST:
       return {
         ...state,
-        editTodoListTitleIsLoading: true,
-        editTodoListTitleSuccessMessage:
-          initialState.editTodoListTitleSuccessMessage,
-        editTodoListTitleErrors: initialState.editTodoListTitleErrors
+        editTodoListIsLoading: true,
+        editTodoListErrors: initialState.editTodoListErrors,
+        editTodoListIsSuccessfull: initialState.editTodoListIsSuccessfull
       };
-    case EDIT_TODO_LIST_TITLE_SUCCESS:
+    case EDIT_TODO_LIST_SUCCESS:
       const todoListDetail = action.response.data;
       const todoListsAfterEdit = state.todoLists.map(item => {
         if (item.id !== todoListDetail.id) return item;
@@ -149,15 +136,15 @@ export function todoReducers(state = initialState, action) {
         ...state,
         todoListDetail,
         todoLists: todoListsAfterEdit,
-        editTodoListTitleIsLoading: initialState.editTodoListTitleIsLoading,
-        editTodoListTitleSuccessMessage:
-          "Todo List's title changed successfully."
+        editTodoListIsLoading: initialState.editTodoListIsLoading,
+        editTodoListIsSuccessfull: action.response.ok
       };
-    case EDIT_TODO_LIST_TITLE_FAILURE:
+    case EDIT_TODO_LIST_FAILURE:
       return {
         ...state,
-        editTodoListTitleIsLoading: initialState.editTodoListTitleIsLoading,
-        editTodoListTitleErrors: action.response.data
+        editTodoListIsLoading: initialState.editTodoListIsLoading,
+        editTodoListErrors: action.response.data,
+        editTodoListIsSuccessfull: action.response.ok
       };
 
     // DELETE_TODO_LIST:
@@ -165,49 +152,34 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         deleteTodoListIsLoading: true,
-        deleteTodoListSuccessMessage: initialState.deleteTodoListSuccessMessage,
-        deleteTodoListErrors: initialState.deleteTodoListErrors
+        deleteTodoListErrors: initialState.deleteTodoListErrors,
+        deleteTodoListIsSuccessfull: initialState.deleteTodoListIsSuccessfull
       };
     case DELETE_TODO_LIST_SUCCESS:
+      const todoListsAfterDelete = [...state.todoLists];
+      todoListsAfterDelete.splice(action.extraData.todoListId, 1);
       return {
         ...state,
+        todoLists: todoListsAfterDelete,
         todoListDetail: initialState.todoListDetail,
         deleteTodoListIsLoading: initialState.deleteTodoListIsLoading,
-        deleteTodoListSuccessMessage: "Todo List deleted successfully."
+        deleteTodoListIsSuccessfull: action.response.ok
       };
     case DELETE_TODO_LIST_FAILURE:
       return {
         ...state,
-        deleteTodoListIsLoading: initialState.deleteTodoListIsLoading,
-        deleteTodoListFailureMessage: "Opsy.. Something went wrong. Try again!"
+        deleteTodoListIsLoading: action.response.ok
       };
 
-    // CLEAR ERRORS/SUCCESS MESSAGES
-    case CLEAR_CREATE_TODO_LIST_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        createTodoListSuccessMessage: initialState.createTodoListSuccessMessage
-      };
     case CLEAR_CREATE_TODO_LIST_ERRORS:
       return {
         ...state,
         createTodoListErrors: initialState.createTodoListErrors
       };
-    case CLEAR_EDIT_TODO_LIST_TITLE_SUCCESS_MESSAGE:
+    case CLEAR_EDIT_TODO_LIST_ERRORS:
       return {
         ...state,
-        editTodoListTitleSuccessMessage:
-          initialState.editTodoListTitleSuccessMessage
-      };
-    case CLEAR_EDIT_TODO_LIST_TITLE_ERRORS:
-      return {
-        ...state,
-        editTodoListTitleErrors: initialState.editTodoListTitleErrors
-      };
-    case CLEAR_DELETE_TODO_LIST_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        deleteTodoListSuccessMessage: initialState.deleteTodoListSuccessMessage
+        editTodoListErrors: initialState.editTodoListErrors
       };
 
     //
@@ -218,7 +190,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodosIsLoading: true,
-        getTodoListsFailureMessage: initialState.getTodoListsFailureMessage,
         todos: initialState.todoLists
       };
     case GET_TODOS_SUCCESS:
@@ -230,17 +201,15 @@ export function todoReducers(state = initialState, action) {
     case GET_TODOS_FAILURE:
       return {
         ...state,
-        getTodosIsLoading: initialState.getTodosIsLoading,
-        getTodosFailureMessage:
-          "Opsy.. Something went wrong. We couldn't retrieve your To-Dos from the database!"
+        getTodosIsLoading: initialState.getTodosIsLoading
       };
     // CREATE_TODO
     case CREATE_TODO_REQUEST:
       return {
         ...state,
         createTodoIsLoading: true,
-        createTodoSuccessMessage: initialState.createTodoSuccessMessage,
-        createTodoErrors: initialState.createTodoErrors
+        createTodoErrors: initialState.createTodoErrors,
+        createTodoIsSuccessfull: initialState.createTodoIsSuccessfull
       };
     case CREATE_TODO_SUCCESS:
       return {
@@ -248,19 +217,14 @@ export function todoReducers(state = initialState, action) {
         todos: [state.todos, action.response.data],
         todoDetail: action.response.data,
         createTodoIsLoading: initialState.createTodoIsLoading,
-        createTodoSuccessMessage: "Todo created successfully."
+        createTodoIsSuccessfull: action.response.ok
       };
     case CREATE_TODO_FAILURE:
       return {
         ...state,
         createTodoIsLoading: initialState.createTodoIsLoading,
-        createTodoErrors: action.response.data || [["Server Error"]]
-      };
-    // CLEAR ERRORS/SUCCESS MESSAGES
-    case CLEAR_CREATE_TODO_SUCCESS_MESSAGE:
-      return {
-        ...state,
-        createTodoSuccessMessage: initialState.createTodoSuccessMessage
+        createTodoErrors: action.response.data || [["Server Error"]],
+        createTodoIsSuccessfull: action.response.ok
       };
     case CLEAR_CREATE_TODO_ERRORS:
       return {

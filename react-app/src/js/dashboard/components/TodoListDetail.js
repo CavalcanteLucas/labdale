@@ -29,12 +29,14 @@ export class TodoListDetail extends React.Component {
     }),
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    deleteTodoListIsSuccessfull: PropTypes.bool
   };
 
   static defaultProps = {
     todoListDetail: null,
-    history: undefined
+    history: undefined,
+    deleteTodoListIsSuccessfull: null
   };
 
   constructor(props) {
@@ -53,17 +55,22 @@ export class TodoListDetail extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { match, location, getTodoList } = this.props;
+    const {
+      match,
+      location,
+      getTodoList,
+      history,
+      deleteTodoListIsSuccessfull
+    } = this.props;
     if (location.pathname !== prevProps.location.pathname) {
       getTodoList(match.params.id);
     }
+
+    if (deleteTodoListIsSuccessfull && !prevProps.deleteTodoListIsSuccessfull) {
+      this.closeDeleteTodoListModal();
+      history.push("/dashboard");
+    }
   }
-
-  closeEditTodoListModal = () =>
-    this.setState({ editTodoListModalIsOpen: false });
-
-  closeDeleteTodoListModal = () =>
-    this.setState({ deleteTodoListModalIsOpen: false });
 
   openEditTodoListModal = () =>
     this.setState({ editTodoListModalIsOpen: true });
@@ -71,9 +78,15 @@ export class TodoListDetail extends React.Component {
   openDeleteTodoListModal = () =>
     this.setState({ deleteTodoListModalIsOpen: true });
 
-  closeAddTodoModal = () => this.setState({ addTodoModalIsOpen: false });
+  closeEditTodoListModal = () =>
+    this.setState({ editTodoListModalIsOpen: false });
+
+  closeDeleteTodoListModal = () =>
+    this.setState({ deleteTodoListModalIsOpen: false });
 
   openAddTodoModal = () => this.setState({ addTodoModalIsOpen: true });
+
+  closeAddTodoModal = () => this.setState({ addTodoModalIsOpen: false });
 
   render() {
     const {
@@ -140,13 +153,12 @@ export class TodoListDetail extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  todoListDetail: state.todo.todoListDetail
+  todoListDetail: state.todo.todoListDetail,
+  deleteTodoListIsSuccessfull: state.todo.deleteTodoListIsSuccessfull
 });
 
 const mapDispatchToProps = dispatch => ({
-  getTodoList: todoListId => {
-    dispatch(getTodoList(todoListId));
-  }
+  getTodoList: todoListId => dispatch(getTodoList(todoListId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoListDetail);
