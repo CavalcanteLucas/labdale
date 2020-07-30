@@ -50,7 +50,11 @@ export class EditTodoModal extends React.Component {
     e.preventDefault();
     const { newTitle, newDeadline } = this.state;
     const { todo, editTodo } = this.props;
-    editTodo(todo.todo_list, todo.id, newTitle, newDeadline);
+
+    editTodo(todo.todo_list, todo.id, {
+      title: newTitle,
+      deadline: moment(newDeadline).format()
+    });
   };
 
   handleInputChange = e => {
@@ -114,8 +118,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  editTodo: (todoListId, todoId, newTitle, newDeadline) =>
-    dispatch(editTodo(todoListId, todoId, newTitle, newDeadline)),
+  editTodo: (todoListId, todoId, args) =>
+    dispatch(editTodo(todoListId, todoId, args)),
   clearEditTodoErrors: () => dispatch(clearEditTodoErrors())
 });
 

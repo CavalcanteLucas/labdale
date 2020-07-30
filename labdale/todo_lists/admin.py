@@ -17,6 +17,7 @@ class TodoAdmin(admin.ModelAdmin):
         "title",
         "deadline",
         "todo_list",
+        "is_done"
     ]
 
 

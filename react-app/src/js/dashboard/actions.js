@@ -213,16 +213,13 @@ export const clearCreateTodoErrors = () => ({
 });
 
 // UPDATE
-export const editTodo = (todoListId, todoId, newTitle, newDeadline) => {
+export const editTodo = (todoListId, todoId, ...args) => {
   const requestData = {
     method: "PUT",
     headers: {
       authorization: `Token ${localStorage.token}`
     },
-    body: JSON.stringify({
-      title: newTitle,
-      deadline: moment(newDeadline).format()
-    })
+    body: JSON.stringify({ ...args[0] })
   };
   return {
     types: {

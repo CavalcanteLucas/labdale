@@ -29,7 +29,7 @@ export class Messager extends React.Component {
             variant="success"
             onClose={() => this.handleCloseMessage(index)}
             dismissible
-            key={`Message: ${message.id}`}
+            key={`Message: ${message.id || index}`}
           >
             {message}
           </Alert>

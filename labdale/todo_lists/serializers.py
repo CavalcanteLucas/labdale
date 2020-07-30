@@ -26,6 +26,7 @@ class TodoSerializer(serializers.Serializer):
     title = serializers.CharField()
     deadline = serializers.DateTimeField()
     todo_list = serializers.PrimaryKeyRelatedField(queryset=TodoList.objects.all())
+    is_done = serializers.BooleanField()
 
     def create(self, validated_data):
         return Todo.objects.create(**validated_data)
@@ -33,5 +34,6 @@ class TodoSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         instance.title = validated_data.get("title", instance.title)
         instance.deadline = validated_data.get("deadline", instance.deadline)
+        instance.is_done = validated_data.get("is_done", instance.is_done)
         instance.save()
         return instance
