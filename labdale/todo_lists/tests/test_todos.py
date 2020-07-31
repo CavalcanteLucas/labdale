@@ -207,7 +207,7 @@ class TodoTests(TestCase):
         todo = baker.make("Todo", todo_list=todo_list)
         self.assertEqual(1, TodoList.objects.count())
 
-        # Edit todo successfully
+        # Attempt to edit todo, should fail with 401
         sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list))
         url = reverse(
             "todo_lists:todo_detail", kwargs={"todo_list": todo_list.id, "pk": todo.id}
@@ -280,7 +280,7 @@ class TodoTests(TestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(todo_list_1.id, response.data["todo_list"])
 
-        # Attempt to edit todo from unexistent todo_list, should return unchanged todo
+        # Attempt to edit todo from unexistent todo_list, should return 404
         sample = {"todo_list": 2}
         sample_todo_list_id = 123
         url = reverse(
@@ -327,3 +327,131 @@ class TodoTests(TestCase):
         self.assertEqual(
             parser.isoparse(sample.data["deadline"]), Todo.objects.get().deadline
         )
+
+    ##
+    # DESTROY
+    ##
+    def test_delete_todo_requires_authorization(self):
+        # Create user
+        user = baker.make("User")
+        self.assertEqual(1, User.objects.count())
+
+        # Create todo list
+        todo_list = baker.make("TodoList", owner=user)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Create todo
+        todo = baker.make("Todo", todo_list=todo_list)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Edit todo successfully
+        sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list))
+        url = reverse(
+            "todo_lists:todo_detail", kwargs={"todo_list": todo_list.id, "pk": todo.id}
+        )
+        response = self.client.delete(
+            path=url, content_type="application/json", data=sample.data
+        )
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
+    def test_delete_todo_is_private(self):
+       # Create two distinct users
+        user_1 = baker.make("User")
+        user_2 = baker.make("User")
+        self.assertEqual(2, User.objects.count())
+
+        # Create two todo lists with 'user_1' as owner
+        todo_list_1 = baker.make("TodoList", owner=user_1)
+        todo_list_2 = baker.make("TodoList", owner=user_1)
+        self.assertEqual(2, TodoList.objects.count())
+
+        # Create a todo for 'todo_list_1'
+        todo = baker.make("Todo", todo_list=todo_list_1)
+        self.assertEqual(1, Todo.objects.count())
+
+        # Test privacy among users
+        ##
+        # Authenticate 'user_2'
+        token, created = Token.objects.get_or_create(user=user_2)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Attempt to edit todo as 'user_1', should fail with 403
+        sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list_1))
+        url = reverse(
+            "todo_lists:todo_detail",
+            kwargs={"todo_list": todo_list_1.id, "pk": todo.id},
+        )
+        response = self.client.delete(
+            path=url, content_type="application/json", data=sample.data, **headers
+        )
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+
+        # Test privacy among todo lists
+        ##
+        # Authenticate 'user_1'
+        token, created = Token.objects.get_or_create(user=user_1)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Attempt to edit todo as 'user_1', should fail with 404
+        sample = TodoSerializer(baker.prepare("Todo", todo_list=todo_list_1))
+        url = reverse(
+            "todo_lists:todo_detail",
+            kwargs={"todo_list": todo_list_2.id, "pk": todo.id},
+        )
+        response = self.client.put(
+            path=url, content_type="application/json", data=sample.data, **headers
+        )
+        self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
+
+        # Attempt to edit todo's todo_list, should return unchanged todo
+        sample = {"todo_list": 2}
+        url = reverse(
+            "todo_lists:todo_detail",
+            kwargs={"todo_list": todo_list_1.id, "pk": todo.id},
+        )
+        response = self.client.put(
+            path=url, content_type="application/json", data=sample, **headers
+        )
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(todo_list_1.id, response.data["todo_list"])
+
+        # Attempt to edit todo from unexistent todo_list, should return 404
+        sample = {"todo_list": 2}
+        sample_todo_list_id = 123
+        url = reverse(
+            "todo_lists:todo_detail",
+            kwargs={"todo_list": sample_todo_list_id, "pk": todo.id},
+        )
+        response = self.client.delete(
+            path=url, content_type="application/json", data=sample, **headers
+        )
+        self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
+
+
+    def test_delete_todo(self):
+        # Create user
+        user = baker.make("User")
+        self.assertEqual(1, User.objects.count())
+
+        # Create todo list
+        todo_list = baker.make("TodoList", owner=user)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Create todo
+        todo = baker.make("Todo", todo_list=todo_list)
+        self.assertEqual(1, TodoList.objects.count())
+
+        # Authenticate user
+        token, created = Token.objects.get_or_create(user=user)
+        self.assertTrue(created)
+        headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
+
+        # Delete todo successfully
+        url = reverse("todo_lists:todo_detail", kwargs={"todo_list": todo_list.id, "pk": todo.id})
+        response = self.client.delete(
+            path=url, content_type="application/json", **headers
+        )
+        self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
+        self.assertEqual(0, Todo.objects.count())

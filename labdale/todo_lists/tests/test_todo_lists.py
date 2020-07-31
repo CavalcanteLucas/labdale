@@ -192,7 +192,7 @@ class TodoListTests(TestCase):
         baker.make("TodoList", owner=user)
         self.assertEqual(1, TodoList.objects.count())
 
-        # Attempt to edit todo list title, should fail with 401
+        # Attempt to edit todo list, should fail with 401
         sample = {"title": "This is a new title for the To-Do List"}
         url = reverse("todo_lists:todo_list_detail", kwargs={"pk": 1})
         response = self.client.put(
