@@ -12,13 +12,7 @@ class TodoListAdmin(admin.ModelAdmin):
 
 
 class TodoAdmin(admin.ModelAdmin):
-    list_display = [
-        "id",
-        "title",
-        "deadline",
-        "todo_list",
-        "is_done"
-    ]
+    list_display = ["id", "title", "deadline", "todo_list", "is_done"]
 
 
 admin.site.register(Todo, TodoAdmin)

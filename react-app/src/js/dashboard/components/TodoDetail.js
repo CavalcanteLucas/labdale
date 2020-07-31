@@ -20,6 +20,7 @@ export class TodoDetail extends React.Component {
   constructor(props) {
     super(props);
 
+    // eslint-disable-next-line camelcase
     const { is_done } = props.todo;
 
     this.state = {

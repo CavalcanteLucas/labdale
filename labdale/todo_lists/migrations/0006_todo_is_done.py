@@ -6,13 +6,11 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('todo_lists', '0005_remove_todolist_created_at'),
+        ("todo_lists", "0005_remove_todolist_created_at"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='todo',
-            name='is_done',
-            field=models.BooleanField(default=False),
+            model_name="todo", name="is_done", field=models.BooleanField(default=False),
         ),
     ]
