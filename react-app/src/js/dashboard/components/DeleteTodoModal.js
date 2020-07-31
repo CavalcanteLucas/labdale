@@ -12,24 +12,18 @@ export class DeleteTodoModal extends React.Component {
     deleteTodo: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,
-    deleteTodoIsSuccessfull: PropTypes.bool,
-    history: PropTypes.shape({
-      push: PropTypes.func
-    })
+    deleteTodoIsSuccessfull: PropTypes.bool
   };
 
   static defaultProps = {
-    deleteTodoIsSuccessfull: null,
-    history: undefined
+    deleteTodoIsSuccessfull: null
   };
 
   componentDidUpdate(prevProps) {
-    const { history, todo, deleteTodoIsSuccessfull } = this.props;
+    const { deleteTodoIsSuccessfull } = this.props;
 
     if (deleteTodoIsSuccessfull && !prevProps.deleteTodoIsSuccessfull) {
-      console.log("deleted");
       this.handleCloseModal();
-      // history.push(`/todo-list/${todo.todo_list}`);
     }
   }
 

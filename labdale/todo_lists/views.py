@@ -57,6 +57,7 @@ class TodoAPIView(generics.ListCreateAPIView):
         request.data["todo_list"] = self.get_todo_list().id
         return self.create(request, *args, **kwargs)
 
+
 class TodoDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TodoSerializer
     permission_classes = [permissions.IsAuthenticated & IsTodoOwner]

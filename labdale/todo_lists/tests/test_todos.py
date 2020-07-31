@@ -355,7 +355,7 @@ class TodoTests(TestCase):
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
     def test_delete_todo_is_private(self):
-       # Create two distinct users
+        # Create two distinct users
         user_1 = baker.make("User")
         user_2 = baker.make("User")
         self.assertEqual(2, User.objects.count())
@@ -429,7 +429,6 @@ class TodoTests(TestCase):
         )
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
-
     def test_delete_todo(self):
         # Create user
         user = baker.make("User")
@@ -449,7 +448,9 @@ class TodoTests(TestCase):
         headers = {"HTTP_AUTHORIZATION": "Token " + token.key}
 
         # Delete todo successfully
-        url = reverse("todo_lists:todo_detail", kwargs={"todo_list": todo_list.id, "pk": todo.id})
+        url = reverse(
+            "todo_lists:todo_detail", kwargs={"todo_list": todo_list.id, "pk": todo.id}
+        )
         response = self.client.delete(
             path=url, content_type="application/json", **headers
         )
