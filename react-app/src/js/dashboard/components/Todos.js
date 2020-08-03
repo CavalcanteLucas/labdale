@@ -5,7 +5,7 @@ import { ListGroup } from "react-bootstrap";
 
 import { getTodos } from "../actions";
 
-import TodoItem from "./TodoItem";
+import TodoDetail from "./TodoDetail";
 
 export class Todos extends React.Component {
   static propTypes = {
@@ -29,7 +29,7 @@ export class Todos extends React.Component {
     return (
       <ListGroup variant="flush">
         {todos.map(todo => (
-          <TodoItem todo={todo} key={`Todo: ${todo.id}`} />
+          <TodoDetail todo={todo} key={`Todo: ${todo.id}`} />
         ))}
       </ListGroup>
     );

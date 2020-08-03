@@ -58,7 +58,7 @@ class TodoAPIView(generics.ListCreateAPIView):
         return self.create(request, *args, **kwargs)
 
 
-class TodoDetailAPIView(generics.UpdateAPIView):
+class TodoDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TodoSerializer
     permission_classes = [permissions.IsAuthenticated & IsTodoOwner]
 

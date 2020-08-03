@@ -7,6 +7,18 @@
 
         &:hover {
             filter: invert(0.25);
-          }
-      }
+        }
+    }
+
+    &__delete-btn {
+        height: 0.9rem;
+        margin-bottom: 0.4rem;
+        margin-left: -1rem;
+
+        filter: invert(0.7);
+
+        &:hover {
+            filter: invert(0.1);
+        }
+    }
  }

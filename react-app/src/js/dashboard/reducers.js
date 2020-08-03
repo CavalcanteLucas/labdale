@@ -28,7 +28,10 @@ import {
   EDIT_TODO_REQUEST,
   EDIT_TODO_SUCCESS,
   EDIT_TODO_FAILURE,
-  CLEAR_EDIT_TODO_ERRORS
+  CLEAR_EDIT_TODO_ERRORS,
+  DELETE_TODO_REQUEST,
+  DELETE_TODO_SUCCESS,
+  DELETE_TODO_FAILURE
 } from "./actions";
 import { LOGOUT_SUCCESS } from "../auth/actions";
 
@@ -45,14 +48,20 @@ const initialState = {
   editTodoListErrors: null,
   editTodoListIsSuccessfull: null,
   deleteTodoListIsLoading: false,
-  deleteTodoListErrors: null,
   deleteTodoListIsSuccessfull: null,
   // TODO
   todos: [],
   getTodosIsLoading: false,
   createTodoIsLoading: false,
   createTodoErrors: null,
-  createTodoIsSuccessfull: null
+  createTodoIsSuccessfull: null,
+  todoDetail: null,
+  editTodoIsLoading: false,
+  editTodoErrors: null,
+  editTodoIsSuccessfull: null,
+  deleteTodoIsLoading: false,
+  deleteTodoErrors: null,
+  deleteTodoIsSuccessfull: null
 };
 
 export function todoReducers(state = initialState, action) {
@@ -166,7 +175,6 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         deleteTodoListIsLoading: true,
-        deleteTodoListErrors: initialState.deleteTodoListErrors,
         deleteTodoListIsSuccessfull: initialState.deleteTodoListIsSuccessfull
       };
     case DELETE_TODO_LIST_SUCCESS:
@@ -267,6 +275,29 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         editTodoErrors: initialState.editTodoErrors
+      };
+
+    // DELETE_TODO:
+    case DELETE_TODO_REQUEST:
+      return {
+        ...state,
+        deleteTodoIsLoading: true,
+        deleteTodoIsSuccessfull: initialState.deleteTodoIsLoading
+      };
+    case DELETE_TODO_SUCCESS:
+      const todosAfterDelete = state.todos.filter(
+        item => item.id !== action.extraData.todoId
+      );
+      return {
+        ...state,
+        todos: todosAfterDelete,
+        deleteTodoIsLoading: initialState.deleteTodoIsLoading,
+        deleteTodoIsSuccessfull: action.response.ok
+      };
+    case DELETE_TODO_FAILURE:
+      return {
+        ...state,
+        deleteTodoIsLoading: action.response.ok
       };
 
     // LOGOUT

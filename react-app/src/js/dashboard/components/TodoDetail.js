@@ -4,10 +4,12 @@ import PropTypes from "prop-types";
 import moment from "moment";
 
 import pencilBtn from "../../../img/pencil-btn.png";
+import garbageBtn from "../../../img/garbage-btn.png";
 
 import EditTodoModal from "./EditTodoModal";
+import DeleteTodoModal from "./DeleteTodoModal";
 
-export default class TodoItem extends React.Component {
+export default class TodoDetail extends React.Component {
   static propTypes = {
     todo: PropTypes.object.isRequired
   };
@@ -16,18 +18,21 @@ export default class TodoItem extends React.Component {
     super(props);
 
     this.state = {
-      editTodoModalIsOpen: false
+      editTodoModalIsOpen: false,
+      deleteTodoModalIsOpen: false
     };
   }
 
-  openEditTodoModal = () => {
-    this.setState({ editTodoModalIsOpen: true });
-  };
+  openEditTodoModal = () => this.setState({ editTodoModalIsOpen: true });
+
+  openDeleteTodoModal = () => this.setState({ deleteTodoModalIsOpen: true });
 
   closeEditTodoModal = () => this.setState({ editTodoModalIsOpen: false });
 
+  closeDeleteTodoModal = () => this.setState({ deleteTodoModalIsOpen: false });
+
   render() {
-    const { editTodoModalIsOpen } = this.state;
+    const { editTodoModalIsOpen, deleteTodoModalIsOpen } = this.state;
     const { todo } = this.props;
     return (
       <ListGroup.Item>
@@ -44,6 +49,18 @@ export default class TodoItem extends React.Component {
           <EditTodoModal
             show={editTodoModalIsOpen}
             onHide={this.closeEditTodoModal}
+            todo={todo}
+          />
+          <Button variant="no-style" onClick={this.openDeleteTodoModal}>
+            <img
+              src={garbageBtn}
+              alt="Delete Todo List"
+              className="todo-detail__delete-btn"
+            />
+          </Button>
+          <DeleteTodoModal
+            show={deleteTodoModalIsOpen}
+            onHide={this.closeDeleteTodoModal}
             todo={todo}
           />
         </div>
