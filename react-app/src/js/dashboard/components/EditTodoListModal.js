@@ -52,8 +52,8 @@ export class EditTodoListModal extends React.Component {
   };
 
   handleInputChange = e => {
-    const { value } = e.target;
-    this.setState({ newTitle: value });
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   };
 
   render() {

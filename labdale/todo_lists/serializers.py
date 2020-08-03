@@ -29,3 +29,9 @@ class TodoSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return Todo.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get("title", instance.title)
+        instance.deadline = validated_data.get("deadline", instance.deadline)
+        instance.save()
+        return instance

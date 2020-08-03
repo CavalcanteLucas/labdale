@@ -24,7 +24,11 @@ import {
   CREATE_TODO_REQUEST,
   CREATE_TODO_SUCCESS,
   CREATE_TODO_FAILURE,
-  CLEAR_CREATE_TODO_ERRORS
+  CLEAR_CREATE_TODO_ERRORS,
+  EDIT_TODO_REQUEST,
+  EDIT_TODO_SUCCESS,
+  EDIT_TODO_FAILURE,
+  CLEAR_EDIT_TODO_ERRORS
 } from "./actions";
 import { LOGOUT_SUCCESS } from "../auth/actions";
 
@@ -44,7 +48,7 @@ const initialState = {
   deleteTodoListErrors: null,
   deleteTodoListIsSuccessfull: null,
   // TODO
-  todos: null,
+  todos: [],
   getTodosIsLoading: false,
   createTodoIsLoading: false,
   createTodoErrors: null,
@@ -117,6 +121,11 @@ export function todoReducers(state = initialState, action) {
         createTodoListErrors: action.response.data || [["Server Error"]],
         createTodoListIsSuccessfull: action.response.ok
       };
+    case CLEAR_CREATE_TODO_LIST_ERRORS:
+      return {
+        ...state,
+        createTodoListErrors: initialState.createTodoListErrors
+      };
 
     // EDIT_TODO_LIST
     case EDIT_TODO_LIST_REQUEST:
@@ -146,6 +155,11 @@ export function todoReducers(state = initialState, action) {
         editTodoListErrors: action.response.data,
         editTodoListIsSuccessfull: action.response.ok
       };
+    case CLEAR_EDIT_TODO_LIST_ERRORS:
+      return {
+        ...state,
+        editTodoListErrors: initialState.editTodoListErrors
+      };
 
     // DELETE_TODO_LIST:
     case DELETE_TODO_LIST_REQUEST:
@@ -171,17 +185,6 @@ export function todoReducers(state = initialState, action) {
         deleteTodoListIsLoading: action.response.ok
       };
 
-    case CLEAR_CREATE_TODO_LIST_ERRORS:
-      return {
-        ...state,
-        createTodoListErrors: initialState.createTodoListErrors
-      };
-    case CLEAR_EDIT_TODO_LIST_ERRORS:
-      return {
-        ...state,
-        editTodoListErrors: initialState.editTodoListErrors
-      };
-
     //
     // TODO
     //
@@ -190,7 +193,7 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         getTodosIsLoading: true,
-        todos: initialState.todoLists
+        todos: initialState.todos
       };
     case GET_TODOS_SUCCESS:
       return {
@@ -214,7 +217,7 @@ export function todoReducers(state = initialState, action) {
     case CREATE_TODO_SUCCESS:
       return {
         ...state,
-        todos: [state.todos, action.response.data],
+        todos: [...state.todos, action.response.data],
         todoDetail: action.response.data,
         createTodoIsLoading: initialState.createTodoIsLoading,
         createTodoIsSuccessfull: action.response.ok
@@ -230,6 +233,40 @@ export function todoReducers(state = initialState, action) {
       return {
         ...state,
         createTodoErrors: initialState.createTodoErrors
+      };
+
+    // EDIT_TODO_LIST
+    case EDIT_TODO_REQUEST:
+      return {
+        ...state,
+        editTodoIsLoading: true,
+        editTodoErrors: initialState.editTodoErrors,
+        editTodoIsSuccessfull: initialState.editTodoIsSuccessfull
+      };
+    case EDIT_TODO_SUCCESS:
+      const todoDetail = action.response.data;
+      const todosAfterEdit = state.todos.map(item => {
+        if (item.id !== todoDetail.id) return item;
+        return todoDetail;
+      });
+      return {
+        ...state,
+        todoDetail,
+        todos: todosAfterEdit,
+        editTodoIsLoading: initialState.editTodoIsLoading,
+        editTodoIsSuccessfull: action.response.ok
+      };
+    case EDIT_TODO_FAILURE:
+      return {
+        ...state,
+        editTodoIsLoading: initialState.editTodoIsLoading,
+        editTodoErrors: action.response.data,
+        editTodoIsSuccessfull: action.response.ok
+      };
+    case CLEAR_EDIT_TODO_ERRORS:
+      return {
+        ...state,
+        editTodoErrors: initialState.editTodoErrors
       };
 
     // LOGOUT

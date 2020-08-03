@@ -32,7 +32,7 @@ export class TodoListsActionBarItem extends React.Component {
             as={Link}
             to={`/todo-list/${todoList.id}`}
             href={todoList.id}
-            key={todoList.id}
+            key={`TodoList: ${todoList.id}`}
             variant="dark"
             action
           >

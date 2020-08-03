@@ -13,7 +13,7 @@ class IsTodoListOwner(permissions.BasePermission):
 
 class IsTodoOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        return obj["todo_list"].owner == request.user
+        return obj.todo_list.owner == request.user
 
 
 class TodoListAPIView(generics.ListCreateAPIView):
@@ -33,31 +33,46 @@ class TodoListDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TodoListSerializer
     permission_classes = [permissions.IsAuthenticated & IsTodoListOwner]
 
-    def perform_update(self, serializer):
-        serializer.save(owner=self.request.user)
+    def put(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
 
 
 class TodoAPIView(generics.ListCreateAPIView):
     serializer_class = TodoSerializer
     permission_classes = [permissions.IsAuthenticated & IsTodoOwner]
 
-    def get_queryset(self):
-        todo_list_id = self.kwargs["todo_list"]
-        user = self.request.user
+    def get_todo_list(self):
         try:
-            todo_list = TodoList.objects.get(id=todo_list_id)
+            todo_list = TodoList.objects.get(id=self.kwargs["todo_list"])
         except:
             raise NotFound()
         if todo_list.owner != self.request.user:
             raise PermissionDenied()
-        return Todo.objects.filter(todo_list=todo_list)
+        return todo_list
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.check_object_permissions(request, serializer.validated_data)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.validated_data)
-        return Response(
-            serializer.data, status=status.HTTP_201_CREATED, headers=headers
-        )
+    def get_queryset(self):
+        return Todo.objects.filter(todo_list=self.get_todo_list())
+
+    def post(self, request, *args, **kwargs):
+        request.data["todo_list"] = self.get_todo_list().id
+        return self.create(request, *args, **kwargs)
+
+
+class TodoDetailAPIView(generics.UpdateAPIView):
+    serializer_class = TodoSerializer
+    permission_classes = [permissions.IsAuthenticated & IsTodoOwner]
+
+    def get_todo_list(self):
+        try:
+            todo_list = TodoList.objects.get(id=self.kwargs["todo_list"])
+        except:
+            raise NotFound()
+        if todo_list.owner != self.request.user:
+            raise PermissionDenied()
+        return todo_list
+
+    def get_queryset(self):
+        return Todo.objects.filter(todo_list=self.get_todo_list())
+
+    def put(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)

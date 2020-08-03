@@ -100,7 +100,7 @@ export class AddTodoModal extends React.Component {
                 name="todoTitle"
                 required
                 type="text"
-                placeholder="Insert title"
+                placeholder={todoTitle}
                 value={todoTitle}
                 onChange={this.handleTodoTitleChange}
               />

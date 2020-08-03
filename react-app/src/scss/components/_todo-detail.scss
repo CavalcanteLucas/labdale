@@ -1,0 +1,12 @@
+.todo-detail {
+    .p { margin: 0;}
+    &__edit-btn {
+        height: 0.9rem;
+        margin-bottom: 0.4rem;
+        filter: invert(0.6);
+
+        &:hover {
+            filter: invert(0.25);
+          }
+      }
+ }
