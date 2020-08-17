@@ -189,6 +189,7 @@ class TodoTests(TestCase):
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(1, response.data["id"])
         self.assertEqual(sample.data["title"], todo_created.title)
+        self.assertEqual(sample.data["is_done"], todo_created.is_done)
         self.assertEqual(user, todo_created.todo_list.owner)
 
     ##
