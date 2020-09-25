@@ -55,6 +55,7 @@ class TodoAPIView(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         request.data["todo_list"] = self.get_todo_list().id
+        request.data["is_done"] = False
         return self.create(request, *args, **kwargs)
 
 
