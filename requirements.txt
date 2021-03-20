@@ -30,7 +30,7 @@ idna==2.9
 importlib-metadata==1.6.0
 importlib-resources==1.4.0
 itypes==1.2.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
 model-bakery==1.1.0
